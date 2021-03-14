@@ -385,6 +385,7 @@ const buttons = [
 ]
 
 const table = {
+  exportAble: true,
   filter: [
     {
       field: 'name',

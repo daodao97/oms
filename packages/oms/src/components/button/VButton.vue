@@ -22,7 +22,7 @@
 </template>
 <script lang="ts">
 import { PropType, ref } from 'vue'
-import { baseProps, plugins, Plugin, VButtonProps, getContainerProps, baseComps } from './base'
+import { baseProps, plugins, Plugin, VButtonProps, getContainerProps, baseComps, events } from './base'
 import { strVarReplace } from '../../utils/string'
 import { SetupContext } from '@vue/runtime-core'
 import { useRouter } from 'vue-router'
@@ -58,7 +58,7 @@ export default {
     },
     ...baseProps
   },
-  emits: ['click', 'aflterClick', 'apiError', 'apiSuccess', 'action'],
+  emits: events,
   setup(props: VButtonProps, ctx: SetupContext) {
     const showContainer = ref(false)
     const instance : Plugin<any> = plugins[props.type]

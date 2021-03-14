@@ -39,7 +39,7 @@
 </template>
 <script lang="ts">
 import { computed, ref } from 'vue'
-import { BaseButtonProps, baseComps, baseProps, getContainerProps, Plugin, plugins } from './base'
+import { BaseButtonProps, baseComps, baseProps, getContainerProps, Plugin, plugins, events } from './base'
 import { SetupContext } from '@vue/runtime-core'
 import { strVarReplace } from '../../utils/string'
 type Buttons = BaseButtonProps[]
@@ -68,7 +68,7 @@ export default {
     },
     ...baseProps
   },
-  emits: ['click', 'aflterClick', 'apiError', 'apiSuccess', 'action'],
+  emits: events,
   setup(props: VButtonGroupProps, ctx: SetupContext) {
     const dropProps : DropProps = { ...defaultDropProps, ...props.props }
     const replaceText: (string) => string = (str) => {

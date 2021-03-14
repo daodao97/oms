@@ -159,7 +159,7 @@ export const exportTable2Excel = (id: string) => {
 }
 
 export const exportJson2Excel = (header: string[], data: any, filename = 'excel-list', multiHeader: string[][] = [], merges: any[] = [], autoWidth = true, bookType = 'xlsx') => {
-  data = [...data]
+  // data = [...data]
   data.unshift(header)
   for (let i = multiHeader.length - 1; i > -1; i--) {
     data.unshift(multiHeader[i])

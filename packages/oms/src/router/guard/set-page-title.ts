@@ -12,7 +12,9 @@ export default function(router: Router) {
         tokens.push(item.meta.title)
       }
     }
-    document.title = tokens.reverse().join('-')
+    if (tokens.length > 1) {
+      document.title = tokens.reverse().join('-')
+    }
     next()
   })
 }

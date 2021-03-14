@@ -60,14 +60,14 @@ export default {
         })
         data = data.concat(list)
         this.task.page++
-        this.task.total = payload.page.total
+        this.task.total = payload.page.count
       }
-      exportJson2Excel({
-        header: header,
-        data: data,
-        filename: task.name
-      })
-      this.$message('文件导出成功')
+      exportJson2Excel(
+        header,
+        data,
+        task.name
+      )
+      this.$message.success('文件导出成功')
       this.dialogVisible = false
     }
   }

@@ -28,6 +28,8 @@ export interface VButtonProps extends BaseButtonProps {
   metaData: Record<string, any>
 }
 
+export const events: string[] = ['click', 'aflterClick', 'apiError', 'apiSuccess', 'action', 'formReset', 'formSubmit']
+
 export const baseProps = {
   props: {
     type: Object,
@@ -120,6 +122,13 @@ const form: Plugin<TableProps> = {
   },
   getSubEvent(props, ctx: SetupContext, showContainer) {
     return {
+      submit(data: any) {
+        ctx.emit('formSubmit', data)
+      },
+      reset() {
+        showContainer.value = false
+        ctx.emit('formReset')
+      }
     }
   }
 }
