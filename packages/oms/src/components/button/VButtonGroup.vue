@@ -91,7 +91,7 @@ export default {
       const btn = props.buttons[index]
       const realTarget : string = strVarReplace(btn.target || '', props.metaData)
       instance.value = plugins[btn.type]
-      instance.value.onclick(realTarget, ctx, props.extra, () => {
+      instance.value.onclick(realTarget, ctx, btn.extra, () => {
         showContainer.value = true
       })
     }

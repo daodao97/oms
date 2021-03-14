@@ -56,7 +56,11 @@ export default defineComponent({
       ]
     },
     activeMenu() {
-      return this.$router.resolve(this.$route.redirect ? this.$route.redirect : this.$route).fullPath
+      let route = this.$route
+      if (route.meta.menuType === 0) {
+        route = route.matched[route.matched.length - 2]
+      }
+      return this.$router.resolve(route.redirect ? route.redirect : route).fullPath
     },
     showLogo() {
       return this.$store.state.settings.sidebarLogo

@@ -9,7 +9,7 @@
   </el-dialog>
 </template>
 <script lang="ts">
-import { export_json_to_excel } from '../../../utils/export2excel'
+import { exportJson2Excel } from '../../../utils/excel'
 
 export default {
   name: 'ExportAddButton',
@@ -62,7 +62,7 @@ export default {
         this.task.page++
         this.task.total = payload.page.total
       }
-      export_json_to_excel({
+      exportJson2Excel({
         header: header,
         data: data,
         filename: task.name

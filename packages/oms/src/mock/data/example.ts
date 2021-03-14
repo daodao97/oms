@@ -340,6 +340,9 @@ const buttons = [
     extra: {
       method: 'POST',
       url: '/test_api'
+    },
+    props: {
+      type: 'warning'
     }
   },
   {
@@ -448,6 +451,11 @@ const table = {
   ],
   batchButton: buttons,
   rowButton: [
+    {
+      type: 'jump',
+      text: '编辑',
+      target: '/user/{id}'
+    },
     {
       type: 'form',
       extra: {

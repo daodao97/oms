@@ -48,6 +48,7 @@ function getPath(item: PageInfo) {
 }
 
 const transRoute = (item: PageInfo): RouteRecordRaw => {
+  const isShow = item.is_show !== undefined ? !!item.is_show : true
   const route: RouteRecordRaw = {
     path: getPath(item),
     name: item.path + item.name,
@@ -56,13 +57,12 @@ const transRoute = (item: PageInfo): RouteRecordRaw => {
       id: item.id,
       title: item.name,
       icon: item.icon,
-      hidden: item.is_show !== undefined ? !item.is_show : false,
+      hidden: !isShow,
       pageSchema: item.page_schema || {},
-      menuType: 2 // 0 隐藏, 1 目录 2 菜单
+      menuType: isShow ? 2 : 0 // 0 隐藏, 1 目录 2 菜单
     },
     children: item.children ? item.children.map(each => transRoute(each)) : []
   }
-  const isShow = item.is_show !== undefined ? !!item.is_show : true
   if (route.children && route.children.length > 0) {
     let allChildHidden = true
     route.children.forEach(each => {

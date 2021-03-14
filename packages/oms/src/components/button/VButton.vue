@@ -25,6 +25,7 @@ import { PropType, ref } from 'vue'
 import { baseProps, plugins, Plugin, VButtonProps, getContainerProps, baseComps } from './base'
 import { strVarReplace } from '../../utils/string'
 import { SetupContext } from '@vue/runtime-core'
+import { useRouter } from 'vue-router'
 
 type VButtonType = PropType<'jump' | 'api' | 'form' | 'table' | 'model'>
 
@@ -61,10 +62,12 @@ export default {
   setup(props: VButtonProps, ctx: SetupContext) {
     const showContainer = ref(false)
     const instance : Plugin<any> = plugins[props.type]
+    const router = useRouter()
     const lickhandler = () => {
       if (!props.preCheck(props)) {
         return
       }
+      console.log(router)
       const realTarget : string = strVarReplace(props.target || '', props.metaData)
       instance.onclick(realTarget, ctx, props.extra, () => {
         showContainer.value = true

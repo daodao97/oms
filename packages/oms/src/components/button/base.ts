@@ -1,5 +1,5 @@
 import { defineAsyncComponent } from 'vue'
-import { useRouter } from 'vue-router'
+import router from '../../router'
 import { useHttp } from '../../oms'
 import { AxiosRequestConfig } from 'axios'
 import { SetupContext } from '@vue/runtime-core'
@@ -80,24 +80,20 @@ export interface Plugin<T> {
   onclick(target: string, ctx: SetupContext, extra: T, callback: () => void): void
 }
 
-export const events : string[] = ['aflterClick']
-
 const jump : Plugin<void> = {
   onclick(target: string) {
     console.log(target)
     if (/http.*/.test(target)) {
       window.open(target)
     } else {
-      const router = useRouter()
-      console.log(router)
-      router && router.push(target)
+      router.push(target)
     }
   }
 }
 
 const api : Plugin<AxiosRequestConfig> = {
   onclick(target: string, ctx, extra) {
-    console.log(target, extra)
+    console.log(99999, target, extra)
     useHttp().request({
       url: target,
       ...extra
