@@ -193,7 +193,6 @@ const userModule: Module<User, any> = {
             // 根据用户权限 user.resource 过滤
             const isSuper = rootState.user.roleIds.indexOf(1) > -1
             const userResource: RemoteModule[] = isSuper ? resource : resourceFilter(resource, rootState.user.resource, '')
-            console.log(isSuper, userResource)
             resolve(userResource)
           } else {
             reject('error')

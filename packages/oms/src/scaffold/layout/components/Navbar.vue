@@ -2,32 +2,32 @@
   <el-row class="navbar">
     <el-col :span="16">
       <hamburger
-          :is-active="sidebar.opened"
-          class="hamburger-container"
-          @toggleClick="toggleSideBar"
+        :is-active="sidebar.opened"
+        class="hamburger-container"
+        @toggleClick="toggleSideBar"
       />
-      <breadcrumb class="breadcrumb-container"/>
+      <breadcrumb class="breadcrumb-container" />
     </el-col>
     <el-col :span="8">
       <div class="right-content">
         <el-popover
-            placement="bottom"
-            width="400"
-            trigger="click"
-            @show="showPopover"
+          placement="bottom"
+          width="400"
+          trigger="click"
+          @show="showPopover"
         >
           <el-badge class="right-item" :is-dot="hasNewMessage">
-            <i class="el-icon-bell icon" circle/>
+            <i class="el-icon-bell icon" circle />
           </el-badge>
         </el-popover>
         <div
-            v-if="showPageJsonSchemaIcon"
-            class="right-item"
+          v-if="showPageJsonSchemaIcon"
+          class="right-item"
         >
-          <page-schema/>
+          <page-schema />
         </div>
         <div class="right-item-button" style="padding: 0">
-          <v-button :buttons="nav"/>
+          <v-button :buttons="nav" />
         </div>
         <el-dropdown class="right-item" trigger="click">
           <div class="user-info">
@@ -43,19 +43,19 @@
       </div>
     </el-col>
     <el-drawer
-        v-if="showJsonSchema"
-        :with-header="false"
-        size="50%"
+      v-if="showJsonSchema"
+      :with-header="false"
+      size="50%"
     />
   </el-row>
 </template>
 
 <script>
-import {mapGetters} from 'vuex'
+import { mapGetters } from 'vuex'
 import Breadcrumb from './Breadcrumb/index.vue'
 import Hamburger from './Hamburger/index.vue'
 import PageSchema from './PageScheam.vue'
-import {showEleByClassName} from '../../../utils'
+import { showEleByClassName } from '../../../utils'
 import Cache from '../../../utils/cache'
 import VButton from '../../../components/button/index.vue'
 
@@ -112,7 +112,7 @@ export default {
       return this.$store.state.settings[name]
     },
     async closeNavBarNotice() {
-      await this.$store.commit('settings/updateSettings', {closeNavNotice: true})
+      await this.$store.commit('settings/updateSettings', { closeNavNotice: true })
       this.closeNotice(this.getSetting('navBarNotice'))
     },
     showPopover() {

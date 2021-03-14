@@ -3,7 +3,7 @@ import _ from 'lodash'
 const form = {
   saveApi: '/save',
   afterSubmit: '',
-  afterReset: '',
+  afterReset: 'goback',
   options: {
     column: 3,
     submitButton: {
@@ -519,7 +519,7 @@ const listMock = {
 
 const layoutForm = {
   afterSubmit: '',
-  afterReset: '',
+  afterReset: 'goback',
   formItems: [
     {
       type: 'input',

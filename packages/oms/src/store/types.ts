@@ -17,7 +17,7 @@ export interface User {
 }
 
 export interface RootState {
-    http: AxiosInstance | undefined,
+    http: AxiosInstance,
     user: User,
     settings: Settings,
     app: App
@@ -29,6 +29,7 @@ export interface Sidebar {
 }
 
 export interface App {
+    pages: Record<string, any>;
     sidebar: Sidebar,
     device: string,
 }

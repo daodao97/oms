@@ -1,17 +1,18 @@
 import { Router } from 'vue-router'
 import store from '../../store'
-import { cloneDeep } from 'lodash'
 
 export default function(router: Router) {
   router.beforeEach(async(to, form, next) => {
     const settings = store.state.settings
-    let title = settings.title
-    cloneDeep(to.matched).reverse().forEach((item, index) => {
-      if (index < 2 && item.meta && item.meta.title) {
-        title = item.meta.title + '-' + title
+    const tokens : string[] = [settings.title]
+    const len = to.matched.length
+    for (let i = len; i > len - 3; i--) {
+      const item = to.matched[i - 1]
+      if (item?.meta?.title) {
+        tokens.push(item.meta.title)
       }
-    })
-    document.title = title
+    }
+    document.title = tokens.reverse().join('-')
     next()
   })
 }

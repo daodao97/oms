@@ -1,20 +1,13 @@
 import type { App } from 'vue'
-import user, { user as userState } from './modules/user'
-import settings, { settings as settingsState } from './modules/settings'
-import app, { app as appState } from './modules/app'
+import user from './modules/user'
+import settings from './modules/settings'
+import app from './modules/app'
 import { ActionContext, createStore } from 'vuex'
 import { RootState } from './types'
 import { AxiosInstance } from 'axios'
 
-const root: RootState = {
-  http: undefined,
-  user: userState,
-  settings: settingsState,
-  app: appState
-}
-
 const store = createStore<RootState>({
-  state: root,
+  state: undefined,
   getters: {
     http: state => state.http,
     sidebar: state => state.app.sidebar,

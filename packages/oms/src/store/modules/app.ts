@@ -7,7 +7,8 @@ export const app: App = {
     opened: Cookies.get('sidebarStatus') ? !!Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
   },
-  device: 'desktop'
+  device: 'desktop',
+  pages: []
 }
 
 const _module: Module<App, any> = {
@@ -32,7 +33,6 @@ const _module: Module<App, any> = {
       state.device = device
     },
     SET_PAGE_JSON_SCHEMA: (state: App, { page, json }: PageSchema) => {
-      // @ts-ignore
       state.pages[page] = json
     }
   },

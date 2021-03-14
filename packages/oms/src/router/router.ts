@@ -3,7 +3,7 @@ import Dashboard from '../scaffold/dashboard.vue'
 import NotFoundPage from '../scaffold/404.vue'
 import Layout from '../scaffold/layout/index.vue'
 import { OmsRouteMeta } from './types'
-import Login from '../scaffold/Login.vue'
+import Login from '../scaffold/login.vue'
 
 const NotFoundMeta: OmsRouteMeta = {
   menuType: 0

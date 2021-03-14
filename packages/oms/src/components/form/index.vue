@@ -483,10 +483,12 @@ export default {
     },
     execAfter(type) {
       const action = this.props[type]
+      console.log(type, action)
       if (action === undefined) {
         return
       }
       if (isString(action)) {
+        console.log(1111, action)
         switch (this.props[type]) {
           case 'goback':
             this.$router && this.$router.back(-1)
