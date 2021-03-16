@@ -1,10 +1,9 @@
-// eslint-disable-next-line no-unused-vars
+/* eslint-disable */
 interface String {
     format(...replacements: string[]): string;
 }
 
 if (!String.prototype.format) {
-  // eslint-disable-next-line no-extend-native
   String.prototype.format = function() {
     const args = arguments
     return this.replace(/{(\d+)}/g, function(match, number) {

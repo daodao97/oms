@@ -21,7 +21,7 @@ const routes: RouteRecordRaw[] = [
     path: '/',
     component: Layout,
     redirect: '/dashboard',
-    name: 'Dashboard',
+    name: 'Root',
     meta: {
       menuType: 1
     },
@@ -30,7 +30,7 @@ const routes: RouteRecordRaw[] = [
         path: 'dashboard',
         name: 'Dashboard',
         component: Dashboard,
-        meta: { title: 'Dashboard', icon: 'el-icon-help', menuType: 2 }
+        meta: { title: 'Dashboard', icon: 'el-icon-help', menuType: 2, keepAlive: true }
       }
     ]
   },

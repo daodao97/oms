@@ -47,11 +47,15 @@ function getPath(item: PageInfo) {
       : path
 }
 
+function getName(item: PageInfo) : string {
+  return (item.path + item.name).split('/').filter(v => v).join('_')
+}
+
 const transRoute = (item: PageInfo): RouteRecordRaw => {
   const isShow = item.is_show !== undefined ? !!item.is_show : true
   const route: RouteRecordRaw = {
     path: getPath(item),
-    name: item.path + item.name,
+    name: getName(item),
     component: getComponent(item),
     meta: {
       id: item.id,

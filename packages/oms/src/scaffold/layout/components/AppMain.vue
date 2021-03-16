@@ -1,13 +1,30 @@
 <template>
   <section class="app-main">
-    <router-view :key="$route.fullPath" />
+    <router-view v-slot="{ Component }">
+      <keep-alive :include="include" max="10">
+        <component :is="Component" :key="$route.fullPath" />
+      </keep-alive>
+    </router-view>
     <el-backtop :bottom="50" />
   </section>
 </template>
 
 <script>
+import { useRoute, onBeforeRouteLeave } from 'vue-router'
 export default {
-  name: 'AppMain'
+  name: 'AppMain',
+  setup() {
+    const route = useRoute()
+    const include = []
+    onBeforeRouteLeave(() => {
+      if (route.meta?.keepAlive) {
+        !!include.indexOf(route.name) && include.push(route.name)
+      }
+    })
+    return {
+      include
+    }
+  }
 }
 </script>
 

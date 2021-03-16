@@ -44,17 +44,19 @@ export function ruleCompute(obj: Record<string, any>, rule: string[][] | string[
   return ret
 }
 
-export function showEleByClassName(class_name: string, block: ScrollLogicalPosition, behavior: ScrollBehavior, index: number | string) {
+export function showEleByClassName(class_name: string, block: string = 'center', behavior: string = 'smooth', index: number | string | boolean = false) {
   setTimeout(() => {
     const ele = document.getElementsByClassName(class_name)
     if (ele.length === 0) {
       return
     }
     const elIndex = index && index === 'last' ? ele.length - 1 : 0
-    ele[elIndex].scrollIntoView({
+    const options = {
       block: block || 'center', // 值有start,center,end,nearest，当前显示在视图区域中间
       behavior: behavior || 'smooth' // 值有auto,instant,smooth，缓动动画（当前是慢速的）
-    })
+    }
+    // @ts-ignore
+    ele[elIndex].scrollIntoView(options)
     // isError[0].querySelector('input').focus()
   }, 100)
 }
