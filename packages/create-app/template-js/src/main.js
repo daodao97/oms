@@ -1,8 +1,8 @@
-import { createAdmin } from 'oms'
-import * as devtool from 'oms-plugin-devtool'
+import { createAdmin } from '@vue-oms/core'
+import * as devtool from '@vue-oms/plugin-devtool'
 import settings from './settings'
-import 'oms/style.css'
-import 'oms-plugin-devtool/style.css'
+import '@vue-oms/style.css'
+import '@vue-oms/plugin-devtool/style.css'
 import app from './app'
 
 const env = import.meta.env

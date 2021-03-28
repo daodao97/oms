@@ -53,7 +53,7 @@
 </template>
 <script>
 import DevLayout from '../DevLayout.vue'
-import { VForm, VButton, JsonView, CodeMirror, eventBus, compactObject } from 'oms'
+import { VForm, VButton, JsonView, CodeMirror, eventBus, compactObject } from '@vue-oms/core'
 import RightMenu from '../rightMenu.vue'
 import { cloneDeep, get, merge, set, unset } from 'lodash'
 import {

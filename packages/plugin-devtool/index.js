@@ -1,6 +1,6 @@
 import FormBuilder from './views/formBuilder/index.vue'
 import TableBuilder from './views/tableBuilder/index.vue'
-import { Container } from 'oms'
+import { Container } from '@vue-oms/core'
 
 const routes = [
   {

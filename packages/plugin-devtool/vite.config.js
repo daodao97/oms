@@ -24,17 +24,17 @@ export default defineConfig({
     open: true
   },
   build: {
-    outDir: 'lib',
+    outDir: 'dist',
     lib: {
       entry: resolve(__dirname, 'index.js'),
-      name: 'oms-plugin-devtool',
+      name: 'OmsPluginDevtool',
       formats: ['umd', 'es']
     },
     sourcemap: false,
     rollupOptions: {
       external: [
         'vue',
-        /^oms*/,
+        /^@vue-oms\/core*/,
         /^core-js*/,
         /^system*/,
         /^node-sql-parser*/
@@ -44,7 +44,7 @@ export default defineConfig({
           vue: 'Vue',
           'node-sql-parser': 'nodeSqlParser',
           'element-plus': 'ElementPlus',
-          'oms': 'OMS'
+          '@vue-oms/core': 'OmsCore'
         }
       }
     }

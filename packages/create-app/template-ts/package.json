@@ -7,7 +7,7 @@
     "serve": "vite preview"
   },
   "dependencies": {
-    "oms": "latest",
+    "@vue-oms/core": "latest",
     "vue": "^3.0.5"
   },
   "devDependencies": {
@@ -29,6 +29,6 @@
     "eslint-plugin-vue": "^7.6.0",
     "sass": "^1.32.8",
     "typescript": "^4.1.3",
-    "vite": "^2.0.1"
+    "vite": "^2.1.3"
   }
 }

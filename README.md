@@ -44,11 +44,13 @@ yarn serve
 
 ### 插件机制
 
-#### `oms` 
+![Mw8VBC](https://gitee.com/daodao97/asset/raw/master/imgs/Mw8VBC.png)
+
+#### `@vue-oms/core` 
   
   核心组件, 用于构建整个后台应用机制, 包括 路由/鉴权/菜单/PageSchema解析等基础能力
   
-#### `oms-plugin-devtool`
+#### `@vue-oms/plugin-devtool`
   
   辅助开发组件, 注册页面构建工具的菜单及功能实现
 

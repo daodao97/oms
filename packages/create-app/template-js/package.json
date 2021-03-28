@@ -8,7 +8,7 @@
     "serve": "yarn build && vite preview"
   },
   "dependencies": {
-    "oms": "latest",
+    "@vue-oms/core": "latest",
     "vue": "^3.0.5"
   },
   "devDependencies": {
@@ -24,6 +24,6 @@
     "rollup-plugin-analyzer": "^4.0.0",
     "rollup-plugin-visualizer": "^4.2.0",
     "sass": "^1.32.7",
-    "vite": "^2.0.1"
+    "vite": "^2.1.3"
   }
 }

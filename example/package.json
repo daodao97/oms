@@ -9,8 +9,8 @@
     "serve": "yarn build && vite preview"
   },
   "dependencies": {
-    "oms": "file:../packages/oms",
-    "oms-plugin-devtool": "file:../packages/plugin-devtool"
+    "@vue-oms/core": "^0.0.1",
+    "@vue-oms/plugin-devtool": "^0.0.1"
   },
   "devDependencies": {
     "@rollup/plugin-alias": "^3.1.2",

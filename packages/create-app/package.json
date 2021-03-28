@@ -1,5 +1,5 @@
 {
-  "name": "@oms/create-app",
+  "name": "@vue-oms/create-app",
   "version": "1.0.0",
   "description": "",
   "bin": {

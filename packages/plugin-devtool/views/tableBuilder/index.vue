@@ -77,7 +77,7 @@
 </template>
 <script>
 import DevLayout from '../DevLayout.vue'
-import { VTable, VForm, VButton, JsonView, eventBus, compactObject } from 'oms'
+import { VTable, VForm, VButton, JsonView, eventBus, compactObject } from '@vue-oms/core'
 import RightMenu from '../rightMenu.vue'
 import input from './ctrls/input'
 import select from './ctrls/select'

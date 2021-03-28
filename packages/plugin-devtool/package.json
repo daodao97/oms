@@ -1,5 +1,5 @@
 {
-  "name": "@oms/plugin-devtool",
+  "name": "@vue-oms/plugin-devtool",
   "version": "0.0.1",
   "scripts": {
     "dev": "vite",
@@ -8,9 +8,9 @@
     "serve": "vite preview"
   },
   "dependencies": {
+    "@vue-oms/core": "^0.0.1",
     "core-js": "^3.8.3",
     "node-sql-parser": "^3.1.0",
-    "oms": "file:../oms",
     "vue": "^3.0.5"
   },
   "devDependencies": {
@@ -27,16 +27,16 @@
     "vite": "^2.0.1"
   },
   "files": [
-    "lib/*"
+    "dist/*"
   ],
-  "main": "./lib/oms-plugin-devtool.umd.js",
-  "module": "./lib/oms-plugin-devtool.es.js",
+  "main": "./lib/plugin-devtool.umd.js",
+  "module": "./lib/plugin-devtool.es.js",
   "style": "./lib/style.css",
   "exports": {
     "./style.css": "./lib/style.css",
     ".": {
-      "import": "./lib/oms-plugin-devtool.es.js",
-      "require": "./lib/oms-plugin-devtool.umd.js"
+      "import": "./lib/plugin-devtool.es.js",
+      "require": "./lib/plugin-devtool.umd.js"
     }
   },
   "license": "MIT"
