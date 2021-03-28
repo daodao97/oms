@@ -1,6 +1,6 @@
 {
-  "name": "oms",
-  "version": "0.0.0",
+  "name": "@vue-oms/core",
+  "version": "0.0.1",
   "scripts": {
     "dev": "vite --config test/dev.config.ts",
     "build": "vite build",
@@ -8,6 +8,7 @@
     "release": "release-it --dry-run",
     "eslint": "eslint --fix --ext .tsx --ext .ts src/"
   },
+  "homepage": "https://github.com/daodao97/vue-oms",
   "dependencies": {
     "axios": "^0.21.1",
     "codemirror": "^5.59.4",
@@ -54,14 +55,14 @@
   "files": [
     "dist/*"
   ],
-  "main": "./dist/oms.umd.js",
-  "module": "./dist/oms.es.js",
+  "main": "./dist/index.umd.js",
+  "module": "./dist/index.es.js",
   "style": "./dist/style.css",
   "exports": {
     "./style.css": "./dist/style.css",
     ".": {
-      "import": "./dist/oms.es.js",
-      "require": "./dist/oms.umd.js"
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js"
     }
   },
   "types": "dist/types/index.d.ts",

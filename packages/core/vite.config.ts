@@ -28,7 +28,7 @@ const build : BuildOptions = {
   outDir: 'dist',
   lib: {
     entry: resolve(__dirname, 'src/index.ts'),
-    name: 'oms',
+    name: 'index',
     formats: ['umd', 'es']
   },
   sourcemap: true,
