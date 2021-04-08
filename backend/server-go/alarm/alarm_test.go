@@ -3,7 +3,7 @@ package alarm
 import (
 	"testing"
 
-	"github.com/daodao97/egin/utils/config"
+	"github.com/daodao97/egin/egin/utils/config"
 	"github.com/go-playground/assert/v2"
 
 	"oms/alarm/dingtalk_robot"

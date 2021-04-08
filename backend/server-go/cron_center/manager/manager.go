@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/daodao97/egin/db"
+	"github.com/daodao97/egin/egin/db"
 	"github.com/prometheus/common/log"
 	"github.com/robfig/cron/v3"
 

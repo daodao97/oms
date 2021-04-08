@@ -3,7 +3,7 @@ package common_config
 import (
 	"encoding/json"
 
-	"github.com/daodao97/egin/db"
+	"github.com/daodao97/egin/egin/db"
 	"github.com/pkg/errors"
 
 	"oms/model"

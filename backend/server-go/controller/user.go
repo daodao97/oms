@@ -5,11 +5,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/daodao97/egin/consts"
-	"github.com/daodao97/egin/db"
-	"github.com/daodao97/egin/lib"
-	egin_user "github.com/daodao97/egin/service/user"
-	"github.com/daodao97/egin/utils"
+	"github.com/daodao97/egin/egin/consts"
+	"github.com/daodao97/egin/egin/db"
+	"github.com/daodao97/egin/egin/lib"
+	egin_user "github.com/daodao97/egin/egin/service/user"
+	"github.com/daodao97/egin/egin/utils"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 

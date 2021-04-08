@@ -3,7 +3,7 @@ package manager
 import (
 	"fmt"
 
-	"github.com/daodao97/egin/db"
+	"github.com/daodao97/egin/egin/db"
 )
 
 type jobs []CronJobEntity

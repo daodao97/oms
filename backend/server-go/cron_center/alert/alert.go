@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/daodao97/egin/lib"
-	"github.com/daodao97/egin/utils/goroutine"
+	"github.com/daodao97/egin/egin/lib"
+	"github.com/daodao97/egin/egin/utils/goroutine"
 	"github.com/prometheus/common/log"
 	"github.com/techxmind/filter"
 	"github.com/techxmind/filter/core"

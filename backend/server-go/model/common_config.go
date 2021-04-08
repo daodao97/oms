@@ -1,7 +1,7 @@
 package model
 
 import (
-	"github.com/daodao97/egin/db"
+	"github.com/daodao97/egin/egin/db"
 )
 
 

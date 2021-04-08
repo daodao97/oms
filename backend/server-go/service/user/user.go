@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/daodao97/egin/cache/redis"
-	"github.com/daodao97/egin/db"
-	egin_user "github.com/daodao97/egin/service/user"
-	"github.com/daodao97/egin/utils/config"
+	"github.com/daodao97/egin/egin/cache/redis"
+	"github.com/daodao97/egin/egin/db"
+	egin_user "github.com/daodao97/egin/egin/service/user"
+	"github.com/daodao97/egin/egin/utils/config"
 	"github.com/pkg/errors"
 
 	"oms/model"

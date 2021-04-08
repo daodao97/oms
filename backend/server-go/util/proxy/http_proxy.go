@@ -10,7 +10,7 @@ import (
 	"net/url"
 	"os"
 
-	"github.com/daodao97/egin/utils"
+	"github.com/daodao97/egin/egin/utils"
 )
 
 type buResponse struct {

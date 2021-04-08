@@ -6,8 +6,8 @@ import (
 	"io/ioutil"
 	"net/http"
 
-	"github.com/daodao97/egin/cache/redis"
-	"github.com/daodao97/egin/lib"
+	"github.com/daodao97/egin/egin/cache/redis"
+	"github.com/daodao97/egin/egin/lib"
 	"github.com/pkg/errors"
 )
 

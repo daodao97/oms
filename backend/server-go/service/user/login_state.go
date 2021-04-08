@@ -3,7 +3,7 @@ package user
 import (
 	"strconv"
 
-	"github.com/daodao97/egin/cache/redis"
+	"github.com/daodao97/egin/egin/cache/redis"
 )
 
 type State struct {

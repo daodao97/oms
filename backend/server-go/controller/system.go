@@ -1,8 +1,8 @@
 package controller
 
 import (
-	"github.com/daodao97/egin/consts"
-	"github.com/daodao97/egin/utils/upload/filesystem"
+	"github.com/daodao97/egin/egin/consts"
+	"github.com/daodao97/egin/egin/utils/upload/filesystem"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 

@@ -3,9 +3,9 @@ package controller
 import (
 	"encoding/json"
 
-	"github.com/daodao97/egin/consts"
-	"github.com/daodao97/egin/db"
-	"github.com/daodao97/egin/lib"
+	"github.com/daodao97/egin/egin/consts"
+	"github.com/daodao97/egin/egin/db"
+	"github.com/daodao97/egin/egin/lib"
 	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 

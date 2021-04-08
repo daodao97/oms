@@ -4,10 +4,10 @@ import (
 	"fmt"
 	"strconv"
 
-	"github.com/daodao97/egin/consts"
-	"github.com/daodao97/egin/db"
-	"github.com/daodao97/egin/lib"
-	userInstance "github.com/daodao97/egin/service/user"
+	"github.com/daodao97/egin/egin/consts"
+	"github.com/daodao97/egin/egin/db"
+	"github.com/daodao97/egin/egin/lib"
+	userInstance "github.com/daodao97/egin/egin/service/user"
 	"github.com/gin-gonic/gin"
 )
 

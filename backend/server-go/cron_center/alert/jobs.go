@@ -1,7 +1,7 @@
 package alert
 
 import (
-	"github.com/daodao97/egin/db"
+	"github.com/daodao97/egin/egin/db"
 
 	"oms/cron_center/manager"
 )

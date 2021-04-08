@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
-	"github.com/daodao97/egin/lib"
+	"github.com/daodao97/egin/egin/lib"
 	"github.com/pkg/errors"
 
 	"oms/alarm/interfaces"

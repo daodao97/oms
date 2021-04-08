@@ -5,12 +5,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/daodao97/egin/lib"
-	"github.com/daodao97/egin/utils/config"
+	"github.com/daodao97/egin/egin/lib"
+	"github.com/daodao97/egin/egin/utils/config"
 	"github.com/gin-gonic/gin"
 
-	"github.com/daodao97/egin/service/user"
-	"github.com/daodao97/egin/utils"
+	"github.com/daodao97/egin/egin/service/user"
+	"github.com/daodao97/egin/egin/utils"
 
 	myUser "oms/service/user"
 )

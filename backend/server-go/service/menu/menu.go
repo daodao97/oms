@@ -5,8 +5,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/daodao97/egin/db"
-	"github.com/daodao97/egin/utils/logger"
+	"github.com/daodao97/egin/egin/db"
+	"github.com/daodao97/egin/egin/utils/logger"
 
 	"oms/model"
 	"oms/service/user"
