@@ -1,0 +1,23 @@
+{
+    "name": "CronCenter",
+    "database": {
+        "default": {
+            "host": "localhost",
+            "port": 3306,
+            "user": "root",
+            "passwd": "",
+            "database": "rock_admin",
+            "pool": {
+                "maxOpenConns": 100,
+                "maxIdleConns": 5
+            },
+            "options": {}
+        }
+    },
+    "redis": {
+        "default": {
+            "host": "localhost",
+            "port": 6379
+        }
+    }
+}

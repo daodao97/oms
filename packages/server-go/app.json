@@ -1,0 +1,96 @@
+{
+    "name": "egin",
+    "address": "127.0.0.1:8080",
+    "mode": "<GIN_MODE>",
+    "custom": [
+        1,
+        2,
+        3
+    ],
+    "logger": {
+        "type": "stdout",
+        "fileName": "tmp/app.log",
+        "level": 5
+    },
+    "database": {
+        "default": {
+            "host": "localhost",
+            "port": 3306,
+            "user": "root",
+            "passwd": "",
+            "database": "rock_admin",
+            "pool": {
+                "maxOpenConns": 100,
+                "maxIdleConns": 5
+            },
+            "options": {}
+        }
+    },
+    "redis": {
+        "default": {
+            "host": "localhost",
+            "port": 6379
+        }
+    },
+    "rabbitmq": {
+        "default": {
+            "host": "localhost",
+            "port": 5672,
+            "user": "guest",
+            "passwd": "guest",
+            "vhost": "egin"
+        }
+    },
+    "mongo": {
+        "default": {
+            "url": "mongodb://localhost:27017"
+        }
+    },
+    "kafka": {
+        "default": "localhost::9092"
+    },
+    "auth": {
+        "cors": {
+            "enable": false
+        },
+        "ipAuth": {
+            "enable": true,
+            "allowedIpList": [
+                "127.0.0.1"
+            ]
+        },
+        "ipLimiter": {
+            "enable": false,
+            "ipLimit": {
+                "127.0.0.1": 1
+            }
+        },
+        "aksk": {
+            "enable": false,
+            "allowed": {
+                "123": "abc"
+            }
+        }
+    },
+    "jwt": {
+        "secret": "abc",
+        "tokenExpire": 86400,
+        "openApi": [
+            "/user/login"
+        ]
+    },
+    "consul": "http://127.0.0.1:8500",
+    "oss": {
+        "default": {
+            "endpoint": "<OSS_END_POINT>",
+            "accessKeyId": "<OSS_ACCESS_KEY>",
+            "accessKeySecret": "<OSS_ACCESS_KEY_SECRET>",
+            "host": "<OSS_HOST>"
+        }
+    },
+    "workWechat": {
+        "agentId": "<WX_AGENT_ID>",
+        "secret":  "<WX_SECRET>",
+        "corpId":  "<WX_CORP_ID>"
+    }
+}
