@@ -15,7 +15,23 @@
 <script lang="ts">
 import {searchTreeValues} from '../../utils'
 import {isNumber} from '../../utils/type'
-import _ from 'lodash'
+import {cloneDeep} from 'lodash'
+import {SetupContext} from '@vue/runtime-core'
+import {ref, onBeforeMount, getCurrentInstance} from 'vue'
+
+interface Props {
+  options: Array<Record<string, any>>,
+  modelValue: Array | Number,
+  disables: Boolean,
+  clearable: Boolean,
+  showAllLevels: Boolean,
+  collapseTags: Boolean,
+  filterable: Boolean,
+  props: Record<any, any>,
+  size: string,
+  optionsApi: string,
+  saveAs: string
+}
 
 export default {
   name: 'VCascader',
@@ -69,38 +85,43 @@ export default {
     }
   },
   emits: ['update:modelValue'],
-  data() {
-    const local = _.cloneDeep(isNumber(this.$props.modelValue) ? [this.$props.modelValue] : this.$props.modelValue)
-    return {
-      localValue: local,
-      optionTree: this.$props.options
-    }
-  },
-  beforeCreate() {
-    this.$props.optionsApi && this.$http.request({
-      method: 'GET',
-      url: this.$props.optionsApi
-    }).then(({payload}) => {
-      this.optionTree = payload || []
-      if (isNumber(this.$props.modelValue)) {
-        this.localValue = searchTreeValues(this.optionTree, this.$props.modelValue, 'value')
-      }
+  setup(props: Props, {emit}: SetupContext) {
+    let localValue = ref(cloneDeep(isNumber(props.modelValue) ? [props.modelValue] : props.modelValue))
+    let optionTree = ref(props.options)
+
+    const app = getCurrentInstance()
+    const http = app?.appContext.config.globalProperties.$http
+    onBeforeMount(() => {
+      props.optionsApi && http.request({
+        method: 'GET',
+        url: props.optionsApi
+      }).then(({payload}: any) => {
+        optionTree = payload || []
+        if (isNumber(props.modelValue)) {
+          localValue = searchTreeValues(optionTree, props.modelValue, 'value')
+        }
+      })
     })
-  },
-  methods: {
-    onchange() {
-      let val = this.localValue
-      if (isNumber(this.$props.modelValue)) {
-        val = this.localValue[this.localValue.length - 1]
+
+    const onchange = () => {
+      let val = localValue
+
+      if (isNumber(props.modelValue)) {
+        val = localValue[localValue.value.length - 1]
+      }
+      if (props.saveAs === 'array') {
+        val = localValue
+      } else if (props.saveAs === 'number') {
+        val = localValue[localValue.value.length - 1]
       }
 
-      if (this.saveAs === 'array') {
-        val = this.localValue
-      } else if (this.saveAs === 'number') {
-        val = this.localValue[this.localValue.length - 1]
-      }
+      emit('update:modelValue', val)
+    }
 
-      this.$emit('update:modelValue', val)
+    return {
+      localValue,
+      optionTree,
+      onchange
     }
   }
 }

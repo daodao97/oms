@@ -1,16 +1,16 @@
 <template>
   <div
-      v-out-click="() => active(false)"
-      :class="'el-date-editor el-range-editor el-input__inner el-date-editor--daterange el-range-editor--'+ $ELEMENT.size + (isFocus ? ' is-active' : '')"
-      :style="{'width': width}"
+    v-out-click="() => active(false)"
+    :class="'el-date-editor el-range-editor el-input__inner el-date-editor--daterange el-range-editor--'+ $ELEMENT.size + (isFocus ? ' is-active' : '')"
+    :style="{'width': width}"
   >
     <input
-        v-model.number="localValue[0]"
-        autocomplete="off"
-        class="el-range-input"
-        :disabled="disabled"
-        @change="onchange"
-        @focus="active(true)"
+      v-model.number="localValue[0]"
+      autocomplete="off"
+      class="el-range-input"
+      :disabled="disabled"
+      @change="onchange"
+      @focus="active(true)"
     > <span class="el-range-separator">~</span> <input
       v-model.number="localValue[1]"
       autocomplete="off"
@@ -18,11 +18,11 @@
       :disabled="disabled"
       @change="onchange"
       @focus="active(true)"
-  > <span v-if="unit" class="el-range-separator">{{ unit }}</span>
+    > <span v-if="unit" class="el-range-separator">{{ unit }}</span>
   </div>
 </template>
 <script lang="ts">
-import {isArray} from '../../utils/type'
+import { isArray } from '../../utils/type'
 
 export default {
   name: 'VRangeNumber',

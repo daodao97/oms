@@ -1,4 +1,4 @@
-import _ from 'lodash'
+import { merge } from 'lodash'
 import { isBool } from '../../utils/type'
 import VSelect from './VSelect.vue'
 import VRadio from './VRadio.vue'
@@ -11,6 +11,7 @@ import VUpload from './VUpload.vue'
 import VInput from './VInput.vue'
 import VCascader from './VCascader.vue'
 import VCascaderPanel from './VCascaderPanel.vue'
+import RuleCreate from './RuleCreate/Index.vue'
 import { Component } from '@vue/runtime-core'
 
 export const componentMap: Record<string, string> = {
@@ -34,7 +35,8 @@ export const componentMap: Record<string, string> = {
   'icon-select': 'v-icon-select',
   'sub-form': 'v-sub-form',
   cascader: 'v-cascader',
-  'cascader-panel': 'v-cascader-panel'
+  'cascader-panel': 'v-cascader-panel',
+  'rule': 'rule-create'
 }
 
 export const formOptions = {
@@ -63,7 +65,7 @@ export function makeFormOptions(options: Record<string, any>) {
     options.cancelButton = { show: options.cancelButton }
   }
 
-  return _.merge({}, formOptions, options)
+  return merge({}, formOptions, options)
 }
 
 export const customFormComps: Component = {
@@ -77,7 +79,8 @@ export const customFormComps: Component = {
   VUpload,
   VInput,
   VCascader,
-  VCascaderPanel
+  VCascaderPanel,
+  RuleCreate
 }
 
 export const getComponentName = (name: string) => {

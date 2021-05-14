@@ -6,17 +6,74 @@
   <VButton v-bind="b2" />
   <VButton v-bind="b3" />
   <VButtonGroup :buttons="buttons" />
+  <Rule v-model="rules" :filters="filters" :sets="sets" />
 </template>
 <script>
 import { mapGetters } from 'vuex'
 import VButton from '../components/button/VButton.vue'
 import VButtonGroup from '../components/button/VButtonGroup.vue'
+import Rule from './rule/index.vue'
+
+// interface FilterCell {
+//   filter : string
+//   operator: string
+//   value: any,
+//   sub: FilterGroup
+// }
+//
+// type Logic = 'and' | 'or' | 'AND' | 'OR'
+//
+// interface FilterGroup {
+//   logic: Logic,
+//   sub: Array<FilterCell>
+// }
+//
+// type Operator = '=' | '+' | '-' | '*' | '/'
+//
+// interface SetCell {
+//   Field: string,
+//   Operator: Operator,
+//   Value: any
+// }
+//
+// interface RuleEngine {
+//   Filter: FilterCell[],
+//   Set: SetCell[]
+// }
+//
+// const tmp : RuleEngine = {
+//   Filter: [
+//     { filter: 'version', operator: '>', value: '1.3.0' },
+//     { filter: 'ip', operator: 'in', value: '北京,上海' }
+//   ]
+// }
 
 export default {
   name: 'Dashboard',
-  components: { VButton, VButtonGroup },
+  components: { VButton, VButtonGroup, Rule },
   data() {
     return {
+      rules: [
+        ['version', '>', '1.3.0'],
+        ['ip', '=', '北京'],
+        [
+          ['version', '>', '1.3.0'],
+          ['ip', '=', '北京']
+        ],
+        [
+          ['version', '=', ''],
+          ['ip', '=', '']
+        ]
+      ],
+      filters: [
+        { label: '版本', field: 'version' },
+        { label: 'ip', field: 'ip' }
+      ],
+      sets: [
+        { label: '活动ID', field: 'version' },
+        { label: '文案', field: 'ip' },
+        { label: '标题', field: 'ip' }
+      ],
       buttons: [
         {
           type: 'jump',

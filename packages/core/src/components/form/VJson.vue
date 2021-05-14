@@ -1,5 +1,6 @@
 <template>
-  <code-mirror v-model="localValue" :options="{mode: 'application/json', readOnly: disabled}" @update:modelValue="onchange"/>
+  <code-mirror v-model="localValue" :options="{mode: 'application/json', readOnly: disabled}"
+               @update:modelValue="onchange"/>
 </template>
 <script lang="ts">
 import CodeMirror from '../codemirror/index.vue'

@@ -24,7 +24,13 @@
 </template>
 <script lang="ts">
 import {getComponentName, getComponentProps, customFormComps} from './util'
-import _ from 'lodash'
+import {merge} from 'lodash'
+import {SetupContext} from '@vue/runtime-core'
+import {getCurrentInstance, ref} from 'vue'
+
+interface Props {
+  item: Array<any>
+}
 
 export default {
   name: 'FormItem',
@@ -51,37 +57,33 @@ export default {
     }
   },
   emits: ['update:modelValue'],
-  data() {
-    this.$options.components = Object.assign(this.$options.components, this.$props.components)
-    const item = this.$props.item
-    if (item.type === 'template') {
-      item.type = 'v-tpl' + item.field
-      const methods = {}
-      Object.keys(item.comp.methods || []).forEach(name => {
-        methods[name] = Function(`return ${item.comp.methods[name]}`)()
+  setup(props: Props, {emit}: SetupContext) {
+    const localValue = ref(props.modelValue)
+    const app = getCurrentInstance()
+    const item = ref(props.item)
+    if (item.value.type === 'template') {
+      item.value.type = 'v-tpl' + item.value.field
+      const methods: Record<string, any> = {}
+      Object.keys(item.value.comp.methods || []).forEach(name => {
+        methods[name] = Function(`return ${item.value.comp.methods[name]}`)()
       })
-      this.$options.components['VTpl' + item.field] = _.merge({}, item.comp, {
+      app.type.components['VTpl' + item.value.field] = merge({}, item.value.comp, {
         data() {
           return {
-            ...item.comp.data
+            ...item.value.comp.data
           }
         },
         methods
       })
     }
-    return {
-      localValue: this.$props.modelValue
+    const onFiledChange = (value: any) => {
+      emit('update:modelValue', value)
     }
-  },
-  methods: {
-    getComponentName(name) {
-      return getComponentName(name)
-    },
-    getComponentProps(item) {
-      return getComponentProps(item)
-    },
-    onFiledChange(value) {
-      this.$emit('update:modelValue', value)
+    return {
+      localValue,
+      getComponentName,
+      getComponentProps,
+      onFiledChange
     }
   }
 }

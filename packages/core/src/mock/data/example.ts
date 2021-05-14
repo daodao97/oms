@@ -309,6 +309,16 @@ const form = {
       value: '{"a":1}'
     },
     {
+      type: 'rule',
+      field: 'rule',
+      label: 'rule',
+      value: [],
+      props: {
+        factorOptions: [{ label: 'A', value: 'A' }, { label: 'B', value: 'B' }, { label: 'C', value: 'C' }],
+        symbolOptions: [{ label: '大于', value: '>' }, { label: '等于', value: '=' }, { label: '小于', value: '<' }]
+      }
+    },
+    {
       type: 'template',
       field: 'p3',
       label: '自定义',

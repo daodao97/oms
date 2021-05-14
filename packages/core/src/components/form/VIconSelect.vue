@@ -15,7 +15,8 @@
     <el-scrollbar style="max-height: 300px; overflow: auto">
       <el-input v-model="filter" placeholder="搜索..." @focus="focus"/>
       <el-row class="icon-list">
-        <el-col v-for="(item, index) in elIconList.filter(each => each.indexOf(filter) !== -1)" :key="index" :span="2" @click="e => onselected(item)">
+        <el-col v-for="(item, index) in elIconList.filter(each => each.indexOf(filter) !== -1)" :key="index" :span="2"
+                @click="e => onselected(item)">
           <v-icon :class="{'icon-cell': true, 'active': item === localValue}" :name="item"/>
         </el-col>
       </el-row>

@@ -6,8 +6,8 @@ export interface FormProps {
     infoApi: string,
     saveApi: string,
     options: object,
-    afterSubmit: string|Function,
-    afterReset: string|Function,
+    afterSubmit: string | Function,
+    afterReset: string | Function,
     components: object,
     rootData: Function,
     dev: boolean
