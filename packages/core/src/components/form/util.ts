@@ -11,7 +11,6 @@ import VUpload from './VUpload.vue'
 import VInput from './VInput.vue'
 import VCascader from './VCascader.vue'
 import VCascaderPanel from './VCascaderPanel.vue'
-import RuleCreate from './RuleCreate/Index.vue'
 import { Component } from '@vue/runtime-core'
 
 export const componentMap: Record<string, string> = {
@@ -79,8 +78,7 @@ export const customFormComps: Component = {
   VUpload,
   VInput,
   VCascader,
-  VCascaderPanel,
-  RuleCreate
+  VCascaderPanel
 }
 
 export const getComponentName = (name: string) => {
