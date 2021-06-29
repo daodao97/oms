@@ -11,7 +11,15 @@ export default defineConfig({
     }
   },
   server: {
-    open: true
+    open: true,
+    port: 3001,
+    proxy: {
+      '/api': {
+        target: 'http://127.0.0.1:8080',
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, '')
+      }
+    }
   },
   plugins: [vue(), vueJsx()]
 })

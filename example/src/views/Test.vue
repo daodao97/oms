@@ -9,7 +9,7 @@
 import { markRaw } from 'vue'
 import { defineComponent } from 'vue'
 import { options1 } from './data'
-import { VForm, VChart } from 'oms'
+import { VForm, VChart } from '@vue-oms/core'
 import MyInput from './MyInput.vue'
 export default defineComponent({
   name: 'Test',

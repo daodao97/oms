@@ -7,6 +7,7 @@ import (
 
 	"github.com/daodao97/egin/egin/lib"
 	"github.com/daodao97/egin/egin/utils/config"
+	"github.com/davecgh/go-spew/spew"
 	"github.com/gin-gonic/gin"
 
 	"github.com/daodao97/egin/egin/service/user"
@@ -26,6 +27,7 @@ func jwtAbort(c *gin.Context, msg string) {
 func Auth(u user.User) gin.HandlerFunc {
 	return func(c *gin.Context) {
 
+		spew.Dump(c.Request.URL.Path, config.Config.Jwt.OpenApi)
 		if _, has := lib.Find(config.Config.Jwt.OpenApi, c.Request.URL.Path); has {
 			c.Next()
 			return
@@ -34,7 +36,7 @@ func Auth(u user.User) gin.HandlerFunc {
 		if authHeader == "" {
 			c.JSON(200, map[string]interface{}{
 				"code":    401,
-				"message": "Authorization Failed.",
+				"message": "Authorization empty",
 			})
 			c.Abort()
 			return
@@ -44,7 +46,7 @@ func Auth(u user.User) gin.HandlerFunc {
 		if !(len(parts) == 2 && parts[0] == "Bearer") {
 			c.JSON(200, map[string]interface{}{
 				"code":    401,
-				"message": "Authorization Failed.",
+				"message": "Authorization Parse Failed.",
 			})
 			c.Abort()
 			return
@@ -54,7 +56,7 @@ func Auth(u user.User) gin.HandlerFunc {
 		if err != nil {
 			c.JSON(200, map[string]interface{}{
 				"code":    401,
-				"message": "无效的Token "+err.Error(),
+				"message": "无效的Token " + err.Error(),
 			})
 			c.Abort()
 			return
@@ -73,7 +75,7 @@ func Auth(u user.User) gin.HandlerFunc {
 		if err != nil {
 			c.JSON(200, map[string]interface{}{
 				"code":    401,
-				"message": "用户状态异常"+err.Error(),
+				"message": "用户状态异常" + err.Error(),
 			})
 			c.Abort()
 			return

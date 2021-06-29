@@ -58,6 +58,7 @@
   </el-table>
 </template>
 <script lang="ts">
+import { nextTick } from 'vue'
 import * as Cells from './cell'
 import VButton from '../button/index.vue'
 import CellEdit from './cell-edit/index.vue'
@@ -110,8 +111,11 @@ export default {
       default: () => {}
     }
   },
-  emits: ['select-change', 'sort-change', 'cell-change', 'btn-action'],
+  emits: ['select-change', 'sort-change', 'cell-change', 'btn-action', 'mounted'],
   setup(props, { emit }) {
+    nextTick(() => {
+      emit('mounted')
+    })
     const rowKey = ref(0)
     const actionWidth = computed<number>(() => {
       if (props.rowButton.length === 1) {

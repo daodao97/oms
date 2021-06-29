@@ -12,12 +12,12 @@ function getWhiteRoutes() {
 
 export default function(router: Router) {
   router.beforeEach(async(to, form, next) => {
-    const token = getToken()
-    if (token) {
+    if (getWhiteRoutes().indexOf(to.path) !== -1) {
       next()
       return
     }
-    if (getWhiteRoutes().indexOf(to.path) !== -1) {
+    const token = getToken()
+    if (token) {
       next()
       return
     }

@@ -60,7 +60,8 @@ export default defineComponent({
       if (route.meta.menuType === 0) {
         route = route.matched[route.matched.length - 2]
       }
-      return this.$router.resolve(route.redirect ? route.redirect : route).fullPath
+      // return this.$router.resolve(route.redirect ? route.redirect : route).fullPath
+      return ''
     },
     showLogo() {
       return this.$store.state.settings.sidebarLogo

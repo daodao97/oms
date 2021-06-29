@@ -1,8 +1,10 @@
+import { defineComponent } from 'vue'
+
 interface Props {
   name: string
 }
 
-export default {
+export default defineComponent({
   name: 'VIcon',
   props: {
     name: {
@@ -22,4 +24,4 @@ export default {
     }
     return () => (<span/>)
   }
-}
+})

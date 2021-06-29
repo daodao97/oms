@@ -1,23 +1,23 @@
 <template>
   <el-cascader
-      v-model="localValue"
-      :options="optionTree"
-      :disabled="disabled"
-      :clearable="clearable"
-      :show-all-levels="showAllLevels"
-      :collapse-tags="collapseTags"
-      :filterable="filterable"
-      :props="props"
-      :size="size"
-      @change="onchange"
+    v-model="localValue"
+    :options="optionTree"
+    :disabled="disabled"
+    :clearable="clearable"
+    :show-all-levels="showAllLevels"
+    :collapse-tags="collapseTags"
+    :filterable="filterable"
+    :props="props"
+    :size="size"
+    @change="onchange"
   />
 </template>
 <script lang="ts">
-import {searchTreeValues} from '../../utils'
-import {isNumber} from '../../utils/type'
-import {cloneDeep} from 'lodash'
-import {SetupContext} from '@vue/runtime-core'
-import {ref, onBeforeMount, getCurrentInstance} from 'vue'
+import { searchTreeValues } from '../../utils'
+import { isNumber } from '../../utils/type'
+import { cloneDeep } from 'lodash'
+import { SetupContext } from '@vue/runtime-core'
+import { ref, onBeforeMount, getCurrentInstance } from 'vue'
 
 interface Props {
   options: Array<Record<string, any>>,
@@ -85,7 +85,7 @@ export default {
     }
   },
   emits: ['update:modelValue'],
-  setup(props: Props, {emit}: SetupContext) {
+  setup(props: Props, { emit }: SetupContext) {
     let localValue = ref(cloneDeep(isNumber(props.modelValue) ? [props.modelValue] : props.modelValue))
     let optionTree = ref(props.options)
 
@@ -95,7 +95,7 @@ export default {
       props.optionsApi && http.request({
         method: 'GET',
         url: props.optionsApi
-      }).then(({payload}: any) => {
+      }).then(({ payload }: any) => {
         optionTree = payload || []
         if (isNumber(props.modelValue)) {
           localValue = searchTreeValues(optionTree, props.modelValue, 'value')

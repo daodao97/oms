@@ -1,10 +1,11 @@
 <template>
   <section class="app-main">
-    <router-view v-slot="{ Component }">
-      <keep-alive :include="include" max="10">
-        <component :is="Component" :key="$route.fullPath" />
-      </keep-alive>
-    </router-view>
+    <router-view />
+<!--    <router-view v-slot="{ Component }">-->
+<!--      <keep-alive :include="include" max="10">-->
+<!--        <component :is="Component" :key="$route.fullPath" />-->
+<!--      </keep-alive>-->
+<!--    </router-view>-->
     <el-backtop :bottom="50" />
   </section>
 </template>

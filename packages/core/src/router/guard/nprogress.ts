@@ -6,6 +6,7 @@ NProgress.configure({ showSpinner: false })
 
 export default function(router: Router) {
   router.beforeEach((to, form, next) => {
+    console.log(form.path, form.query, to.path, to.query)
     NProgress.start()
     next()
   })

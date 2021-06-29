@@ -8,13 +8,22 @@ function isLodeRemoteRoutes(): boolean {
   return store.state.user.isLodeRemoteRoutes
 }
 
+function getWhiteRoutes() {
+  return store.state.settings.whiteRoutes
+}
+
 export default function(router: Router) {
   router.beforeEach(async(to, form, next) => {
+    if (getWhiteRoutes().indexOf(to.path) !== -1) {
+      next()
+      return
+    }
     if (isLodeRemoteRoutes()) {
       next()
       return
     }
-    await store.dispatch('user/info')
+    const data = await store.dispatch('user/info')
+    console.log(1111, data)
     const remoteRoute: RemoteModule[] = await store.dispatch('user/loadRemoteRoutes')
     const routeModules: OmsModule[] = transRemoteModules(remoteRoute)
     routeModules.forEach(item => {

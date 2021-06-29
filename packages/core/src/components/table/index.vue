@@ -51,6 +51,7 @@
           @sort-change="sortTable"
           @cell-change="cellChange"
           @btn-action="btnAction"
+          @mounted="load"
         />
       </slot>
     </el-tab-pane>
@@ -101,6 +102,7 @@
 </template>
 
 <script lang="ts">
+import { defineComponent } from 'vue'
 import VForm from '../form/index.vue'
 import VButton from '../button/index.vue'
 import { ruleCompute } from '../../utils'
@@ -113,7 +115,7 @@ import ExportAddButton from './export/index.vue'
 import TableStyle from './TableSytle.vue'
 import { cloneDeep } from 'lodash'
 
-export default {
+export default defineComponent({
   name: 'VTable',
   components: {
     VForm,
@@ -343,7 +345,9 @@ export default {
     }
   },
   mounted() {
-    setTimeout(() => this.load(), 200)
+    this.$nextTick(() => {
+      this.load()
+    })
   },
   methods: {
     changeTab(tab, e) {
@@ -387,8 +391,10 @@ export default {
         return
       }
       this.load()
+      // setUrlParams(filter)
     },
     load(args = {}, extraPrams = {}) {
+      console.log(111111111111111)
       if (!this.listApi) {
         return
       }
@@ -420,7 +426,7 @@ export default {
           this.tableList = payload.list
           this.page = Object.assign(this.page, payload.page || {})
           this.loading = false
-          setUrlParams(filter)
+          return params
         })
     },
     handleSelectionChange(rows) {
@@ -547,7 +553,7 @@ export default {
       }
     }
   }
-}
+})
 </script>
 <style lang="scss" scoped>
 .filter-form {

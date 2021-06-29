@@ -2,7 +2,7 @@ import { defineAsyncComponent } from 'vue'
 import router from '../../router'
 import { useHttp } from '../../oms'
 import { AxiosRequestConfig } from 'axios'
-import { SetupContext } from '@vue/runtime-core'
+import { Component, SetupContext } from '@vue/runtime-core'
 import { FormProps } from '../form/types'
 import { TableProps } from '../table/types'
 import { strVarReplace } from '../../utils/string'
@@ -68,7 +68,7 @@ export const baseProps = {
   }
 }
 
-export const baseComps = {
+export const baseComps: Record<string, Component> = {
   VForm: defineAsyncComponent(() => import('../form/index.vue')),
   VTable: defineAsyncComponent(() => import('../table/index.vue')),
   SocketList: defineAsyncComponent(() => import('../normal/SocketList.vue'))
@@ -84,11 +84,10 @@ export interface Plugin<T> {
 
 const jump : Plugin<void> = {
   onclick(target: string) {
-    console.log(target)
     if (/http.*/.test(target)) {
       window.open(target)
     } else {
-      router.push(target)
+      router.push(target).then()
     }
   }
 }
@@ -133,6 +132,27 @@ const form: Plugin<TableProps> = {
   }
 }
 
+const modal: Plugin<any> = {
+  onclick(target: string, ctx: SetupContext, extra: any, callback: () => void) {
+    callback()
+  },
+  getSubComp() {
+    return ''
+  },
+  getSubProps(extra: any, metaDataa) {
+    return {}
+  },
+  getSubEvent(props, ctx: SetupContext, showContainer) {
+    return {
+      submit(data: any) {
+      },
+      reset() {
+        showContainer.value = false
+      }
+    }
+  }
+}
+
 const table: Plugin<FormProps> = {
   onclick(target: string, ctx: SetupContext, extra: FormProps, callback: () => void) {
     callback()
@@ -166,7 +186,7 @@ const table: Plugin<FormProps> = {
   }
 }
 
-export const plugins: Record<string, Plugin<any>> = { jump, api, form, table }
+export const plugins: Record<string, Plugin<any>> = { jump, api, form, table, modal }
 
 export function getContainerProps(container: string, props: VButtonProps) {
   let defaultP : Record<string, any> = {

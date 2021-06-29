@@ -9,7 +9,7 @@ export default function(router: Router) {
     for (let i = len; i > len - 3; i--) {
       const item = to.matched[i - 1]
       if (item?.meta?.title) {
-        tokens.push(item.meta.title)
+        tokens.push(item.meta.title + '')
       }
     }
     if (tokens.length > 1) {

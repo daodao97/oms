@@ -147,7 +147,7 @@ const userModule: Module<User, any> = {
           reject('http client not init')
         } else {
           rootState.http.request<UserInfo, ApiResponse<UserInfo>>({
-            url: '/login',
+            url: '/user/login',
             method: 'POST',
             data: data
           }).then((response: ApiResponse<UserInfo>) => {
@@ -188,6 +188,7 @@ const userModule: Module<User, any> = {
           url: '/user/routes',
           method: 'get'
         }).then((response: ApiResponse<RemoteModule[]>) => {
+          console.log(response)
           if (response.payload) {
             const resource: RemoteModule[] = response.payload || []
             // 根据用户权限 user.resource 过滤
@@ -198,6 +199,7 @@ const userModule: Module<User, any> = {
             reject('error')
           }
         }).catch(error => {
+          console.log(error)
           reject(error)
         })
       })

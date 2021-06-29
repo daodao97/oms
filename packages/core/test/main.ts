@@ -4,7 +4,7 @@ import { createAdmin } from 'oms'
 import { OmsOptions } from 'oms'
 
 const options: OmsOptions = {
-  mock: true
+  mock: false
 }
 
 createAdmin(options)

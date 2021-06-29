@@ -21,7 +21,7 @@
   </span>
 </template>
 <script lang="ts">
-import { PropType, ref } from 'vue'
+import { PropType, ref, defineComponent } from 'vue'
 import { baseProps, plugins, Plugin, VButtonProps, getContainerProps, baseComps, events } from './base'
 import { strVarReplace } from '../../utils/string'
 import { SetupContext } from '@vue/runtime-core'
@@ -29,16 +29,16 @@ import { useRouter } from 'vue-router'
 
 type VButtonType = PropType<'jump' | 'api' | 'form' | 'table' | 'model'>
 
-export default {
+export default defineComponent({
   name: 'VButton',
-  components: { ...baseComps },
+  components: baseComps,
   props: {
     type: {
       type: String as VButtonType,
       default: '',
       validator: (val: string) => {
         return [
-          'jump', 'api', 'form', 'table', 'model'
+          'jump', 'api', 'form', 'table', 'modal'
         ].includes(val)
       }
     },
@@ -59,7 +59,7 @@ export default {
     ...baseProps
   },
   emits: events,
-  setup(props: VButtonProps, ctx: SetupContext) {
+  setup(props: VButtonProps, ctx: SetupContext) { // @ts-ignore
     const showContainer = ref(false)
     const instance : Plugin<any> = plugins[props.type]
     const router = useRouter()
@@ -95,5 +95,6 @@ export default {
       xsubEvent
     }
   }
-}
+})
 </script>
+

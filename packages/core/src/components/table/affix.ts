@@ -33,6 +33,9 @@ export function useAffix(classname: string, top: number) {
     setTimeout(() => {
       // @ts-ignore
       el = document.getElementsByClassName(classname)[0]
+      if (el === undefined) {
+        return
+      }
       offsetTop = el.getBoundingClientRect().top
       window.addEventListener('scroll', debounce(handler, 20))
     }, 2000)
