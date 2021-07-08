@@ -10,6 +10,7 @@
     :props="props"
     :size="size"
     @change="onchange"
+    :key="key"
   />
 </template>
 <script lang="ts">
@@ -21,7 +22,7 @@ import { ref, onBeforeMount, getCurrentInstance } from 'vue'
 
 interface Props {
   options: Array<Record<string, any>>,
-  modelValue: Array | Number,
+  modelValue: Array<Number> | Number,
   disables: Boolean,
   clearable: Boolean,
   showAllLevels: Boolean,
@@ -87,7 +88,8 @@ export default {
   emits: ['update:modelValue'],
   setup(props: Props, { emit }: SetupContext) {
     let localValue = ref(cloneDeep(isNumber(props.modelValue) ? [props.modelValue] : props.modelValue))
-    let optionTree = ref(props.options)
+    const optionTree = ref(props.options)
+    const key = ref(0)
 
     const app = getCurrentInstance()
     const http = app?.appContext.config.globalProperties.$http
@@ -96,15 +98,17 @@ export default {
         method: 'GET',
         url: props.optionsApi
       }).then(({ payload }: any) => {
-        optionTree = payload || []
+        optionTree.value = payload || []
         if (isNumber(props.modelValue)) {
-          localValue = searchTreeValues(optionTree, props.modelValue, 'value')
+          localValue.value = searchTreeValues(optionTree.value, props.modelValue, 'value')
         }
+        key.value++
       })
     })
 
     const onchange = () => {
       let val = localValue
+      console.log(11, val)
 
       if (isNumber(props.modelValue)) {
         val = localValue[localValue.value.length - 1]
@@ -121,7 +125,8 @@ export default {
     return {
       localValue,
       optionTree,
-      onchange
+      onchange,
+      key
     }
   }
 }

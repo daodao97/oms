@@ -22,8 +22,7 @@ export default function(router: Router) {
       next()
       return
     }
-    const data = await store.dispatch('user/info')
-    console.log(1111, data)
+    await store.dispatch('user/info')
     const remoteRoute: RemoteModule[] = await store.dispatch('user/loadRemoteRoutes')
     const routeModules: OmsModule[] = transRemoteModules(remoteRoute)
     routeModules.forEach(item => {

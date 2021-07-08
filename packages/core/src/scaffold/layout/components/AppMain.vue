@@ -1,11 +1,12 @@
 <template>
   <section class="app-main">
-    <router-view />
-<!--    <router-view v-slot="{ Component }">-->
-<!--      <keep-alive :include="include" max="10">-->
-<!--        <component :is="Component" :key="$route.fullPath" />-->
-<!--      </keep-alive>-->
-<!--    </router-view>-->
+    <router-view :key="$route.fullPath" />
+    <!--    keep-alive 是组件会挂载两次, 导致 请求两次接口-->
+    <!--    <router-view v-slot="{ Component }">-->
+    <!--      <keep-alive :include="include" max="10">-->
+    <!--        <component :is="Component" :key="$route.fullPath" />-->
+    <!--      </keep-alive>-->
+    <!--    </router-view>-->
     <el-backtop :bottom="50" />
   </section>
 </template>

@@ -9,7 +9,7 @@ import { merge, cloneDeep } from 'lodash'
 
 export const user: User = {
   name: '',
-  avatar: 'https://gitee.com/daodao97/asset/raw/master/imgs/WechatIMG9.jpeg',
+  avatar: '',
   token: getToken(),
   customRouter: [],
   remoteRouter: [],
@@ -173,6 +173,8 @@ const userModule: Module<User, any> = {
           }).then((response: ApiResponse<UserInfo>) => {
             const resource: Resource = resourceTrans(response.payload?.resource || [])
             const roleIds: strOrNum[] = response.payload?.role_ids || []
+            commit('updateState', { key: 'name', value: response.payload?.name })
+            commit('updateState', { key: 'avatar', value: response.payload?.avatar })
             commit('updateState', { key: 'resource', value: resource })
             commit('updateState', { key: 'roleIds', value: roleIds })
             resolve(true)
@@ -188,7 +190,6 @@ const userModule: Module<User, any> = {
           url: '/user/routes',
           method: 'get'
         }).then((response: ApiResponse<RemoteModule[]>) => {
-          console.log(response)
           if (response.payload) {
             const resource: RemoteModule[] = response.payload || []
             // 根据用户权限 user.resource 过滤

@@ -278,7 +278,6 @@ export default defineComponent({
       const fieldMap = {}
       const computeRules = {}
       const query = this.$route ? this.$route.query : {}
-      console.log(query)
       formItems.forEach((item) => {
         if (query[item.field] !== undefined) {
           item.value = this.parseType(item, query[item.field])

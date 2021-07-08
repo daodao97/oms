@@ -345,6 +345,7 @@ export default defineComponent({
     }
   },
   mounted() {
+    console.log(123)
     this.$nextTick(() => {
       this.load()
     })
@@ -394,7 +395,6 @@ export default defineComponent({
       // setUrlParams(filter)
     },
     load(args = {}, extraPrams = {}) {
-      console.log(111111111111111)
       if (!this.listApi) {
         return
       }
