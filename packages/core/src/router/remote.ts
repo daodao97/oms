@@ -63,7 +63,8 @@ const transRoute = (item: PageInfo): RouteRecordRaw => {
       icon: item.icon,
       hidden: !isShow,
       pageSchema: item.page_schema || {},
-      menuType: isShow ? 2 : 0 // 0 隐藏, 1 目录 2 菜单
+      menuType: isShow ? 2 : 0, // 0 隐藏, 1 目录 2 菜单
+      keepAlive: false
     },
     children: item.children ? item.children.map(each => transRoute(each)) : []
   }

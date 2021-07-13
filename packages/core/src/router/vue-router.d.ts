@@ -4,6 +4,6 @@ declare module 'vue-router' {
   interface RouteMeta {
     pageSchema?: Record<string, any>
     menuType: number,
-    keepAlive: boolean
+    keepAlive?: boolean
   }
 }

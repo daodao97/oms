@@ -67,7 +67,7 @@ export function makeFormOptions(options: Record<string, any>) {
   return merge({}, formOptions, options)
 }
 
-export const customFormComps: Component = {
+export const customFormComps: Record<string, Component> = {
   VSelect,
   VRadio,
   VCheckbox,

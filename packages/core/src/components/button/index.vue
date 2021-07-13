@@ -13,11 +13,12 @@
   </template>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import VButton from './VButton.vue'
 import VButtonGroup from './VButtonGroup.vue'
 import { isArray } from '../../utils/type'
 
-export default {
+export default defineComponent({
   components: {
     VButton, VButtonGroup
   },
@@ -55,5 +56,5 @@ export default {
     rightClick(e: any) {
     }
   }
-}
+})
 </script>

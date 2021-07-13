@@ -38,7 +38,7 @@
   </span>
 </template>
 <script lang="ts">
-import { computed, ref } from 'vue'
+import { computed, ref, defineComponent } from 'vue'
 import { BaseButtonProps, baseComps, baseProps, getContainerProps, Plugin, plugins, events } from './base'
 import { SetupContext } from '@vue/runtime-core'
 import { strVarReplace } from '../../utils/string'
@@ -58,12 +58,12 @@ interface VButtonGroupProps {
   props: DropProps
 }
 
-export default {
+export default defineComponent({
   name: 'VButtonGroup',
   components: { ...baseComps },
   props: {
     buttons: {
-      type: Array as Buttons,
+      type: Array as unknown as Buttons,
       default: () => []
     },
     ...baseProps
@@ -132,5 +132,5 @@ export default {
       containerTitle
     }
   }
-}
+})
 </script>

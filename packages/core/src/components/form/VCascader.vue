@@ -1,5 +1,6 @@
 <template>
   <el-cascader
+    :key="key"
     v-model="localValue"
     :options="optionTree"
     :disabled="disabled"
@@ -10,10 +11,10 @@
     :props="props"
     :size="size"
     @change="onchange"
-    :key="key"
   />
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { searchTreeValues } from '../../utils'
 import { isNumber } from '../../utils/type'
 import { cloneDeep } from 'lodash'
@@ -34,7 +35,7 @@ interface Props {
   saveAs: string
 }
 
-export default {
+export default defineComponent({
   name: 'VCascader',
   props: {
     options: {
@@ -87,7 +88,7 @@ export default {
   },
   emits: ['update:modelValue'],
   setup(props: Props, { emit }: SetupContext) {
-    let localValue = ref(cloneDeep(isNumber(props.modelValue) ? [props.modelValue] : props.modelValue))
+    const localValue = ref(cloneDeep(isNumber(props.modelValue) ? [props.modelValue] : props.modelValue))
     const optionTree = ref(props.options)
     const key = ref(0)
 
@@ -129,5 +130,5 @@ export default {
       key
     }
   }
-}
+})
 </script>

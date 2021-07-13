@@ -34,7 +34,10 @@
   </slot>
   <!--  列表  -->
   <el-tabs v-if="tableTabs.length > 0" v-model="activeTab" type="border-card" @tab-click="changeTab">
-    <el-tab-pane v-for="(item, index) in tableTabs" :key="index+'-pane'" :label="item.label" :name="item.value + ''" :lazy="true">
+    <el-tab-pane v-for="(item, index) in tableTabs" :key="index+'-pane'" :name="item.value + ''" :lazy="true">
+      <template #label>
+        <span><v-icon :name="item.icon || ''" />{{ item.label }}</span>
+      </template>
       <slot name="table">
         <table-style
           v-loading="loading"
@@ -106,7 +109,7 @@ import { defineComponent } from 'vue'
 import VForm from '../form/index.vue'
 import VButton from '../button/index.vue'
 import { ruleCompute } from '../../utils'
-import { setUrlParams } from '../../utils/url'
+// import { setUrlParams } from '../../utils/url'
 import { firstUpperCase, strVarReplace } from '../../utils/string'
 import { isBool, isObject, isArray } from '../../utils/type'
 import { getPageTitle } from './lib'

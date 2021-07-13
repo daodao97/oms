@@ -18,6 +18,7 @@ export interface BaseButtonProps {
   target: string,
   text: string,
   extra: AxiosRequestConfig | formExtra,
+  when: Array<any>,
 }
 
 export interface VButtonProps extends BaseButtonProps {

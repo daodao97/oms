@@ -23,18 +23,15 @@
   </el-form-item>
 </template>
 <script lang="ts">
+import { defineComponent } from 'vue'
 import { getComponentName, getComponentProps, customFormComps } from './util'
 import { merge } from 'lodash'
 import { SetupContext } from '@vue/runtime-core'
 import { getCurrentInstance, ref } from 'vue'
 
-interface Props {
-  item: Array<any>
-}
-
-export default {
+export default defineComponent({
   name: 'FormItem',
-  components: { ...customFormComps },
+  components: customFormComps,
   props: {
     formOptions: {
       type: Object,
@@ -57,7 +54,7 @@ export default {
     }
   },
   emits: ['update:modelValue'],
-  setup(props: Props, { emit }: SetupContext) {
+  setup(props, { emit }: SetupContext) {
     const localValue = ref(props.modelValue)
     const app = getCurrentInstance()
     const item = ref(props.item)
@@ -67,14 +64,16 @@ export default {
       Object.keys(item.value.comp.methods || []).forEach(name => {
         methods[name] = Function(`return ${item.value.comp.methods[name]}`)()
       })
-      app.type.components['VTpl' + item.value.field] = merge({}, item.value.comp, {
-        data() {
-          return {
-            ...item.value.comp.data
-          }
-        },
-        methods
-      })
+      if (app !== null) {
+        app.type.components['VTpl' + item.value.field] = merge({}, item.value.comp, {
+          data() {
+            return {
+              ...item.value.comp.data
+            }
+          },
+          methods
+        })
+      }
     }
     const onFiledChange = (value: any) => {
       emit('update:modelValue', value)
@@ -86,7 +85,7 @@ export default {
       onFiledChange
     }
   }
-}
+})
 </script>
 <style lang="scss" scoped>
 .form-item-info {
