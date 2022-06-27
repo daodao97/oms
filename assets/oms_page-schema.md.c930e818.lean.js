@@ -1,0 +1,1 @@
+import{_ as e,c as a,o as t}from"./app.0160ccb5.js";const i=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"oms/page-schema.md","lastUpdated":1656235294000}'),s={name:"oms/page-schema.md"};function r(o,c,p,n,m,d){return t(),a("div")}var f=e(s,[["render",r]]);export{i as __pageData,f as default};
