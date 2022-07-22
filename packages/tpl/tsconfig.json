@@ -1,0 +1,41 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "vite/client",
+      "element-plus/global"
+    ],
+    "declaration": true,
+    "outDir": "dist",
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@okiss/utils/*": ["packages/utils/src/*"],
+      "@okiss/oms/*": ["packages/oms/src/*"],
+      "@okiss/vbtf/*": ["packages/vbtf/src/*"],
+    }
+  },
+  "include": [
+    "auto-imports.d.ts",
+    "src",
+    "./*.d.ts",
+    "packages/**/**/*.ts",
+    "packages/**/**/*.d.ts",
+    "packages/**/**/*.tsx",
+    "packages/**/**/*.vue",
+    "packages/shims-vue.d.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}

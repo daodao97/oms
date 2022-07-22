@@ -1,0 +1,35 @@
+{
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "strict": true,
+    "jsx": "preserve",
+    "sourceMap": true,
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
+    "lib": [
+      "esnext",
+      "dom"
+    ],
+    "types": [
+      "vite/client",
+      "element-plus/global"
+    ],
+    "declaration": true,
+    "outDir": "dist/types",
+    "emitDeclarationOnly": true,
+    "allowJs": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"],
+      "@okiss/utils/*": ["../utils/src/*"]
+    }
+  },
+  "include": [
+    "src",
+    "auto-imports.d.ts",
+    "components.d.ts"
+  ],
+  "exclude": ["node_modules", "dist"]
+}
