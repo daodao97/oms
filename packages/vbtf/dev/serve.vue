@@ -1,22 +1,31 @@
 <template>
-  <VButton v-bind="base" />
-  <el-divider />
-  <VButton v-bind="jump" />
-  <el-divider />
-  <VButton v-bind="api" />
-  <el-divider />
-  <VButton v-bind="form" />
-  <el-divider />
-  <VButtonGroup :buttons="buttons" />
-  <el-divider />
-  <VForm
-    v-model="form1Data"
-    v-bind="form1"
-  />
-  <el-divider />
-  <VTable />
-  <el-divider />
-  <MonacoEditor class="editor" />
+
+  <div>
+    <VButton v-bind="base" />
+    <el-divider />
+    <VButton v-bind="jump" />
+    <el-divider />
+    <VButton v-bind="api" />
+    <el-divider />
+    <VButton v-bind="form" />
+    <el-divider />
+    <VButtonGroup :buttons="buttons" />
+    <el-divider />
+    <VForm
+      v-model="form1Data"
+      v-bind="form1"
+    />
+    <el-divider />
+    <VForm
+      v-model="form2Data"
+      v-bind="form2"
+    />
+    <el-divider />
+    <VTable />
+    <el-divider />
+    <MonacoEditor class="editor" />
+
+  </div>
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
@@ -64,15 +73,6 @@ const form = {
   }
 }
 
-// {
-//   when: "1",
-//   set: {
-//     test: {
-//       value: 1
-//     }
-//   }
-// }
-
 const buttons = [
   base, jump, api, form
 ]
@@ -94,6 +94,7 @@ const form1 = {
       field: 'sub-form',
       type: 'sub-form',
       props: {
+        repeat: true,
         formItems: [
           {
             field: 'ok',
@@ -129,6 +130,23 @@ const form1 = {
     {
       field: 'image',
       type: 'image'
+    }
+  ]
+}
+
+const form2Data = ref({})
+const form2 = {
+  saveApi: '/test',
+  options: {
+    inline: true
+  },
+  formItems: [
+    {
+      field: 'test',
+      rules: 'required'
+    },
+    {
+      field: 'test2'
     }
   ]
 }

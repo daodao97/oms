@@ -29,19 +29,25 @@
           <el-button
             v-if="sub.length > 1"
             type="danger"
-            :icon="minus"
             circle
             @click="remove(index)"
-          />
+          >
+            <template #icon>
+              <el-icon size="small"><Minus /></el-icon>
+            </template>
+          </el-button>
         </div>
         <div class="box">
           <el-button
             v-if="(index === sub.length - 1) && sub.length < max"
             type="primary"
-            :icon="plus"
             circle
             @click="push"
-          />
+          >
+            <template #icon>
+              <el-icon size="small"><Plus /></el-icon>
+            </template>
+          </el-button>
         </div>
       </el-col>
     </el-row>
@@ -55,6 +61,8 @@ import { isArray, isObject } from '@okiss/utils'
 export default defineComponent({
   name: 'VSubForm',
   components: {
+    Plus,
+    Minus,
     VForm: defineAsyncComponent(() => import('./VForm.vue'))
   },
   inject: ['formData', 'dev', 'mod'],
@@ -96,7 +104,7 @@ export default defineComponent({
     const value = cloneDeep(this.$props.modelValue)
 
     if (this.$props.repeat === true && isArray(this.$props.modelValue)) {
-      subData = value
+      subData = value as Array<Record<string, any>>
     } else if (this.$props.repeat === false && isObject(this.$props.modelValue)) {
       subData.push(value)
     } else {
@@ -115,9 +123,7 @@ export default defineComponent({
         submitButton: false,
         cancelButton: false,
         disabled: this.disabled
-      }),
-      plus: markRaw(Plus),
-      minus: markRaw(Minus)
+      })
     }
   },
   watch: {
@@ -137,7 +143,7 @@ export default defineComponent({
     push() {
       this.sub.push({})
     },
-    remove(index) {
+    remove(index: number) {
       this.sub = remove(this.sub, (item, key) => {
         return key !== index
       })
@@ -147,7 +153,7 @@ export default defineComponent({
     onchange() {
       this.$emit('update:modelValue', this.repeat ? this.sub : this.sub[0])
     },
-    subMounted(fApi, index) {
+    subMounted(fApi: any, index: number) {
       this.fApis[index] = fApi
     },
     validate: async function() {

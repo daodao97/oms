@@ -1,28 +1,68 @@
 <template>
-  <el-alert v-if="errMsg" type="error" style="margin: 20px 40px"> {{ errMsg }}</el-alert>
-  <el-form v-if="formItemsSection.length > 0" ref="formData" :key="key" v-loading="loading" class="v-form"
-    :model="formData" :rules="formRules" :label-width="formOptions.labelWidth" :inline="formOptions.inline"
-    :label-position="formOptions.labelPosition" :validate-on-rule-change="false">
+  <el-alert
+    v-if="errMsg"
+    type="error"
+    style="margin: 20px 40px"
+  > {{ errMsg }}</el-alert>
+  <el-form
+    v-if="formItemsSection.length > 0"
+    ref="formData"
+    :key="key"
+    v-loading="loading"
+    class="v-form"
+    :model="formData"
+    :rules="formRules"
+    :label-width="formOptions.labelWidth"
+    :inline="formOptions.inline"
+    :label-position="formOptions.labelPosition"
+    :validate-on-rule-change="false"
+    @keyup.enter="onenter"
+  >
     <el-row>
-      <template v-for="(item, index) in formItemsSection" :key="'item-' + index">
+      <template
+        v-for="(item, index) in formItemsSection"
+        :key="'item-' + index"
+      >
         <!--   card     -->
         <component
           :is="formOptions.inline ? 'span' : ((index === 0 && formItemsSection.length === 1) ? 'span' : 'el-card')"
-          :class="formOptions.inline ? 'form-section-inline' : 'form-section'" shadow="never">
-          <template v-if="item.name" #header>
+          :class="formOptions.inline ? 'form-section-inline' : 'form-section'"
+          shadow="never"
+        >
+          <template
+            v-if="item.name"
+            #header
+          >
             <span>{{ item.name }}</span>
           </template>
-          <template v-for="(section, num) in item.children" :key="'section-' + index + '-' + num">
+          <template
+            v-for="(section, num) in item.children"
+            :key="'section-' + index + '-' + num"
+          >
             <!--    row     -->
             <component :is="formOptions.inline ? 'span' : (section.isRow ? 'el-row' : 'span')">
-              <template v-for="(each, i) in section.items" :key="'each-' + i">
+              <template
+                v-for="(each, i) in section.items"
+                :key="'each-' + i"
+              >
                 <!--   col    -->
-                <component :is="formOptions.inline ? 'span' : 'el-col'" :span="each.col.span">
-                  <form-item v-show="each.type !== 'hidden' && each.show" :key="each.id" :ref="each.field"
-                    v-model="formData[each.field]" devtool="{devId: `${prefixPath}${each.index}`, dev: dev}"
-                    :form-options="formOptions" :components="components" :item="each"
-                    :show-label="!!formOptions.labelWidth" :mod="props.mod"
-                    @update:model-value="(val, extra) => onFiledChange(each.field, val, extra)" />
+                <component
+                  :is="formOptions.inline ? 'span' : 'el-col'"
+                  :span="each.col.span"
+                >
+                  <form-item
+                    v-show="each.type !== 'hidden' && each.show"
+                    :key="each.id"
+                    :ref="each.field"
+                    v-model="formData[each.field]"
+                    devtool="{devId: `${prefixPath}${each.index}`, dev: dev}"
+                    :form-options="formOptions"
+                    :components="components"
+                    :item="each"
+                    :show-label="!!formOptions.labelWidth"
+                    :mod="props.mod"
+                    @update:model-value="(val, extra) => onFiledChange(each.field, val, extra)"
+                  />
                 </component>
               </template>
             </component>
@@ -30,13 +70,23 @@
         </component>
       </template>
       <template v-if="formOptions.inline === true">
-        <form-action :submiting="submiting" :form-options="formOptions" :submit-confirm="submitConfirm"
-          @submit="submitForm('formData')" @cancel="resetForm('formData')" />
+        <form-action
+          :submiting="submiting"
+          :form-options="formOptions"
+          :submit-confirm="submitConfirm"
+          @submit="submitForm('formData')"
+          @cancel="resetForm('formData')"
+        />
       </template>
       <template v-else>
         <el-col :span="24">
-          <form-action :submiting="submiting" :form-options="formOptions" :submit-confirm="submitConfirm"
-            @submit="submitForm('formData')" @cancel="resetForm('formData')" />
+          <form-action
+            :submiting="submiting"
+            :form-options="formOptions"
+            :submit-confirm="submitConfirm"
+            @submit="submitForm('formData')"
+            @cancel="resetForm('formData')"
+          />
         </el-col>
       </template>
     </el-row>
@@ -216,7 +266,7 @@ export default defineComponent({
     },
     formItemsSection() {
       const sectionIndex = []
-      const source = this.formItemsSource.map(function (val, index) {
+      const source = this.formItemsSource.map(function(val, index) {
         if (val.index === undefined) {
           val.index = `[${index}]`
         }
@@ -317,6 +367,9 @@ export default defineComponent({
     }
   },
   methods: {
+    async onenter() {
+      await this.submitForm()
+    },
     layoutItem(section) {
       const items = []
       const cell = {
@@ -547,7 +600,7 @@ export default defineComponent({
           if (isArray(each.value)) {
             if (isArray(nowValue)) {
               check = (dependVale, nowValue) => {
-                const tmp = dependVale.filter(function (v) { return nowValue.indexOf(v) > -1 })
+                const tmp = dependVale.filter(function(v) { return nowValue.indexOf(v) > -1 })
                 return tmp.length > 0
               }
             } else {
