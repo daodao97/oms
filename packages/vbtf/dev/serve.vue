@@ -9,7 +9,10 @@
   <el-divider />
   <VButtonGroup :buttons="buttons" />
   <el-divider />
-  <VForm v-model="form1Data" v-bind="form1" />
+  <VForm
+    v-model="form1Data"
+    v-bind="form1"
+  />
   <el-divider />
   <VTable />
   <el-divider />
@@ -81,7 +84,14 @@ const form1 = {
       field: 'test'
     },
     {
-      field: "sub-form",
+      field: 'test333',
+      depend: {
+        field: 'test',
+        value: '1'
+      }
+    },
+    {
+      field: 'sub-form',
       type: 'sub-form',
       props: {
         formItems: [
@@ -89,7 +99,7 @@ const form1 = {
             field: 'ok',
             depend: {
               field: '.test',
-              value: "1"
+              value: '1'
             }
           }
         ]
@@ -99,7 +109,7 @@ const form1 = {
       field: 'test1',
       computed: [
         {
-          when: "1",
+          when: '1',
           set: {
             test: {
               value: 1
@@ -107,7 +117,7 @@ const form1 = {
           }
         },
         {
-          when: "2",
+          when: '2',
           set: {
             test: {
               value: 2
@@ -119,7 +129,7 @@ const form1 = {
     {
       field: 'image',
       type: 'image'
-    },
+    }
   ]
 }
 </script>

@@ -275,8 +275,11 @@ export default defineComponent({
           if (item.depend?.field?.indexOf('.') !== 0) {
             return
           }
-          item.show = this.canShow(item)
-          item.id = uuidv4()
+          const show = this.canShow(item)
+          if (item.show !== show) {
+            item.show = this.canShow(item)
+            item.id = uuidv4()
+          }
         })
       },
       {

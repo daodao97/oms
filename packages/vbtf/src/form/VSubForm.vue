@@ -48,13 +48,11 @@
   </div>
 </template>
 <script lang="ts">
-// @ts-nocheck
-// todo ts
 import { cloneDeep, merge, remove } from 'lodash'
 import { Plus, Minus } from '@element-plus/icons-vue'
 import { isArray, isObject } from '@okiss/utils'
 
-export default {
+export default defineComponent({
   name: 'VSubForm',
   components: {
     VForm: defineAsyncComponent(() => import('./VForm.vue'))
@@ -170,7 +168,7 @@ export default {
       return this.formData
     }
   }
-}
+})
 </script>
 <style lang="scss" scoped>
 .sub-form {
