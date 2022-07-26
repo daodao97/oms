@@ -81,6 +81,21 @@ const form1Data = ref({})
 const form1 = {
   formItems: [
     {
+      'field': 'owner_ids',
+      'label': '负责人',
+      'type': 'select',
+      'rules': 'required',
+      'props': {
+        fullWidth: true,
+        'selectApi': '/user/select_options',
+        'multiple': true,
+        'multipleLimit': 10,
+        'immediate': true,
+        'valueKey': 'id',
+        'labelKey': 'nickname'
+      }
+    },
+    {
       field: 'test',
       type: 'select',
       options: [
