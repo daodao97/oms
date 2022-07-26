@@ -154,7 +154,8 @@ const form2 = {
       info: 'oksssssssssss'
     },
     {
-      field: 'test2'
+      field: 'test2',
+      type: 'daterange'
     }
   ]
 }

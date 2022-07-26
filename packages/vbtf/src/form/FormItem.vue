@@ -135,6 +135,6 @@ export default defineComponent({
   }
 }
 .my-inline-form-item {
-  width: 120px;
+  //width: 120px;
 }
 </style>
