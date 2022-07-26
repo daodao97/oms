@@ -20,7 +20,7 @@
     </template>
     <template #default>
       <div style="display:flex;flex-direction: column; width: 100%">
-        <div>
+        <div :class="{ 'my-inline-form-item': formOptions.inline }">
           <component
             :is="getComponentName(item.type)"
             :key="item.id || ''"
@@ -133,5 +133,8 @@ export default defineComponent({
     font-size: 12px;
     line-height: 1.5;
   }
+}
+.my-inline-form-item {
+  width: 120px;
 }
 </style>

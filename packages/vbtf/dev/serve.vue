@@ -144,7 +144,8 @@ const form2Data = ref({})
 const form2 = {
   saveApi: '/test',
   options: {
-    inline: true
+    inline: true,
+    labelWidth: 0
   },
   formItems: [
     {
