@@ -30,10 +30,11 @@
             v-if="sub.length > 1"
             type="danger"
             circle
+            size="small"
             @click="remove(index)"
           >
             <template #icon>
-              <el-icon size="small"><Minus /></el-icon>
+              <el-icon><Minus /></el-icon>
             </template>
           </el-button>
         </div>
@@ -41,11 +42,12 @@
           <el-button
             v-if="(index === sub.length - 1) && sub.length < max"
             type="primary"
+            size="small"
             circle
             @click="push"
           >
             <template #icon>
-              <el-icon size="small"><Plus /></el-icon>
+              <el-icon><Plus /></el-icon>
             </template>
           </el-button>
         </div>

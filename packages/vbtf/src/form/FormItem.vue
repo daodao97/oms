@@ -18,30 +18,37 @@
         <i class="el-icon-warning-outline" />
       </el-tooltip>
     </template>
-    <component
-      :is="getComponentName(item.type)"
-      :key="item.id || ''"
-      ref="ctrl"
-      v-model="localValue"
-      v-bind="compProps(item, $props.formOptions)"
-      @update:model-value="onFiledChange"
-    />
-    <div
-      v-if="item.info && !formOptions.inline"
-      class="form-item-info"
-    >
-      <i class="el-icon-warning-outline" /> <span v-html="item.info" />
-    </div>
+    <template #default>
+      <div style="display:flex;flex-direction: column; width: 100%">
+        <div>
+          <component
+            :is="getComponentName(item.type)"
+            :key="item.id || ''"
+            ref="ctrl"
+            v-model="localValue"
+            v-bind="compProps(item, $props.formOptions)"
+            @update:model-value="onFiledChange"
+          />
+        </div>
+        <div
+          v-if="item.info && !formOptions.inline"
+          class="form-item-info"
+        >
+          <el-icon color="#E6A23C"><Warning /></el-icon> <span v-html="item.info" />
+        </div>
+      </div>
+    </template>
   </el-form-item>
 </template>
 <script lang="ts">
 import { getComponentName, getComponentProps, customFormComps } from './util'
 import { merge } from 'lodash'
 import { SetupContext } from 'vue'
+import { Warning } from '@element-plus/icons-vue'
 
 export default defineComponent({
   name: 'FormItem',
-  components: customFormComps,
+  components: { ...customFormComps, Warning },
   props: {
     formOptions: {
       type: Object,
@@ -116,9 +123,11 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .form-item-info {
-  color: #909399;
+  color: var(--el-color-info);
   font-size: 12px;
   line-height: 1.5;
+  display: flex;
+  align-items: center;
 
   ::v-deep(*) {
     font-size: 12px;

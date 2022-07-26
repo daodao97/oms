@@ -10,7 +10,7 @@ import { merge } from 'lodash'
 import { showEleByClassName } from '@okiss/utils'
 import { inject } from 'vue'
 
-const vsPath = inject('vsPath')
+const vsPath = inject('vsPath', '')
 
 const addScript = (src) => {
   if (document.getElementById(src)) {

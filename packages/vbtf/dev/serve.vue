@@ -81,7 +81,13 @@ const form1Data = ref({})
 const form1 = {
   formItems: [
     {
-      field: 'test'
+      field: 'test',
+      type: 'select',
+      options: [
+        { value: '1', label: '1' },
+        { value: '2', label: '2' }
+      ],
+      info: 'oksssssssssss'
     },
     {
       field: 'test333',
@@ -142,8 +148,9 @@ const form2 = {
   },
   formItems: [
     {
-      field: 'test',
-      rules: 'required'
+      field: 'test1',
+      rules: 'required',
+      info: 'oksssssssssss'
     },
     {
       field: 'test2'
