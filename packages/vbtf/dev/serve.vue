@@ -29,7 +29,10 @@
 </template>
 <script setup lang="ts">
 import { ref } from 'vue'
-import { VButton, VButtonGroup, VForm, VTable, MonacoEditor } from '@'
+import { VButton, VButtonGroup, VForm, VTable, MonacoEditor, regCustomFormComps } from '@'
+import VTest from './VTest.vue'
+
+regCustomFormComps({ VTest })
 
 const base = {
   text: '常规按钮',
@@ -80,6 +83,25 @@ const buttons = [
 const form1Data = ref({})
 const form1 = {
   formItems: [
+    {
+      type: 'VTest',
+      field: 'v_test'
+    },
+    {
+      'label': '生效场景',
+      'field': 'page',
+      'options': [
+        {
+          'label': '购买页',
+          'value': 'sell'
+        },
+        {
+          'label': '升级页',
+          'value': 'upgrade'
+        }
+      ],
+      'type': 'checkbox'
+    },
     {
       'field': 'owner_ids',
       'label': '负责人',

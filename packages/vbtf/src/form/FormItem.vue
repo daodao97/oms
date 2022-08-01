@@ -20,7 +20,7 @@
     </template>
     <template #default>
       <div style="display:flex;flex-direction: column; width: 100%">
-        <div :class="{ 'my-inline-form-item': formOptions.inline }">
+        <div :class="{ 'my-inline-form-item': formOptions?.inline }">
           <component
             :is="getComponentName(item.type)"
             :key="item.id || ''"
@@ -46,9 +46,11 @@ import { merge } from 'lodash'
 import { SetupContext } from 'vue'
 import { Warning } from '@element-plus/icons-vue'
 
+customFormComps.Warning = Warning
+
 export default defineComponent({
   name: 'FormItem',
-  components: { ...customFormComps, Warning },
+  components: customFormComps,
   props: {
     formOptions: {
       type: Object,
