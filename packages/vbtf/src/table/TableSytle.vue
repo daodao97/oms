@@ -68,7 +68,7 @@
         />
       </template>
     </el-table-column>
-    <template #empty> 没有数据</template>
+    <template #empty> {{ props.EmptyText || '没有数据' }}</template>
     <el-affix />
   </el-table>
 </template>

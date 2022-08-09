@@ -1,5 +1,4 @@
 <template>
-
   <div>
     <VButton v-bind="base" />
     <el-divider />
@@ -24,7 +23,6 @@
     <VTable />
     <el-divider />
     <MonacoEditor class="editor" />
-
   </div>
 </template>
 <script setup lang="ts">
@@ -40,7 +38,7 @@ const base = {
     type: 'primary'
   },
   onClick() {
-    alert('onClick')
+    alert('我被点了')
   }
 }
 
@@ -84,70 +82,7 @@ const form1Data = ref({})
 const form1 = {
   formItems: [
     {
-      type: 'VTest',
-      field: 'v_test'
-    },
-    {
-      'label': '生效场景',
-      'field': 'page',
-      'options': [
-        {
-          'label': '购买页',
-          'value': 'sell'
-        },
-        {
-          'label': '升级页',
-          'value': 'upgrade'
-        }
-      ],
-      'type': 'checkbox'
-    },
-    {
-      'field': 'owner_ids',
-      'label': '负责人',
-      'type': 'select',
-      'rules': 'required',
-      'props': {
-        fullWidth: true,
-        'selectApi': '/user/select_options',
-        'multiple': true,
-        'multipleLimit': 10,
-        'immediate': true,
-        'valueKey': 'id',
-        'labelKey': 'nickname'
-      }
-    },
-    {
-      field: 'test',
-      type: 'select',
-      options: [
-        { value: '1', label: '1' },
-        { value: '2', label: '2' }
-      ],
-      info: 'oksssssssssss'
-    },
-    {
-      field: 'test333',
-      depend: {
-        field: 'test',
-        value: '1'
-      }
-    },
-    {
-      field: 'sub-form',
-      type: 'sub-form',
-      props: {
-        repeat: true,
-        formItems: [
-          {
-            field: 'ok',
-            depend: {
-              field: '.test',
-              value: '1'
-            }
-          }
-        ]
-      }
+      field: 'test2'
     },
     {
       field: 'test1',
@@ -156,7 +91,7 @@ const form1 = {
           when: '1',
           set: {
             test: {
-              value: 1
+              value: 'now test1 value is 1'
             }
           }
         },
@@ -164,15 +99,28 @@ const form1 = {
           when: '2',
           set: {
             test: {
-              value: 2
+              value: 'now test1 value is 2',
+              type: 'select'
             }
           }
         }
       ]
     },
     {
-      field: 'image',
-      type: 'image'
+      field: 'test',
+      depend: {
+        field: 'test2',
+        value: '1'
+      }
+    },
+    {
+      field: 'test3',
+      type: 'select',
+      options: [
+        { value: '1', label: '1' },
+        { value: '2', label: '2' }
+      ],
+      info: '字段提示, 可以写html, <a target="_blank" href="https://github.com/daodao97/oms">点我跳转</a>'
     }
   ]
 }
