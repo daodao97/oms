@@ -505,7 +505,7 @@ export default defineComponent({
   mounted() {
     this.$nextTick(() => {
       console.log('mounted.$nextTick')
-      this.load()
+      !this.$props.infoApi && this.load()
     })
   },
   methods: {

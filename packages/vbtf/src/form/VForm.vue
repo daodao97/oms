@@ -369,9 +369,8 @@ export default defineComponent({
   methods: {
     async onenter() {
       if (this.$props.options?.inline) {
-        return
+        await this.submitForm()
       }
-      await this.submitForm()
     },
     layoutItem(section) {
       const items = []

@@ -20,7 +20,7 @@
       v-bind="form2"
     />
     <el-divider />
-    <VTable />
+    <VTable :table-props="{emptyText: '~没有了~'}" />
     <el-divider />
     <MonacoEditor class="editor" />
   </div>
