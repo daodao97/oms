@@ -1,28 +1,22 @@
 <template>
   <div>
-    <VButton v-bind="base" />
+    <!-- <VButton v-bind="base" />
     <el-divider />
     <VButton v-bind="jump" />
     <el-divider />
     <VButton v-bind="api" />
-    <el-divider />
+    <el-divider /> -->
     <VButton v-bind="form" />
-    <el-divider />
+    <!-- <el-divider />
     <VButtonGroup :buttons="buttons" />
     <el-divider />
-    <VForm
-      v-model="form1Data"
-      v-bind="form1"
-    />
+    <VForm v-model="form1Data" v-bind="form1" />
     <el-divider />
-    <VForm
-      v-model="form2Data"
-      v-bind="form2"
-    />
+    <VForm v-model="form2Data" v-bind="form2" />
     <el-divider />
-    <VTable :table-props="{emptyText: '~没有了~'}" />
+    <VTable :table-props="{ emptyText: '~没有了~' }" />
     <el-divider />
-    <MonacoEditor class="editor" />
+    <MonacoEditor class="editor" /> -->
   </div>
 </template>
 <script setup lang="ts">
@@ -68,7 +62,31 @@ const form = {
   extra: {
     formItems: [
       {
+        field: 'test',
+        type: 'VTest'
+      },
+      {
         field: 'name'
+      },
+      {
+        field: 'test',
+        type: 'select',
+        options: () => {
+          return [
+          ]
+        },
+        info: '字段提示, 可以写html, <a target="_blank" href="https://github.com/daodao97/oms">点我跳转</a>'
+      },
+      {
+        field: 'test3',
+        type: 'select',
+        options: () => {
+          return [
+            { value: '1', label: '1' },
+            { value: '2', label: '2' }
+          ]
+        },
+        info: '字段提示, 可以写html, <a target="_blank" href="https://github.com/daodao97/oms">点我跳转</a>'
       }
     ]
   }

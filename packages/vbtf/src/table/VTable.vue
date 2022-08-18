@@ -676,6 +676,16 @@ export default defineComponent({
       }
       return true
     },
+    batchMetaData(extra: Record<string, any>) {
+      const ids = []
+      this.selectionRows.forEach(item => {
+        if (item.id !== undefined) {
+          ids.push(item.id)
+        }
+      })
+
+      return { ids: ids, _selection: this.selectionRows, _query: this.queryParams() }
+    },
     batchDynamicExtra(extra: Record<string, any>) {
       const ids = []
       const extData = {}
@@ -752,6 +762,7 @@ export default defineComponent({
         } else {
           item['pre-check'] = this.batchButtonPreCheck
           item['dynamic-extra'] = this.batchDynamicExtra
+          item['meta-data'] = this.batchMetaData
           if (item?.extra?.actionHandler) {
             switch (item?.extra?.actionHandler) {
               case '@topList':

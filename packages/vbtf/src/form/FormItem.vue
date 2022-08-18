@@ -48,6 +48,8 @@ import { Warning } from '@element-plus/icons-vue'
 
 customFormComps.Warning = Warning
 
+console.log('customFormComps', customFormComps)
+
 export default defineComponent({
   name: 'FormItem',
   components: customFormComps,

@@ -1,6 +1,6 @@
 {
   "name": "@okiss/vbtf",
-  "version": "0.0.30",
+  "version": "0.0.33",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "cross-env pkg=vbtf vite --config ../../build/dev.config.ts",
@@ -8,13 +8,13 @@
     "release": "pnpm build && cross-env pkg=vbtf node ../../build/release.js"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.0.8",
+    "@element-plus/icons-vue": "^2.0.9",
     "@okiss/utils": "workspace:*",
     "@vueuse/core": "^9.1.0",
     "axios": "^0.27.2",
-    "dayjs": "^1.11.4",
+    "dayjs": "^1.11.5",
     "echarts": "^5.3.3",
-    "element-plus": "2.2.12",
+    "element-plus": "2.2.13",
     "file-saver": "^2.0.5",
     "inputmask": "^5.0.7",
     "js-cookie": "^3.0.1",
@@ -30,10 +30,10 @@
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^3.0.1",
+    "@vitejs/plugin-vue": "^3.0.3",
     "@vitejs/plugin-vue-jsx": "^2.0.0",
     "@vue/compiler-sfc": "^3.2.37",
-    "eslint": "^8.21.0",
+    "eslint": "^8.22.0",
     "eslint-plugin-vue": "^9.3.0",
     "rollup-plugin-cdn": "^0.1.2",
     "rollup-plugin-copy": "^3.4.0",
@@ -43,8 +43,8 @@
     "typescript": "^4.7.4",
     "unplugin-auto-import": "^0.11",
     "unplugin-vue-components": "^0.22.4",
-    "vite": "^3.0.5",
-    "vite-plugin-monaco-editor-nls": "^2.0.1",
+    "vite": "^3.0.8",
+    "vite-plugin-monaco-editor-nls": "^2.0.2",
     "vite-plugin-optimize-persist": "^0.1.2",
     "vite-plugin-package-config": "^0.1.1",
     "vite-plugin-vue-setup-extend": "^0.4.0",

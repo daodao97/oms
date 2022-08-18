@@ -5,9 +5,12 @@ import { MySSO } from './util/sso'
 import { merge } from 'lodash'
 import { routes } from './router'
 import { admin } from './store'
+import { regCustomFormComps } from '@okiss/vbtf'
+import VTest from './components/VTest.vue'
 
 setCmp('test', defineAsyncComponent(() => import('./views/dashboard/index.vue')))
 
+regCustomFormComps({ VTest })
 regViews(import.meta.globEager('./views/**/**.vue'))
 
 const myapp : OmsPlugin = {
