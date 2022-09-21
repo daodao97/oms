@@ -353,6 +353,12 @@ export default defineComponent({
     if (tableProps['rowKey'] === '__random__') {
       tableProps['rowKey'] = () => (new Date()).getTime() + Math.random()
     }
+    if (query['_sort_by'] !== undefined) {
+      tableProps.defaultSort = {
+        prop: query['_sort_by'],
+        order: query['_sort_type'] === 'desc' ? 'descending' : 'ascending'
+      }
+    }
 
     return {
       rowKey: 0,
@@ -942,12 +948,17 @@ export default defineComponent({
       }
     },
     sortTable({ column, order, prop }) {
-      if (order && prop) {
-        this.sort = { _sort_by: prop, _sort_type: order === 'descending' ? 'desc' : 'asc' }
-      } else {
+      if (!(order && prop)) {
         this.sort = null
+        return
       }
-      console.log('sortTable')
+
+      this.sort = { _sort_by: prop, _sort_type: order === 'descending' ? 'desc' : 'asc' }
+      const defaultSort = { prop, order }
+      if (this.tableTableProps.defaultSort.prop === defaultSort.prop && this.tableTableProps.defaultSort.order === defaultSort.order) {
+        return
+      }
+      this.tableTableProps.defaultSort = defaultSort
       this.load()
     },
     loadChildren(row, treeNode, resolve) {
