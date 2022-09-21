@@ -715,14 +715,21 @@ export default defineComponent({
         data[k] = extData[k].join(',')
       })
 
-      if (extra) {
-        if (extra.url !== undefined) {
-          if (isVarTplStr(extra.url)) {
-            extra.url = strVarReplace(extra.url, data)
-          } else {
-            extra.params = extra.params || {}
-            extra.params.id = idStr
-          }
+      extra = extra || {}
+      extra.data = extra.data || {}
+
+      extra.data._selected = this.selectionRows
+
+      if (extra.url !== undefined) {
+        extra.params = extra.params || {}
+        Object.keys(extData).forEach(k => {
+          extra.params[k] = extData[k].join(',')
+        })
+        if (extra.url.indexOf('{id}') === -1) {
+          extra.params.id = idStr
+        }
+        if (isVarTplStr(extra.url)) {
+          extra.url = strVarReplace(extra.url, data)
         }
       }
 
