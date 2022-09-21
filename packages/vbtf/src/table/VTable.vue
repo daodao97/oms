@@ -791,6 +791,13 @@ export default defineComponent({
     queryParams() {
       return queryParams(location.hash)
     },
+    queryString() {
+      const index = location.hash.indexOf('?')
+      if (index === -1) {
+        return ''
+      }
+      return location.hash.substring(index + 1)
+    },
     makeNormalButton(arr) {
       const data = this.queryParams()
       return arr.filter(item => {
@@ -806,7 +813,7 @@ export default defineComponent({
         if (isArray(item)) {
           item = this.makeNormalButton(item)
         } else {
-          item['meta-data'] = () => { return { ...this.queryParams(), tableList: this.tableList } }
+          item['meta-data'] = () => { return { ...this.queryParams(), _query: this.queryString(), tableList: this.tableList } }
           if (item?.extra?.initQueryParams === false) {
             item['meta-data'] = {}
           }
