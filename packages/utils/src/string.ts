@@ -1,6 +1,6 @@
 import { getObjectNodeByKeyTree } from './object'
 import { isArray, isObject } from './type'
-import Handlebars from 'handlebars'
+import Handlebars from './handlebars'
 
 function templateV2(tpl: string, data : Record<string, any>) {
   return Handlebars.compile(tpl)(data)
