@@ -1,8 +1,19 @@
 <template>
-  <span v-html="show" />
+  <span v-if="loading">
+    <el-icon class="is-loading"><Loading /></el-icon>
+  </span>
+  <span v-else v-html="show" />
 </template>
 <script lang="ts" setup>
 import { strVarReplace } from '@okiss/utils'
+import { extractDateFormat } from 'element-plus';
+import { getCurrentInstance } from 'vue'
+import { Loading } from '@element-plus/icons-vue'
+import { fa } from 'element-plus/es/locale';
+
+const app = getCurrentInstance()
+const root = app.appContext.config.globalProperties
+
 const props = defineProps({
   data: {
     type: [String, Number, Array, Object],
@@ -20,12 +31,44 @@ const props = defineProps({
     type: String,
     default: ''
   },
+  interval: {
+    type: Number,
+    default: 0
+  },
+  api: {
+    type: Object,
+    default: undefined
+  },
   scope: {
     type: Object,
     default: () => {}
   }
 })
-const show = computed(() => {
-  return strVarReplace(props.tpl, props.row)
+
+const show = ref('')
+let interval = undefined
+const loading = ref(false)
+onBeforeMount(() => {
+  show.value = strVarReplace(props.tpl, props.row)
+  if (props.interval === 0 || props.api === undefined) {
+    return
+  }
+  const extra = {url: '', method: 'GET', ...props.api, data: props.row}
+  extra.url = strVarReplace(extra.url, props.row)
+  const fn = () => {
+    loading.value = true
+    app && root.$http.request(extra).then(res => {
+      show.value = strVarReplace(props.tpl, res.data) 
+      loading.value = false
+    })
+  }
+  fn()
+  interval = setInterval(fn, props.interval)
 })
+
+onBeforeUnmount(() => {
+  clearInterval(interval)
+})
+
+
 </script>
