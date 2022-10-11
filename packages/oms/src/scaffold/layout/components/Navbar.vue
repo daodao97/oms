@@ -1,5 +1,5 @@
 <template>
-  <el-row class="navbar">
+  <el-row ref="header" class="navbar" :style="{background: setting.envColor[user.env]}">
     <el-col :span="16">
       <hamburger
         :is-active="sidebar.opened"
@@ -68,7 +68,7 @@ import { mapGetters } from 'vuex'
 import Breadcrumb from './Breadcrumb/index.vue'
 import Hamburger from './Hamburger/index.vue'
 import PageEditor from './PageEditor.vue'
-import { showEleByClassName, Cache } from '@okiss/utils'
+import { showEleByClassName, Cache, waterMarker } from '@okiss/utils'
 import { VBtn as VButton } from '@okiss/vbtf'
 
 export default {
@@ -96,6 +96,12 @@ export default {
     moduleName() {
       return this.$store.state.app.moduleName
     },
+    setting() {
+      return this.$store.state.settings
+    },
+    user() {
+      return this.$store.state.user
+    },
     showPageJsonSchemaIcon() {
       return this.$store.state.settings.showPageJsonSchema || false
     }
@@ -110,6 +116,14 @@ export default {
         dangerouslyUseHTMLString: true,
         duration: 0,
         onClose: this.closeNavBarNotice
+      })
+    }
+    if (this.user.env) {
+      waterMarker({
+        elRef: this.$refs.header.$el, 
+        waterMark: this.user.env,
+        color:"skyblue",
+        size: "20"
       })
     }
   },

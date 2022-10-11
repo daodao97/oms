@@ -28,7 +28,11 @@ export const defaultSettings: Settings = {
   nav: [],
   whiteRoutes: ['/login'],
   tokenExpire: 7 * 24 * 60 * 60 * 1000,
-  defaultAvatar: 'http://assest.daodao.run/avatar.jpg'
+  defaultAvatar: 'http://assest.daodao.run/avatar.jpg',
+  envColor: {
+    'uat': 'gray',
+    'pre': 'green'
+  }
 }
 
 export const defaultOptions: OmsOptions = {

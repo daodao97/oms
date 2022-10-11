@@ -26,7 +26,8 @@ export interface Settings {
     nav?: Nav[],
     whiteRoutes?: Array<string | RegExp>,
     tokenExpire?: number,
-    defaultAvatar?: string
+    defaultAvatar?: string,
+    envColor?: Record<string, string>,
 }
 
 export type UsePlugin = Plugin | [Plugin, any]
@@ -71,6 +72,7 @@ export interface UserInfo {
     nickname: string,
     role_ids: Array<string>,
     resource: ResourceIds
+    env: string,
 }
 
 export type Resource = Record<string, boolean | Record<string, boolean>>

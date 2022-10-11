@@ -16,6 +16,7 @@ export interface User {
     roleIds: strOrNum[],
     resource: Resource,
     path: string
+    env: string
 }
 
 export interface RootState {

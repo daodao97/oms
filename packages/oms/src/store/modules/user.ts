@@ -17,7 +17,8 @@ export const user: User = {
   isLodeRemoteRoutes: false,
   resource: {},
   roleIds: [],
-  path: ''
+  path: '',
+  env: ''
 }
 
 const userModule: Module<User, any> = {
@@ -54,7 +55,8 @@ const userModule: Module<User, any> = {
         isLodeRemoteRoutes: false,
         resource: {},
         roleIds: [],
-        path: ''
+        path: '',
+        env: ''
       })
     }
   },
@@ -99,6 +101,7 @@ const userModule: Module<User, any> = {
             commit('updateState', { key: 'nickname', value: response.data?.nickname })
             // commit('updateState', { key: 'avatar', value: response.data?.avatar })
             commit('updateState', { key: 'roleIds', value: roleIds })
+            commit('updateState', { key: 'env', value: response.data?.env })
             // @ts-ignore
             !Cookies.get('username') && Cookies.set('username', response.data?.name)
             resolve(true)
