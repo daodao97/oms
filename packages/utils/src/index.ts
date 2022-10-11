@@ -10,4 +10,5 @@ export * from './validate'
 export * from './array'
 export * from './comm'
 export * from './vueuse'
+export * from './wartermark'
 
