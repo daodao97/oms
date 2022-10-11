@@ -4,6 +4,10 @@
   </div>
 </template>
 <script setup>
+import { useStore } from 'vuex'
+const store = useStore()
+const name = computed(() => store.getters.name)
+
 </script>
 
 <style lang="scss" scoped>
