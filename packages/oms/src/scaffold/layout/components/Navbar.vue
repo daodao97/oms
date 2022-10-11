@@ -118,7 +118,7 @@ export default {
         onClose: this.closeNavBarNotice
       })
     }
-    if (this.user.env) {
+    if (!!this.setting.envColor[this.user.env]) {
       waterMarker({
         elRef: this.$refs.header.$el, 
         waterMark: this.user.env,
