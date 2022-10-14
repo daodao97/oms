@@ -42,11 +42,15 @@ const props = defineProps({
   scope: {
     type: Object,
     default: () => {}
+  },
+  extraData: {
+    type: Object,
+    default: () => {} 
   }
 })
 
 const show = ref('')
-let interval = undefined
+let interval : NodeJS.Timer | undefined = undefined
 const loading = ref(false)
 onBeforeMount(() => {
   show.value = strVarReplace(props.tpl, props.row)
@@ -54,11 +58,11 @@ onBeforeMount(() => {
     return
   }
   const extra = {url: '', method: 'GET', ...props.api, data: props.row}
-  extra.url = strVarReplace(extra.url, props.row)
+  extra.url = strVarReplace(extra.url, {...props.row, ...props.extraData})
   const fn = () => {
     loading.value = true
     app && root.$http.request(extra).then(res => {
-      show.value = strVarReplace(props.tpl, res.data) 
+      show.value = strVarReplace(props.tpl, {...res.data, ...props.extraData}) 
       loading.value = false
     })
   }
