@@ -30,8 +30,8 @@ Handlebars.registerHelper('ifLte', function (a, b, options) {
     return options.inverse(this);
 });
 
-const a = Handlebars.compile("{{#ifEq state 'done'}}{{count}}人{{else}}{{state}}{{/ifEq}}")({"count":0,"state":"初始化","timestamp":0,"sql":""})
-
-console.log(a)
+Handlebars.registerHelper('match', function(kv, k) {
+    return kv[k] ?? kv["_default"]
+});
 
 export default Handlebars
