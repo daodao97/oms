@@ -53,7 +53,7 @@ const show = ref('')
 let interval : NodeJS.Timer | undefined = undefined
 const loading = ref(false)
 onBeforeMount(() => {
-  show.value = strVarReplace(props.tpl, props.row)
+  show.value = strVarReplace(props.tpl, {...props.row, ...props.extraData})
   if (props.interval === 0 || props.api === undefined) {
     return
   }
