@@ -40,6 +40,7 @@ import SidebarItem from './SidebarItem.vue'
 import SearchMenu from './SearchMenu.vue'
 import { cloneDeep } from 'lodash'
 import { MenuType } from '../../../../types'
+import { showEleByClassName } from '@okiss/utils'
 
 export default defineComponent({
   components: { SidebarItem, Logo, SearchMenu },
@@ -70,11 +71,17 @@ export default defineComponent({
       ])
     },
     activeMenu() {
-      let route = this.$route
-      if (route.meta.menuType === 0) {
-        route = route.matched[route.matched.length - 2]
+      console.log(2222, this.$route)
+      let m = this.$route.matched
+
+      for(let i = m.length - 1; i >= 0; i--) {
+        let tmp = m[i]
+        if (tmp.meta.menuType == MenuType.menu) {
+          return this.$router.resolve(tmp.redirect ? tmp.redirect : tmp).fullPath 
+        }
       }
-      return this.$router.resolve(route.redirect ? route.redirect : route).fullPath
+      
+      return ''
     },
     showLogo() {
       return this.$store.state.settings.sidebarLogo
@@ -89,6 +96,9 @@ export default defineComponent({
     isCollapse() {
       return !this.sidebar.opened
     }
+  },
+  mounted() {
+    showEleByClassName('is-active')
   },
   methods: {
     filterRoute(arr) {
