@@ -1,5 +1,6 @@
 import { InterceptorUse } from './types'
-import axios, { AxiosError, AxiosInstance, AxiosRequestConfig, AxiosResponse, Canceler } from 'axios'
+import axios, { AxiosError, AxiosInstance, AxiosResponse, Canceler } from 'axios'
+import { AxiosRequestConfig } from './index'
 // @ts-ignore
 import qs from 'qs'
 
@@ -70,6 +71,9 @@ export const cacheAdapter: (config: AxiosRequestConfig, instance: AxiosInstance)
 
 export const cancelRequestInterceptor: InterceptorUse<AxiosRequestConfig, AxiosError> = {
   onFulfilled: function(config: AxiosRequestConfig) {
+    if (config.cacheEnable === false) {
+      return config
+    }
     if (task.pending(config)) {
       task.delTask(config)
     }
@@ -85,6 +89,11 @@ export const cancelRequestInterceptor: InterceptorUse<AxiosRequestConfig, AxiosE
 
 export const cancelResponseInterceptor: InterceptorUse<AxiosResponse, AxiosError> = {
   onFulfilled: function(response: AxiosResponse) {
+    console.log(response.config)
+    // @ts-ignore
+    if (response.config.cacheEnable === false) {
+      return response
+    }
     if (response.config.method === 'get' && Object.keys(response.data as Record<string, any>).length > 0) {
       task.addCache(response.config, response.data)
     }

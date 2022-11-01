@@ -1,12 +1,13 @@
 import locale from 'element-plus/lib/locale/lang/zh-cn'
-import { AxiosRequestConfig } from 'axios'
+import { AxiosRequestConfig } from './utils/request'
 import { OmsOptions } from './types'
 import { Settings } from './types'
 
 const defaultAxios: AxiosRequestConfig = {
   baseURL: '/api',
   withCredentials: true,
-  timeout: 5000
+  timeout: 5000,
+  cacheEnable: true
 }
 
 export const defaultSettings: Settings = {
