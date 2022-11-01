@@ -1,6 +1,6 @@
 {
   "name": "@okiss/oms",
-  "version": "0.0.26",
+  "version": "0.0.27",
   "scripts": {
     "dev": "cross-env pkg=oms vite --config ../../build/dev.config.ts",
     "build": "cross-env pkg=oms vite build --config ../../build/lib.config.ts",
