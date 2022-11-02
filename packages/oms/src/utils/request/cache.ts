@@ -89,7 +89,6 @@ export const cancelRequestInterceptor: InterceptorUse<AxiosRequestConfig, AxiosE
 
 export const cancelResponseInterceptor: InterceptorUse<AxiosResponse, AxiosError> = {
   onFulfilled: function(response: AxiosResponse) {
-    console.log(response.config)
     // @ts-ignore
     if (response.config.cacheEnable === false) {
       return response
