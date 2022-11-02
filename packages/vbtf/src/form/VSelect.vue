@@ -32,7 +32,21 @@
       :key="item[valueKey]"
       :label="getLabel(item)"
       :value="item[valueKey]"
-    />
+    >
+      <el-tooltip
+        v-if="item.previewHtml"
+        raw-content
+        effect="light"
+        content="<img
+          style='max-width: 400px;'
+          src='https://tva4.sinaimg.cn/large/87c01ec7gy1frmry165k5j21hc0u0n6b.jpg'
+        >"
+        placement="right"
+      >
+        <span style="display:inline-block; width:100%">{{ getLabel(item) }}</span>
+      </el-tooltip>
+      <span v-else>{{ getLabel(item) }}</span>
+    </el-option>
   </el-select>
 </template>
 

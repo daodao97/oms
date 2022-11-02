@@ -7,6 +7,10 @@
     <VButton v-bind="api" />
     <el-divider /> -->
     <VButton v-bind="form" />
+    <VForm
+      v-model="form1Data"
+      v-bind="form.extra"
+    />
     <!-- <el-divider />
     <VButtonGroup :buttons="buttons" />
     <el-divider />
@@ -82,7 +86,9 @@ const form = {
         type: 'select',
         options: () => {
           return [
-            { value: '1', label: '1' },
+            { value: '1', label: '1',
+              previewHtml: "<img src='https://tva4.sinaimg.cn/large/87c01ec7gy1frmry165k5j21hc0u0n6b.jpg'>"
+            },
             { value: '2', label: '2' }
           ]
         },
