@@ -28,6 +28,7 @@ export interface Settings {
     tokenExpire?: number,
     defaultAvatar?: string,
     envColor?: Record<string, string>,
+    serviceOffLineNotice? : string,
 }
 
 export type UsePlugin = Plugin | [Plugin, any]

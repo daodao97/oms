@@ -6,15 +6,25 @@
     style="margin: 0 0 20px 0"
     :closable="false"
   />
-  <ElAlert
-    v-if="haveNotice"
-    v-bind="notice"
-    style="margin: 0 0 20px 0"
-  />
-  <VLoading v-if="loading" />
-  <template v-else>
-    <slot v-bind="schema" />
+
+  <template v-if="env === 'prod' && serviceOffLine">
+    <div
+      class="offline-notice"
+      v-html="serviceOffLine === true ? setting.serviceOffLineNotice : serviceOffLine"
+    />
   </template>
+  <template v-else>
+    <ElAlert
+      v-if="haveNotice"
+      v-bind="notice"
+      style="margin: 0 0 20px 0"
+    />
+    <VLoading v-if="loading" />
+    <template v-else>
+      <slot v-bind="schema" />
+    </template>
+  </template>
+
 </template>
 <script lang="ts">
 import VLoading from './VLoading.vue'
@@ -39,7 +49,16 @@ export default defineComponent({
       haveNotice: false,
       notice: {},
       schema: {},
-      owners: []
+      owners: [],
+      serviceOffLine: false
+    }
+  },
+  computed: {
+    env() {
+      return this.$store.state.user.env
+    },
+    setting() {
+      return this.$store.state.settings
     }
   },
   beforeCreate() {
@@ -62,9 +81,20 @@ export default defineComponent({
         delete data['notice']
       }
       this.owners = data.ownerNames || []
+      this.serviceOffLine = data.serviceOffLine || false
       this.schema = this.$props.schemaHandler(data, project)
       store.commit('app/SET_PAGE_JSON_SCHEMA', { page: this.$route.path, json: this.schema })
     })
   }
 })
 </script>
+
+<style lang="scss" scoped>
+.offline-notice {
+  text-align: center;
+  color: red;
+  font-size: 250%;
+  height: 300px;
+  line-height: 300px;
+}
+</style>
