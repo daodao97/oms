@@ -955,7 +955,8 @@ export default defineComponent({
 
       this.sort = { _sort_by: prop, _sort_type: order === 'descending' ? 'desc' : 'asc' }
       const defaultSort = { prop, order }
-      if (this.tableTableProps.defaultSort.prop === defaultSort.prop && this.tableTableProps.defaultSort.order === defaultSort.order) {
+      const preDefaultSort = this.tableTableProps.defaultSort
+      if (JSON.stringify(preDefaultSort) === JSON.stringify(defaultSort)) {
         return
       }
       this.tableTableProps.defaultSort = defaultSort
