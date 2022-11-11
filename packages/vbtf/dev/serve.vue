@@ -66,11 +66,37 @@ const form = {
   extra: {
     formItems: [
       {
-        field: 'test',
-        type: 'VTest'
+        field: 'test'
+        // type: 'VTest'
       },
       {
-        field: 'name'
+        field: 'switch',
+        type: 'switch'
+      },
+      {
+        field: 'name',
+        rules: 'required',
+        depend: {
+          field: 'test',
+          value: '1'
+        }
+      },
+      {
+        field: 'subform',
+        type: 'sub-form',
+        depend: {
+          field: 'test',
+          value: '1'
+        },
+        props: {
+          formItems: [
+            {
+              field: 'name',
+              rules: 'required'
+
+            }
+          ]
+        }
       },
       {
         field: 'test',
@@ -86,7 +112,8 @@ const form = {
         type: 'select',
         options: () => {
           return [
-            { value: '1', label: '1',
+            {
+              value: '1', label: '1',
               previewHtml: "<img src='https://tva4.sinaimg.cn/large/87c01ec7gy1frmry165k5j21hc0u0n6b.jpg'>"
             },
             { value: '2', label: '2' }

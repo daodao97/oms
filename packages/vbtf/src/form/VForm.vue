@@ -520,7 +520,7 @@ export default defineComponent({
         for (let i = 0; i < this.formItemsSource.length; i++) {
           const item = this.formItemsSource[i]
           const validate = this.$refs[item.field] ? this.$refs[item.field][0]?.$refs?.ctrl?.validate : undefined
-          if (!validate) {
+          if (!item.show || !validate) {
             continue
           }
           if (isAsyncFunc(validate) && !(await validate())) {
