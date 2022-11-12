@@ -7,10 +7,10 @@
     <VButton v-bind="api" />
     <el-divider /> -->
     <VButton v-bind="form" />
-    <VForm
+    <!-- <VForm
       v-model="form1Data"
       v-bind="form.extra"
-    />
+    /> -->
     <!-- <el-divider />
     <VButtonGroup :buttons="buttons" />
     <el-divider />
@@ -114,7 +114,7 @@ const form = {
           return [
             {
               value: '1', label: '1',
-              previewHtml: "<img src='https://tva4.sinaimg.cn/large/87c01ec7gy1frmry165k5j21hc0u0n6b.jpg'>"
+              previewHtml: "<img style='width: 200px' src='https://tva4.sinaimg.cn/large/87c01ec7gy1frmry165k5j21hc0u0n6b.jpg'>"
             },
             { value: '2', label: '2' }
           ]

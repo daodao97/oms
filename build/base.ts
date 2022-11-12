@@ -2,11 +2,11 @@ import path from 'path'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
 import AutoImport from 'unplugin-auto-import/vite'
-import fs from 'fs'
-import visualizer from 'rollup-plugin-visualizer'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
+import visualizer from 'rollup-plugin-visualizer'
 import svgLoader from 'vite-svg-loader'
+import fs from 'fs'
 
 const pkg = process.env.pkg
 

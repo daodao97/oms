@@ -2,17 +2,18 @@
   <span v-if="loading">
     <el-icon class="is-loading"><Loading /></el-icon>
   </span>
-  <span v-else v-html="show" />
+  <span
+    v-else
+    v-html="show"
+  />
 </template>
 <script lang="ts" setup>
 import { strVarReplace } from '@okiss/utils'
-import { extractDateFormat } from 'element-plus';
 import { getCurrentInstance } from 'vue'
 import { Loading } from '@element-plus/icons-vue'
-import { fa } from 'element-plus/es/locale';
 
 const app = getCurrentInstance()
-const root = app.appContext.config.globalProperties
+const root = app!.appContext.config.globalProperties
 
 const props = defineProps({
   data: {
@@ -45,24 +46,24 @@ const props = defineProps({
   },
   extraData: {
     type: Object,
-    default: () => {} 
+    default: () => {}
   }
 })
 
 const show = ref('')
-let interval : NodeJS.Timer | undefined = undefined
+let interval : NodeJS.Timer | undefined
 const loading = ref(false)
 onBeforeMount(() => {
-  show.value = strVarReplace(props.tpl, {...props.row, ...props.extraData})
+  show.value = strVarReplace(props.tpl, { ...props.row, ...props.extraData })
   if (props.interval === 0 || props.api === undefined) {
     return
   }
-  const extra = {url: '', method: 'GET', ...props.api, data: props.row}
-  extra.url = strVarReplace(extra.url, {...props.row, ...props.extraData})
+  const extra = { url: '', method: 'GET', ...props.api, data: props.row }
+  extra.url = strVarReplace(extra.url, { ...props.row, ...props.extraData })
   const fn = () => {
     loading.value = true
     app && root.$http.request(extra).then(res => {
-      show.value = strVarReplace(props.tpl, {...res.data, ...props.extraData}) 
+      show.value = strVarReplace(props.tpl, { ...res.data, ...props.extraData })
       loading.value = false
     })
   }
@@ -73,6 +74,5 @@ onBeforeMount(() => {
 onBeforeUnmount(() => {
   clearInterval(interval)
 })
-
 
 </script>

@@ -13,8 +13,9 @@
 </template>
 <script lang="ts">
 import { exportJson2Excel } from '../excel'
+import { defineComponent } from 'vue'
 
-export default {
+export default defineComponent({
   name: 'ExportAddButton',
   props: {
     getInfo: {
@@ -40,7 +41,7 @@ export default {
   },
   methods: {
     async execute() {
-      const task = this.getInfo()
+      const task = this.$props.getInfo!()
       this.task = Object.assign(this.task, task)
       let exportData = []
       const header = []
@@ -74,5 +75,5 @@ export default {
       this.dialogVisible = false
     }
   }
-}
+})
 </script>

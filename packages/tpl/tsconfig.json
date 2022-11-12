@@ -21,10 +21,10 @@
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@okiss/utils/*": ["packages/utils/src/*"],
-      "@okiss/oms/*": ["packages/oms/src/*"],
-      "@okiss/vbtf/*": ["packages/vbtf/src/*"],
+      "@": ["src"],
+      "@okiss/utils": ["packages/utils/src"],
+      "@okiss/oms": ["packages/oms/src"],
+      "@okiss/vbtf": ["packages/vbtf/src"],
     }
   },
   "include": [

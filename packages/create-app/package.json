@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "enquirer": "^2.3.6",
-    "kolorist": "^1.5.1",
-    "minimist": "^1.2.6"
+    "kolorist": "^1.6.0",
+    "minimist": "^1.2.7"
   }
 }

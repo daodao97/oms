@@ -4,8 +4,7 @@ import ElementPlus from 'element-plus'
 import 'element-plus/dist/index.css'
 import axios from 'axios'
 
-import { RegComponents } from '@'
-import { VForm } from '@'
+import { RegComponents, VForm } from '../src'
 RegComponents({ VForm })
 
 const app = createApp(Dev)
@@ -20,4 +19,5 @@ http.interceptors.response.use(function(response) {
   return Promise.reject(error)
 })
 app.config.globalProperties.$http = http
-app.use(ElementPlus).mount('#app')
+app.use(ElementPlus)
+app.mount('#app')

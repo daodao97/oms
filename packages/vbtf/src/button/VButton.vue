@@ -53,7 +53,7 @@
 // todo ts
 import { baseProps, plugins, Plugin, VButtonProps, getContainerProps, baseComps, events, eventsType } from './base'
 import { snakeToCamel, strVarReplace, isString, isFunc } from '@okiss/utils'
-import { SetupContext } from 'vue'
+import { SetupContext, PropType } from 'vue'
 import * as Icon from '@element-plus/icons-vue'
 import { merge } from 'lodash'
 
@@ -112,7 +112,7 @@ export default defineComponent({
       if (extra.url === undefined) {
         extra.url = props.target
       }
-      extra = props.dynamicExtra({...extra})
+      extra = props.dynamicExtra({ ...extra })
 
       const _injectData = injectData()
       if (extra.method === undefined || extra.method === 'GET') {
