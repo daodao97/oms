@@ -116,13 +116,13 @@ import FormAction from './FormAction.vue'
 import FormItem from './FormItem.vue'
 import transRule from './rule'
 import { cloneDeep, merge, sum, findIndex } from 'lodash'
-import draggable from 'vuedraggable'
 import { PropType, defineComponent } from 'vue'
 import { confirmType } from './types'
+import { ElCard } from 'element-plus'
 
 export default defineComponent({
   name: 'VForm',
-  components: { FormAction, FormItem, draggable },
+  components: { FormAction, FormItem, ElCard },
   provide() {
     return {
       formData: this.formData,

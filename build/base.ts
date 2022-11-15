@@ -14,6 +14,7 @@ export const ROOT = path.resolve(__dirname, '../packages/' + pkg)
 export const SRC = path.resolve(ROOT, 'src')
 export const DEV = path.resolve(ROOT, 'dev')
 const autoImports = path.resolve(ROOT, 'auto-imports.d.ts')
+const components = path.resolve(ROOT, 'components.d.ts')
 const _export = process.env.EXPORT === 'true'
 
 export const resolve = {
@@ -34,6 +35,7 @@ export const plugins = [
     resolvers: [ElementPlusResolver()]
   }),
   Components({
+    dts: components,
     resolvers: [ElementPlusResolver()]
   }),
   _export ? visualizer({

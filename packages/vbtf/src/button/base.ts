@@ -1,7 +1,6 @@
 import { AxiosRequestConfig } from 'axios'
 import { Component, SetupContext, defineAsyncComponent } from 'vue'
 import { FormProps } from '../form/types'
-// @ts-ignore
 import { strVarReplace, isFunc, isObject } from '@okiss/utils'
 import { Ref, UnwrapRef } from 'vue'
 import { ElMessage as Message } from 'element-plus'

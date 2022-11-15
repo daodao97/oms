@@ -66,6 +66,7 @@ const form = {
   extra: {
     formItems: [
       {
+        section: 'xxx',
         field: 'test'
         // type: 'VTest'
       },
@@ -82,6 +83,7 @@ const form = {
         }
       },
       {
+        section: 'bbb',
         field: 'subform',
         type: 'sub-form',
         depend: {

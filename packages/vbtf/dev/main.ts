@@ -1,7 +1,7 @@
 import { createApp } from 'vue'
 import Dev from './serve.vue'
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
+// import ElementPlus from 'element-plus'
+// import 'element-plus/dist/index.css'
 import axios from 'axios'
 
 import { RegComponents, VForm } from '../src'
@@ -19,5 +19,5 @@ http.interceptors.response.use(function(response) {
   return Promise.reject(error)
 })
 app.config.globalProperties.$http = http
-app.use(ElementPlus)
+// app.use(ElementPlus)
 app.mount('#app')

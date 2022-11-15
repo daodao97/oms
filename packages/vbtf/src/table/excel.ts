@@ -14,7 +14,6 @@ class Workbook implements WorkBook {
 }
 
 const generateArray = (table: HTMLElement, max : number) => {
-  console.log(1111, table)
   const out = []
   const rows = table.querySelectorAll('tr')
   const ranges = []

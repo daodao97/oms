@@ -56,13 +56,14 @@ import { snakeToCamel, strVarReplace, isString, isFunc } from '@okiss/utils'
 import { SetupContext, PropType } from 'vue'
 import * as Icon from '@element-plus/icons-vue'
 import { merge } from 'lodash'
+import { ElDialog, ElDrawer } from 'element-plus'
 
 type VButtonType = PropType<'jump' | 'api' | 'form' | 'table' | 'model'>
 import { getCurrentInstance } from 'vue'
 
 export default defineComponent({
   name: 'VButton',
-  components: baseComps,
+  components: { ...baseComps, ElDialog, ElDrawer },
   props: {
     type: {
       type: String as VButtonType,

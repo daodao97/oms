@@ -22,7 +22,7 @@ import VNumber from './VNumber.vue'
 import VDuration from './VDuration.vue'
 import VTableSelect from './TableSelect/index.vue'
 import dayjs from 'dayjs/esm/index.js'
-import { ElSwitch } from 'element-plus'
+import VSwitch from './VSwitch.vue'
 // @ts-ignore
 
 export const componentMap: Record<string, string> = {
@@ -44,7 +44,7 @@ export const componentMap: Record<string, string> = {
   color: 'el-color-picker',
   rate: 'el-rate',
   select: 'v-select',
-  switch: 'el-switch',
+  switch: 'v-switch',
   json: 'v-json',
   'icon-select': 'v-icon-select',
   'sub-form': 'v-sub-form',
@@ -111,7 +111,7 @@ export const customFormComps: Record<string, Component> = {
   VDuration,
   VDate,
   VTableSelect,
-  VSwitch: ElSwitch
+  VSwitch
 }
 
 export const regCustomFormComps = (comps: Record<string, Component>) => {

@@ -4,7 +4,6 @@
       v-if="modal"
       type="modal"
       text="查看"
-      @click="currentItem"
     >
       <component
         :is="getComponentName(item.type)"
@@ -23,7 +22,6 @@
   </ElForm>
 </template>
 <script lang="ts">
-import { useStore } from 'vuex'
 
 import VButton from '../../button/VButton.vue'
 import { customFormComps, getComponentName, getComponentProps } from '../../form/util'
@@ -56,20 +54,6 @@ export default defineComponent({
     }
   },
   emits: ['update:modelValue'],
-  setup(props) {
-    const store = useStore()
-
-    /**
-    * 弹窗模式下单元格按钮点击事件
-    */
-    const currentItem = () => {
-      store.dispatch('builderSchema/setCurrentCellItem', props.item)
-    }
-
-    return {
-      currentItem
-    }
-  },
   data() {
     return {
       localValue: this.$props.modelValue

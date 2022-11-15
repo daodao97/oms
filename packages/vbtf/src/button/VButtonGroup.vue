@@ -48,6 +48,7 @@ import { getCurrentInstance, SetupContext } from 'vue'
 import { isString, isFunc, strVarReplace } from '@okiss/utils'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { merge } from 'lodash'
+import { ElDialog, ElDrawer } from 'element-plus'
 
 type Buttons = BaseButtonProps[]
 interface DropProps {
@@ -66,7 +67,7 @@ interface VButtonGroupProps {
 
 export default defineComponent({
   name: 'VButtonGroup',
-  components: { ...baseComps, ArrowDown },
+  components: { ...baseComps, ArrowDown, ElDialog, ElDrawer },
   props: {
     buttons: {
       type: Array as unknown as Buttons,
