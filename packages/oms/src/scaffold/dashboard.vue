@@ -5,12 +5,12 @@ import { getCmp } from '../utils/container'
 export default defineComponent({
   name: 'Dashboard',
   setup() {
-    const store = useStore()
-    const name = computed(() => store.getters.name)
     const custom = getCmp('test')
     if (custom) {
       return () => <custom/>
     }
+    const store = useStore()
+    const name = computed(() => store.getters.name)
     return () => <div class='dashboard-container'>
       <div class='dashboard-text'>Hi { name.value } 😄</div>
     </div>

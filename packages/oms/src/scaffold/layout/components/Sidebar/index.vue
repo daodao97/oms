@@ -55,13 +55,6 @@ export default defineComponent({
           localRoutes.push(item)
         }
       })
-      console.log(cloneDeep([
-        {
-          label: '',
-          routes: localRoutes
-        },
-        ...this.remoteRouter
-      ]))
       return cloneDeep([
         {
           label: '',
@@ -71,16 +64,15 @@ export default defineComponent({
       ])
     },
     activeMenu() {
-      console.log(2222, this.$route)
-      let m = this.$route.matched
+      const m = this.$route.matched
 
-      for(let i = m.length - 1; i >= 0; i--) {
-        let tmp = m[i]
+      for (let i = m.length - 1; i >= 0; i--) {
+        const tmp = m[i]
         if (tmp.meta.menuType == MenuType.menu) {
-          return this.$router.resolve(tmp.redirect ? tmp.redirect : tmp).fullPath 
+          return this.$router.resolve(tmp.redirect ? tmp.redirect : tmp).fullPath
         }
       }
-      
+
       return ''
     },
     showLogo() {

@@ -83,7 +83,6 @@ export default {
         return this.$router.resolve(child.redirect ? child.redirect : child).fullPath
       } catch (e) {
         console.error('路由解析错误')
-        console.log(child)
         return '/'
       }
     }

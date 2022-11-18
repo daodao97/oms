@@ -19,13 +19,12 @@
       v-for="(item, index) in headers.filter(e => e.type !== 'hidden')"
       :key="index + '-table-column'"
       :prop="item.field"
-      :label="item.label"
       v-bind="getColumnProps(item)"
     >
       <!-- 表头 -->
       <template #header>
         <span devtool="{devId: `headers[${index}]`, dev: dev, parent: 2}">
-          {{ item.label }}
+          {{ item.label || item.field }}
           <el-tooltip
             v-if="item.info"
             effect="dark"

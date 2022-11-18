@@ -1,7 +1,7 @@
 import type { RouteRecordRaw } from 'vue-router'
 import { MenuType, OmsModule, PageInfo, PageType, RemoteModule } from '../types'
 import { Component } from 'vue'
-import { Container, Form, Report, Table, Tree } from '../scaffold'
+import { Container, Form, Report, Table, Tree, Custom } from '../scaffold'
 
 let bu: Record<string, any> = {}
 export function regViews(_bu: Record<string, any>) {
@@ -33,7 +33,7 @@ const getComponent = (item: PageInfo): Component => {
     case PageType.report:
       return Report
     case PageType.customSchema:
-      return Container
+      return Custom
   }
   return Container
 }

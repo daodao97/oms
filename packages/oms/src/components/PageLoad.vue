@@ -28,7 +28,7 @@
 </template>
 <script lang="ts">
 import VLoading from './VLoading.vue'
-import { isObject, isString } from '@okiss/utils'
+import { isObject, isString, isArray } from '@okiss/utils'
 import store from '../store'
 
 export default defineComponent({
@@ -69,19 +69,22 @@ export default defineComponent({
     const conf = { params: this.$route.params }
     this.$http.get(this.$props.schemaApi || api, conf).then(({ data }) => {
       this.loading = false
-      if (data.notice !== undefined) {
-        this.haveNotice = true
-        if (isString(data.notice)) {
-          this.notice = {
-            title: data.notice
+      if (isObject(data)) {
+        if (data.notice !== undefined) {
+          this.haveNotice = true
+          if (isString(data.notice)) {
+            this.notice = {
+              title: data.notice
+            }
+          } else if (isObject(data.notice)) {
+            this.notice = data.notice
           }
-        } else if (isObject(data.notice)) {
-          this.notice = data.notice
+          delete data['notice']
         }
-        delete data['notice']
+        this.owners = data.ownerNames || []
+        this.serviceOffLine = data.serviceOffLine || false
+
       }
-      this.owners = data.ownerNames || []
-      this.serviceOffLine = data.serviceOffLine || false
       this.schema = this.$props.schemaHandler(data, project)
       store.commit('app/SET_PAGE_JSON_SCHEMA', { page: this.$route.path, json: this.schema })
     })

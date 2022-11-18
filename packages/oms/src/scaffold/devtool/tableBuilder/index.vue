@@ -332,7 +332,6 @@ export default {
     removeOne() {
       unset(this.builderSchema, this.activeIndex)
       this.builderSchema = cloneDeep(compactObject(this.builderSchema))
-      console.log(this.builderSchema)
       this.activeIndex = ''
       this.ctrlOptions = {}
       this.ctrlSchema = {}
@@ -348,7 +347,6 @@ export default {
         if (['normalButton', 'batchButton', 'rowButton'].indexOf(m[1]) > -1) {
           this.activeBrick = 'buttons'
         }
-        console.log(m)
         let type = this.builderSchema[m[1]][parseInt(m[2])].type
         if (m[1] === 'headers' && type === undefined) {
           type = 'span'

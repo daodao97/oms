@@ -215,7 +215,6 @@ export default {
   },
   methods: {
     onDevAction(btnType, path) {
-      console.log(111, btnType, path)
       this.activeIndex = 'formItems' + path
       if (btnType === 'edit') {
         this.activeTab = 'ctrl'
