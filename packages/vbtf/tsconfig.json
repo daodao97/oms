@@ -23,12 +23,11 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@okiss/utils": ["../utils/src"]
-    }
+    },
+    "rootDir": "src"
   },
   "include": [
     "src",
-    "dev",
     "auto-imports.d.ts",
     "components.d.ts"
   ],

@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "cross-env pkg=oms vite --config ../../build/dev.config.ts",
     "build": "cross-env pkg=oms vite build --config ../../build/lib.config.ts",
-    "release": "pnpm build && cross-env pkg=oms node ../../build/release.js"
+    "ts": "vue-tsc --declaration --emitDeclarationOnly --skipLibCheck",
+    "release": "cross-env pkg=oms node ../../build/release.js",
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",

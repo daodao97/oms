@@ -1,6 +1,5 @@
 import { defineConfig } from 'vite'
 import path from 'path'
-
 import { ROOT, resolve, plugins, pkgJson, firstUpperCase } from './base'
 
 export const external = () : Array<RegExp> => {

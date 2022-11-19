@@ -23,9 +23,8 @@
     "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
-      "@okiss/utils/*": ["../utils/src/*"],
-      "@okiss/vbtf/*": ["../vbtf/src/*"]
-    }
+    },
+    "rootDir": "src"
   },
   "include": [
     "src",

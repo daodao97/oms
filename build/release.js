@@ -17,7 +17,10 @@ const cache = JSON.parse(JSON.stringify(pkg))
 pkg.version = getUpdatedVersion(args.type, pkg.version)
 savePkgJson(ROOT, pkg)
 
-exec('vue-dts-generator')
+// exec('vue-dts-generator')
+exec('pnpm ts > /dev/null')
+
+exec('pnpm build')
 
 pkg['module'] = './dist/index.es.js'
 pkg['exports']['.']['import'] = './dist/index.es.js'

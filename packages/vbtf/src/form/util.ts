@@ -203,8 +203,8 @@ export const getComponentValue = (item: any, formOptions: Record<string, any>) =
   return item.value
 }
 
-export let uploadHeader = () => { return {} }
+export let uploadHeader : () => {} = () => { return {} }
 
-export function setUploadHeaderHandle(fn: Function) {
+export function setUploadHeaderHandle(fn: () => {}) {
   uploadHeader = fn
 }
