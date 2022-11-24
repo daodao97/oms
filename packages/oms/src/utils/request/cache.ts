@@ -1,6 +1,5 @@
 import { InterceptorUse } from './types'
-import axios, { AxiosError, AxiosInstance, AxiosResponse, Canceler } from 'axios'
-import { AxiosRequestConfig } from './index'
+import axios, { AxiosError, AxiosInstance, AxiosResponse, Canceler, AxiosRequestConfig } from 'axios'
 // @ts-ignore
 import qs from 'qs'
 

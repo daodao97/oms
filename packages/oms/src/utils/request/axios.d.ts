@@ -1,10 +1,10 @@
 import 'axios'
 
 declare module 'axios' {
-    // eslint-disable-next-line no-unused-vars
     export interface AxiosRequestConfig {
         cacheTime?: number
         notHoldApiErr?: boolean
+        cacheEnable?: boolean
     }
     export interface AxiosResponse<T = any> {
         code: number;

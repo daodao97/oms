@@ -1,13 +1,8 @@
-import axios, { AxiosRequestConfig as C } from 'axios'
+import axios, { AxiosRequestConfig } from 'axios'
 import { defaultOptions } from '../../default'
 import { merge } from 'lodash'
 import { interceptors } from './interceptors'
 
-export interface AxiosRequestConfig extends C {
-  cacheTime?: number,
-  cacheEnable?: boolean,
-  notHoldApiErr?: boolean
-}
 
 export function instance(conf: AxiosRequestConfig = {}) {
   const defaultConf: AxiosRequestConfig = defaultOptions.axios || {}

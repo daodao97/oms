@@ -1,5 +1,5 @@
 import locale from 'element-plus/lib/locale/lang/zh-cn'
-import { AxiosRequestConfig } from './utils/request'
+import { AxiosRequestConfig } from 'axios'
 import { OmsOptions } from './types'
 import { Settings } from './types'
 

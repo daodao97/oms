@@ -5,9 +5,18 @@ import { Message, MessageBox } from '../../plugins/element-plus'
 import { removeToken } from '../token'
 import { cancelRequestInterceptor, cancelResponseInterceptor } from './cache'
 import { isString } from '@okiss/utils'
-// @ts-nocheck
+
 function getToken() {
   return store.state.user.token
+}
+
+function errMsg(message: string) {
+  Message({
+    message: message,
+    type: 'error',
+    duration: 5 * 1000,
+    grouping: true
+  })
 }
 
 const baseRequestInterceptor: InterceptorUse<AxiosRequestConfig, AxiosError> = {
@@ -43,11 +52,7 @@ const baseResponseInterceptor: InterceptorUse<AxiosResponse, AxiosError> = {
         })
         return
       } else {
-        Message({
-          message: message,
-          type: 'error',
-          duration: 5 * 1000
-        })
+        errMsg(message)
       }
       return Promise.reject(message)
     }
@@ -62,6 +67,7 @@ const baseResponseInterceptor: InterceptorUse<AxiosResponse, AxiosError> = {
       MessageBox({
         title: '提示',
         type: 'success',
+        grouping: true,
         ..._message_box
       })
     }
@@ -72,11 +78,7 @@ const baseResponseInterceptor: InterceptorUse<AxiosResponse, AxiosError> = {
     if (axios.isCancel(error)) {
       return Promise.reject('')
     }
-    Message({
-      message: `${error.message} ${error.config.method}::${error.config.url?.split('?')[0]}`,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    errMsg(`${error.message} ${error.config.method}::${error.config.url?.split('?')[0]}`)
     return Promise.reject(error)
   }
 }
