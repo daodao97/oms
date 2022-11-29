@@ -79,36 +79,5 @@
     "vue-global-api": "^0.4.1",
     "vue-tsc": "^1.0.9",
     "which-pm-runs": "^1.1.0"
-  },
-  "vite": {
-    "optimizeDeps": {
-      "include": [
-        "@element-plus/icons-vue",
-        "@vueuse/core",
-        "axios",
-        "axios/lib/helpers/buildURL",
-        "dayjs",
-        "dayjs/esm/index.js",
-        "dayjs/locale/zh-cn",
-        "echarts",
-        "element-plus",
-        "element-plus/lib/locale/lang/zh-cn",
-        "file-saver",
-        "inputmask",
-        "js-cookie",
-        "lodash",
-        "mitt",
-        "mockjs",
-        "nprogress",
-        "path-to-regexp",
-        "sortablejs",
-        "vue",
-        "vue-router",
-        "vue3-markdown-it",
-        "vuedraggable",
-        "vuex",
-        "xlsx"
-      ]
-    }
   }
 }

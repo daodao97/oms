@@ -1,6 +1,6 @@
 {
   "name": "@okiss/vbtf",
-  "version": "0.0.49",
+  "version": "0.0.56",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "cross-env pkg=vbtf vite --config ../../build/dev.config.ts",
@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
-    "@okiss/utils": "workspace:*",
+    "@okiss/utils": "workspace:^",
     "axios": "^1.1.3",
     "dayjs": "^1.11.6",
     "echarts": "^5.4.0",
@@ -41,10 +41,7 @@
   "module": "./src/index.ts",
   "style": "./dist/style.css",
   "types": "./dist/types/index.d.ts",
-  "exports": {
-    "./style.css": "./dist/style.css",
-    ".": {
-      "import": "./src/index.ts"
-    }
+  "publishConfig": {
+    "module": "./dist/index.es.js"
   }
 }

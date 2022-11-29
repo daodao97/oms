@@ -3,7 +3,7 @@ import { resolve } from 'path'
 import vue from '@vitejs/plugin-vue'
 import visualizer from 'rollup-plugin-visualizer'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import fs from "fs";
+import fs from 'fs'
 
 const plugins = [
   vue(),
@@ -34,15 +34,15 @@ export default defineConfig({
     outDir: 'dist',
     lib: {
       entry: resolve(__dirname, 'index.js'),
-      name: 'OmsPluginDevtool',
-      formats: ['umd', 'es']
+      name: 'index',
+      formats: ['es']
     },
     sourcemap: false,
     rollupOptions: {
       external: external,
       output: {
         globals: {
-          vue: 'Vue',
+          vue: 'Vue'
         }
       }
     }

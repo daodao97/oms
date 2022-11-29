@@ -6,36 +6,19 @@ const { cp, cd, exec, rm, mkdir } = require('shelljs')
 const pkgName = process.env.pkg
 const ROOT = path.resolve(__dirname, '../packages/' + pkgName)
 const distDir = path.resolve(ROOT, 'dist')
-const tmpDir = path.join(ROOT, 'tmp')
 const args = {...mri(process.argv.slice(2)), type: 'patch'}
 
-checkErr(rm('-rf', tmpDir), "rm tmp dir fail")
-checkErr(mkdir(tmpDir), 'make tmp dir fail')
-
 const pkg = pkgJson()
-const cache = JSON.parse(JSON.stringify(pkg))
 pkg.version = getUpdatedVersion(args.type, pkg.version)
 savePkgJson(ROOT, pkg)
 
-exec('pnpm ts > /dev/null')
-checkErr(cp("-R", distDir, tmpDir), 'cp -rf dist tmp/ fail')
 exec('pnpm build')
 
-pkg['module'] = './dist/index.es.js'
-pkg['exports']['.']['import'] = './dist/index.es.js'
-savePkgJson(tmpDir, pkg, true)
+console.log("generate ts")
+exec('pnpm ts > /dev/null')
 
-checkErr(cp("-R", distDir, tmpDir), 'cp -rf dist tmp/ fail')
-checkErr(cd(tmpDir), 'cd tmp dir fail')
 const dry = args['dry-run'] ? '--dry-run' : ''
-checkErr(exec('npm publish --access public ' + dry), 'npm publish fail')
-if (!args['dry-run']) {
-  checkErr(rm('-rf', tmpDir), 'rm -rf tmp dir fail')
-}
-
-if (dry) {
-  savePkgJson(ROOT, cache)
-}
+checkErr(exec('pnpm publish --access public ' + dry), 'npm publish fail')
 
 // helper
 function checkErr(result, msg) {
@@ -49,6 +32,7 @@ function  pkgJson ()  {
   const str = fs.readFileSync(path.resolve(ROOT, 'package.json'), 'utf8').toString()
   return JSON.parse(str)
 }
+
 function savePkgJson(dir, data, replaceDep= false) {
   let str = JSON.stringify(data, undefined, '  ')
   if (replaceDep) {
@@ -56,6 +40,7 @@ function savePkgJson(dir, data, replaceDep= false) {
   }
   fs.writeFileSync(path.join(dir, 'package.json'), str)
 }
+
 function getUpdatedVersion(type, v1) {
   const nums = v1.split('.').map(v => +v)
   switch (type) {
