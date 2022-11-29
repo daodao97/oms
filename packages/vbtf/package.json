@@ -1,6 +1,6 @@
 {
   "name": "@okiss/vbtf",
-  "version": "0.0.56",
+  "version": "0.0.60",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "cross-env pkg=vbtf vite --config ../../build/dev.config.ts",
@@ -11,10 +11,10 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.0.10",
     "@okiss/utils": "workspace:^",
-    "axios": "^1.1.3",
+    "axios": "^1.2.0",
     "dayjs": "^1.11.6",
     "echarts": "^5.4.0",
-    "element-plus": "2.2.21",
+    "element-plus": "2.2.25",
     "file-saver": "^2.0.5",
     "inputmask": "^5.0.7",
     "lodash": "^4.17.21",

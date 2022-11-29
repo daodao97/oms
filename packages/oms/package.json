@@ -1,6 +1,6 @@
 {
   "name": "@okiss/oms",
-  "version": "0.0.32",
+  "version": "0.0.31",
   "scripts": {
     "dev": "cross-env pkg=oms vite --config ../../build/dev.config.ts",
     "build": "cross-env pkg=oms vite build --config ../../build/lib.config.ts",
@@ -8,25 +8,27 @@
     "release": "cross-env pkg=oms node ../../build/release.js"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "workspace:^",
-    "@okiss/utils": "workspace:^",
-    "@okiss/vbtf": "workspace:^",
-    "@vueuse/core": "workspace:^",
-    "axios": "workspace:^",
-    "dayjs": "workspace:^",
-    "element-plus": "workspace:^",
+    "@element-plus/icons-vue": "^2.0.10",
+    "@okiss/utils": "workspace:*",
+    "@okiss/vbtf": "workspace:*",
+    "@vueuse/core": "^9.6.0",
+    "axios": "^1.2.0",
+    "dayjs": "^1.11.6",
+    "element-plus": "2.2.25",
     "js-cookie": "^3.0.1",
-    "lodash": "workspace:^",
+    "lodash": "^4.17.21",
     "mitt": "^3.0.0",
     "mockjs": "^1.1.0",
+    "monaco-editor": "^0.34.1",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^6.2.1",
     "qs": "^6.11.0",
-    "vue": "workspace:^",
-    "vue-router": "workspace:^",
+    "vue": "^3.2.45",
+    "vue-router": "^4.1.6",
     "vue3-markdown-it": "^1.0.10",
-    "vuex": "workspace:^"
+    "vuedraggable": "^4.0.3",
+    "vuex": "^4.1.0"
   },
   "files": [
     "dist/*"

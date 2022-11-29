@@ -1,20 +1,35 @@
 const fs = require('fs')
 const path = require('path')
 const mri = require('mri')
-const { cp, cd, exec, rm, mkdir } = require('shelljs')
+const { exec, cd } = require('shelljs')
 
-const pkgName = process.env.pkg
-const ROOT = path.resolve(__dirname, '../packages/' + pkgName)
-const distDir = path.resolve(ROOT, 'dist')
 const args = {...mri(process.argv.slice(2)), type: 'patch'}
 
-const pkg = pkgJson()
+const pkgName = process.env.pkg
+
+if (!pkgName) {
+  console.log('need pkg name')
+  return
+}
+
+const base = path.resolve(__dirname, '../')
+const ROOT = path.resolve(__dirname, '../packages/' + pkgName)
+
+const pkg = pkgJson(ROOT)
+const basePkg = pkgJson(base)
 pkg.version = getUpdatedVersion(args.type, pkg.version)
+Object.keys(pkg.dependencies).forEach(key => {
+  if (basePkg.dependencies[key] !== undefined) {
+    pkg.dependencies[key] = basePkg.dependencies[key] 
+  }
+})
 savePkgJson(ROOT, pkg)
+
+cd(ROOT)
 
 exec('pnpm build')
 
-console.log("generate ts")
+console.log("generate ts ...")
 exec('pnpm ts > /dev/null')
 
 const dry = args['dry-run'] ? '--dry-run' : ''
@@ -28,16 +43,13 @@ function checkErr(result, msg) {
   }
 }
 
-function  pkgJson ()  {
-  const str = fs.readFileSync(path.resolve(ROOT, 'package.json'), 'utf8').toString()
+function  pkgJson (dir)  {
+  const str = fs.readFileSync(path.resolve(dir, 'package.json'), 'utf8').toString()
   return JSON.parse(str)
 }
 
-function savePkgJson(dir, data, replaceDep= false) {
+function savePkgJson(dir, data) {
   let str = JSON.stringify(data, undefined, '  ')
-  if (replaceDep) {
-    str = str.replaceAll("workspace:*", "latest")
-  }
   fs.writeFileSync(path.join(dir, 'package.json'), str)
 }
 
