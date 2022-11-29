@@ -17,9 +17,8 @@ const cache = JSON.parse(JSON.stringify(pkg))
 pkg.version = getUpdatedVersion(args.type, pkg.version)
 savePkgJson(ROOT, pkg)
 
-// exec('vue-dts-generator')
 exec('pnpm ts > /dev/null')
-
+checkErr(cp("-R", distDir, tmpDir), 'cp -rf dist tmp/ fail')
 exec('pnpm build')
 
 pkg['module'] = './dist/index.es.js'
@@ -30,7 +29,9 @@ checkErr(cp("-R", distDir, tmpDir), 'cp -rf dist tmp/ fail')
 checkErr(cd(tmpDir), 'cd tmp dir fail')
 const dry = args['dry-run'] ? '--dry-run' : ''
 checkErr(exec('npm publish --access public ' + dry), 'npm publish fail')
-checkErr(rm('-rf', tmpDir), 'rm -rf tmp dir fail')
+if (!args['dry-run']) {
+  checkErr(rm('-rf', tmpDir), 'rm -rf tmp dir fail')
+}
 
 if (dry) {
   savePkgJson(ROOT, cache)
