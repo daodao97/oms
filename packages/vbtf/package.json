@@ -40,8 +40,9 @@
   ],
   "module": "./src/index.ts",
   "style": "./dist/style.css",
-  "types": "./dist/types/index.d.ts",
+  "types": "./src/index.ts",
   "publishConfig": {
-    "module": "./dist/index.es.js"
+    "module": "./dist/index.es.js",
+    "types": "./dist/types/index.d.ts"
   }
 }

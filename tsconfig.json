@@ -20,12 +20,7 @@
     "outDir": "dist",
     "allowJs": true,
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"],
-      "@okiss/utils/*": ["packages/utils/src/*"],
-      "@okiss/oms/*": ["packages/oms/src/*"],
-      "@okiss/vbtf/*": ["packages/vbtf/src/*"],
-    }
+    "paths": {}
   },
   "include": [
     "auto-imports.d.ts",
