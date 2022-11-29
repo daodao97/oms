@@ -36,6 +36,12 @@
   "module": "./src/index.ts",
   "style": "./dist/style.css",
   "types": "./src/index.ts",
+  "exports": {
+    "./style.css": "./dist/style.css",
+    ".": {
+      "import": "./dist/index.es.js"
+    }
+  },
   "publishConfig": {
     "module": "./dist/index.es.js",
     "types": "./dist/types/index.d.ts"

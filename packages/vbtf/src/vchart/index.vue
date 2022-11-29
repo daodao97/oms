@@ -9,7 +9,7 @@
 <script lang="ts">
 // @ts-nocheck
 // todo ts
-import * as echarts from 'echarts'
+// import * as echarts from 'echarts'
 import { debounce } from '@okiss/utils'
 
 export default {
@@ -22,12 +22,12 @@ export default {
   },
   setup(props: { options: any }) {
     const chartDom = ref(null)
-    let chart = null
+    const chart = null
 
     onMounted(() => {
-      chart = shallowRef(echarts.init(chartDom.value))
-      chart.value.setOption(props.options)
-      window.addEventListener('resize', resize)
+      // chart = shallowRef(echarts.init(chartDom.value))
+      // chart.value.setOption(props.options)
+      // window.addEventListener('resize', resize)
       resize()
     })
 

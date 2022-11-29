@@ -24,6 +24,9 @@ const basePkg = pkgJson(base)
 const pkgs = getDirectories(path.join(__dirname, '../packages'))
 
 pkgs.forEach(pkgName => {
+    if (pkgName === "utils") { // utils 依赖的 axios 不能更新
+        return
+    }
     let ROOT = r(__dirname, '../packages/' + pkgName)
     const pkg = pkgJson(ROOT)
     Object.keys(pkg.dependencies).forEach(key => {
