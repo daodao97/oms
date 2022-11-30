@@ -8,12 +8,11 @@
   />
 </template>
 <script lang="ts" setup>
-import { strVarReplace } from '@okiss/utils'
-import { getCurrentInstance } from 'vue'
+import { strVarReplace, isArray } from '@okiss/utils'
 import { Loading } from '@element-plus/icons-vue'
+import { globalProperties } from '../../func'
 
-const app = getCurrentInstance()
-const root = app!.appContext.config.globalProperties
+const { $http } = globalProperties()
 
 const props = defineProps({
   data: {
@@ -51,24 +50,28 @@ const props = defineProps({
 })
 
 const show = ref('')
-let interval : NodeJS.Timer | undefined
+let interval : number
 const loading = ref(false)
 onBeforeMount(() => {
   show.value = strVarReplace(props.tpl, { ...props.row, ...props.extraData })
-  if (props.interval === 0 || props.api === undefined) {
+  if (props.api === undefined) {
     return
   }
   const extra = { url: '', method: 'GET', ...props.api, data: props.row }
   extra.url = strVarReplace(extra.url, { ...props.row, ...props.extraData })
   const fn = () => {
     loading.value = true
-    app && root.$http.request(extra).then(res => {
-      show.value = strVarReplace(props.tpl, { ...res.data, ...props.extraData })
+    $http?.request(extra).then((res: any) => {
+      show.value = strVarReplace(props.tpl, { ...res.data, ...props.extraData, resp: res.data })
+      loading.value = false
+    }).catch((e : any) => {
       loading.value = false
     })
   }
   fn()
-  interval = setInterval(fn, props.interval)
+  if (props.interval > 0) {
+    interval = setInterval(fn, props.interval)
+  }
 })
 
 onBeforeUnmount(() => {

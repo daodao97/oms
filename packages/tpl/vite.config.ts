@@ -85,6 +85,9 @@ export default ({ mode }: any) => {
   return defineConfig({
     base: env.VITE_BASE,
     resolve: {
+      dedupe: [
+        'vue'
+      ],
       alias: {
         vue: 'vue/dist/vue.esm-bundler.js',
         '@': path.resolve(__dirname, '/src')

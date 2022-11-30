@@ -312,21 +312,10 @@ importers:
       file-saver: ^2.0.5
       inputmask: ^5.0.7
       js-cookie: ^3.0.1
-      lodash: ^4.17.21
-      mitt: ^3.0.0
-      mockjs: ^1.1.0
       monaco-editor: ^0.34.1
-      normalize.css: ^8.0.1
-      nprogress: ^0.2.0
-      path-to-regexp: ^6.2.1
-      qs: ^6.11.0
-      sortablejs: ^1.15.0
       vue: ^3.2.45
       vue-router: ^4.1.6
-      vue3-markdown-it: ^1.0.10
-      vuedraggable: ^4.0.3
       vuex: ^4.1.0
-      xlsx: ^0.18.5
     dependencies:
       '@element-plus/icons-vue': 2.0.10_vue@3.2.45
       '@okiss/oms': link:../oms
@@ -340,21 +329,10 @@ importers:
       file-saver: 2.0.5
       inputmask: 5.0.7
       js-cookie: 3.0.1
-      lodash: 4.17.21
-      mitt: 3.0.0
-      mockjs: 1.1.0
       monaco-editor: 0.34.1
-      normalize.css: 8.0.1
-      nprogress: 0.2.0
-      path-to-regexp: 6.2.1
-      qs: 6.11.0
-      sortablejs: 1.15.0
       vue: 3.2.45
       vue-router: 4.1.6_vue@3.2.45
-      vue3-markdown-it: 1.0.10_@types+markdown-it@12.2.3
-      vuedraggable: 4.1.0_vue@3.2.45
       vuex: 4.1.0_vue@3.2.45
-      xlsx: 0.18.5
 
   packages/utils:
     specifiers:
@@ -4373,7 +4351,7 @@ packages:
       vue: ^3.0.1
     dependencies:
       sortablejs: 1.14.0
-      vue: 3.2.45
+      vue: registry.npmmirror.com/vue/3.2.45
     dev: false
 
   /vuex/4.0.2_vue@3.2.37:

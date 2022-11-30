@@ -6,7 +6,7 @@
   <el-drawer
     v-model="show"
     title="页面设计"
-    custom-class="my-drawer"
+    class="my-drawer"
     :direction="direction"
     size="90%"
     destroy-on-close

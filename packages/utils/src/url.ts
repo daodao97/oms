@@ -1,6 +1,5 @@
 // @ts-ignore
-import * as buildURL from 'axios/lib/helpers/buildURL'
-console.log(buildURL)
+import buildURL from 'axios/lib/helpers/buildURL'
 export function queryParams(str: string) {
   const queryString = str.indexOf('?') !== -1 ? str.slice(str.indexOf('?') + 1) : (str.indexOf('/') !== -1 ? '' : str)
   const pairs = queryString.split('&')

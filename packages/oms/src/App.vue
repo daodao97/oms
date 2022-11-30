@@ -1,11 +1,8 @@
 <template>
-  <el-config-provider :locale="locale">
-    <router-view />
-  </el-config-provider>
+  <router-view />
 </template>
 
 <script setup lang="ts">
-import zhCn from 'element-plus/lib/locale/lang/zh-cn'
 import { addNewStyle, addNewStyleTag } from '@okiss/utils'
 import { provide } from 'vue'
 
@@ -25,7 +22,6 @@ onBeforeMount(() => {
     addNewStyleTag(css)
   }
 })
-const locale = zhCn
 
 if (window?.OmsOptions?.form?.vsPath) {
   provide('vsPath', window?.OmsOptions?.form?.vsPath)

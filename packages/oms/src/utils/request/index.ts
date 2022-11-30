@@ -3,7 +3,6 @@ import { defaultOptions } from '../../default'
 import { merge } from 'lodash'
 import { interceptors } from './interceptors'
 
-
 export function instance(conf: AxiosRequestConfig = {}) {
   const defaultConf: AxiosRequestConfig = defaultOptions.axios || {}
   const c = merge(defaultConf, conf || {})

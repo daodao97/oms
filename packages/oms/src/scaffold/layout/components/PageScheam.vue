@@ -6,7 +6,7 @@
   <el-drawer
     v-model="show"
     title="PageSchema"
-    custom-class="my-drawer"
+    class="my-drawer"
     :direction="direction"
     size="50%"
     destroy-on-close
