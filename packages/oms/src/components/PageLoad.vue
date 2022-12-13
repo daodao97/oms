@@ -14,10 +14,11 @@
     />
   </template>
   <template v-else>
-    <ElAlert
+    <VNotice
       v-if="haveNotice"
       v-bind="notice"
       style="margin: 0 0 20px 0"
+      :dataApi = "noticeApi"
     />
     <VLoading v-if="loading" />
     <template v-else>
@@ -30,9 +31,10 @@
 import VLoading from './VLoading.vue'
 import { isObject, isString, isArray } from '@okiss/utils'
 import store from '../store'
+import VNotice from './notice/VNotice.vue'
 
 export default defineComponent({
-  components: { VLoading },
+  components: { VLoading, VNotice },
   props: {
     schemaHandler: {
       type: Function,
@@ -48,6 +50,7 @@ export default defineComponent({
       loading: true,
       haveNotice: false,
       notice: {},
+      noticeApi: "",
       schema: {},
       owners: [],
       serviceOffLine: false
@@ -78,6 +81,7 @@ export default defineComponent({
             }
           } else if (isObject(data.notice)) {
             this.notice = data.notice
+            this.noticeApi = data.notice.noticeApi
           }
           delete data['notice']
         }
