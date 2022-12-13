@@ -12,7 +12,8 @@ export default {
     dataApi: {
       type: String,
       default: ''
-    }
+    },
+    notice: {}
   },
   data() {
     return {
@@ -21,10 +22,14 @@ export default {
     }
   },
   beforeCreate() {
-    this.$http.get(this.$props.dataApi).then(({data}) => {
-      this.title = data.title
-      this.hasNotice = len(data.title) != 0
-    })
+    if (len(this.$props.dataApi) != 0) {
+      this.$http.get(this.$props.dataApi).then(({ data }) => {
+        this.title = data.title
+        this.hasNotice = len(data.title) != 0
+      })
+      return
+    }
+    this.title = this.notice.title
   }
 }
 </script>
