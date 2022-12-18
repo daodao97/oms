@@ -1,8 +1,10 @@
 <template>
-  <el-alter
-      v-if="hasNotice"
-      :title = "title"
-  />
+  <div>
+    <el-alter
+        v-if="hasNotice"
+        :title = "title"
+    />
+  </div>
 </template>
 
 <script>
@@ -28,8 +30,9 @@ export default {
         this.hasNotice = len(data.title) != 0
       })
       return
+    }else {
+      this.title = this.notice.title
     }
-    this.title = this.notice.title
   }
 }
 </script>

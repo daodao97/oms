@@ -81,7 +81,7 @@ export default defineComponent({
             }
           } else if (isObject(data.notice)) {
             this.notice = data.notice
-            this.noticeApi = data.notice.noticeApi// TODO: 这里和notice进行互斥，考虑是否在这一层进行后端请求
+            this.noticeApi = data.notice.noticeApi
           }
           delete data['notice']
         }
