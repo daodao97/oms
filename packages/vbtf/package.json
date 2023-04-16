@@ -1,0 +1,59 @@
+{
+  "name": "@okiss/vbtf",
+  "version": "0.0.66",
+  "scripts": {
+    "preinstall": "npx only-allow pnpm",
+    "dev": "cross-env pkg=vbtf vite --config ../../build/dev.config.ts",
+    "build": "cross-env pkg=vbtf vite build --config ../../build/lib.config.ts",
+    "ts": "vue-tsc --declaration --emitDeclarationOnly --skipLibCheck",
+    "release": "cross-env pkg=vbtf node ../../build/release.js"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "@okiss/utils": "latest",
+    "axios": "^1.3.4",
+    "dayjs": "^1.11.7",
+    "element-plus": "2.3.1",
+    "file-saver": "^2.0.5",
+    "inputmask": "^5.0.8",
+    "lodash": "^4.17.21",
+    "sortablejs": "^1.15.0",
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6",
+    "vuedraggable": "^4.0.3",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.1.0",
+    "@vitejs/plugin-vue-jsx": "^3.0.1",
+    "@vue/compiler-sfc": "^3.2.47",
+    "eslint": "^8.37.0",
+    "eslint-plugin-vue": "^9.10.0",
+    "monaco-editor": "^0.36.1",
+    "sass": "^1.60.0",
+    "typescript": "^5.0.2",
+    "vite": "^4.2.1"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "module": "./src/index.ts",
+  "style": "./dist/style.css",
+  "types": "./src/index.ts",
+  "exports": {
+    "./style.css": "./dist/style.css",
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "publishConfig": {
+    "module": "./dist/index.es.js",
+    "types": "./dist/types/index.d.ts",
+    "exports": {
+      "./style.css": "./dist/style.css",
+      ".": {
+        "import": "./dist/index.es.js"
+      }
+    }
+  }
+}

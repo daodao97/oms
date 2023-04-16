@@ -1,0 +1,36 @@
+{
+  "name": "admin-app",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@okiss/oms": "latest",
+    "vue": "^3.2.33",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@rollup/plugin-typescript": "^8.3.0",
+    "@types/file-saver": "^2.0.4",
+    "@types/inputmask": "^5.0.1",
+    "@types/js-cookie": "^3.0.1",
+    "@types/lodash": "^4.14.178",
+    "@types/mockjs": "^1.0.5",
+    "@types/node": "^17.0.8",
+    "@types/nprogress": "^0.2.0",
+    "@typescript-eslint/eslint-plugin": "^5.9.0",
+    "@typescript-eslint/parser": "^5.9.0",
+    "@vitejs/plugin-vue": "^2.0.1",
+    "@vitejs/plugin-vue-jsx": "^1.3.3",
+    "@vue/compiler-sfc": "^3.2.26",
+    "eslint": "^8.6.0",
+    "eslint-plugin-vue": "^8.2.0",
+    "rollup-plugin-copy": "^3.4.0",
+    "rollup-plugin-visualizer": "^5.6.0",
+    "sass": "^1.47.0",
+    "typescript": "^4.5.4",
+    "vite": "^2.7.10"
+  }
+}

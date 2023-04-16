@@ -1,0 +1,20 @@
+{
+  "name": "@okiss/create-app",
+  "version": "0.0.3",
+  "description": "",
+  "bin": {
+    "create-app": "./index.js"
+  },
+  "files": [
+    "index.js",
+    "template-*"
+  ],
+  "main": "index.js",
+  "author": "daodao97",
+  "license": "MIT",
+  "dependencies": {
+    "enquirer": "^2.3.6",
+    "kolorist": "^1.6.0",
+    "minimist": "^1.2.7"
+  }
+}

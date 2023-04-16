@@ -1,0 +1,55 @@
+{
+  "name": "@okiss/oms",
+  "version": "0.0.36",
+  "scripts": {
+    "dev": "cross-env pkg=oms vite --config ../../build/dev.config.ts",
+    "build": "cross-env pkg=oms vite build --config ../../build/lib.config.ts",
+    "ts": "vue-tsc --declaration --emitDeclarationOnly --skipLibCheck",
+    "release": "cross-env pkg=oms node ../../build/release.js"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "@okiss/utils": "latest",
+    "@okiss/vbtf": "latest",
+    "@vueuse/core": "^9.13.0",
+    "axios": "^1.3.4",
+    "dayjs": "^1.11.7",
+    "element-plus": "2.3.1",
+    "js-cookie": "^3.0.1",
+    "lodash": "^4.17.21",
+    "mitt": "^3.0.0",
+    "mockjs": "^1.1.0",
+    "monaco-editor": "^0.36.1",
+    "normalize.css": "^8.0.1",
+    "nprogress": "^0.2.0",
+    "path-to-regexp": "^6.2.1",
+    "qs": "^6.11.1",
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6",
+    "vue3-markdown-it": "^1.0.10",
+    "vuedraggable": "^4.0.3",
+    "vuex": "^4.1.0"
+  },
+  "files": [
+    "dist/*"
+  ],
+  "module": "./src/index.ts",
+  "style": "./dist/style.css",
+  "types": "./src/index.ts",
+  "exports": {
+    "./style.css": "./dist/style.css",
+    ".": {
+      "import": "./src/index.ts"
+    }
+  },
+  "publishConfig": {
+    "module": "./dist/index.es.js",
+    "types": "./dist/types/index.d.ts",
+    "exports": {
+      "./style.css": "./dist/style.css",
+      ".": {
+        "import": "./dist/index.es.js"
+      }
+    }
+  }
+}
