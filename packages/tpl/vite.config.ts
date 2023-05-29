@@ -70,6 +70,7 @@ const baseEnv = {
 
 export default ({ mode }: any) => {
   const env = { ...baseEnv, ...process.env, ...loadEnv(mode, process.cwd()) }
+  console.log(env.VITE_SERVER_API)
   const server : ServerOptions = {
     open: true,
     port: 3001,

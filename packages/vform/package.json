@@ -12,12 +12,12 @@
   "dependencies": {
     "@element-plus/icons-vue": "^2.1.0",
     "@okiss/utils": "latest",
-    "axios": "^1.3.4",
+    "axios": "^1.4.0",
     "dayjs": "^1.11.7",
-    "element-plus": "2.3.1",
+    "element-plus": "2.3.5",
     "inputmask": "^5.0.8",
     "lodash": "^4.17.21",
-    "vue": "^3.2.47",
+    "vue": "^3.3.4",
     "vuedraggable": "^4.0.3"
   },
   "devDependencies": {

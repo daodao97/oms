@@ -11,7 +11,7 @@
     "@okiss/oms": "workspace:^",
     "core-js": "^3.20.2",
     "node-sql-parser": "^4.0.5",
-    "vue": "^3.2.47"
+    "vue": "^3.3.4"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.0.1",

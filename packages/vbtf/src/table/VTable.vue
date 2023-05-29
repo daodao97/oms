@@ -77,7 +77,7 @@
   >
     <el-tab-pane
       v-for="(item, index) in tableTabs"
-      :key="index+'-pane'"
+      :key="index + '-pane'"
       :name="item.value + ''"
       :lazy="true"
     >
@@ -192,6 +192,7 @@ import { SortableEvent } from 'sortablejs'
 import { getComponentValue } from '../form/util'
 import { exportJson2Excel } from './excel'
 import VIcon from '../VIcon'
+import { ElMessageBox } from 'element-plus'
 
 export default defineComponent({
   name: 'VTable',
@@ -1038,17 +1039,21 @@ export default defineComponent({
         const currRow = this.tableList.splice(oldIndex, 1)[0]
         this.tableList.splice(newIndex, 0, currRow)
         this.tableKey++
-        this.tableKey++
       }
 
       let dragSortApi = ''
-      let immediate = false
+      let needConfirm = false
       if (isString(this.$props.dragSort) && this.$props.dragSort) {
         dragSortApi = this.$props.dragSort
-        immediate = true
       }
       if (isObject(this.$props.dragSort) && this.$props.dragSort.sortApi) {
         dragSortApi = this.$props.dragSort.sortApi
+        needConfirm = this.$props.dragSort.confirm === true
+        console.log('need', this.$props.dragSort, needConfirm)
+      }
+
+      if (!dragSortApi) {
+        return
       }
 
       const ids = []
@@ -1058,7 +1063,13 @@ export default defineComponent({
         }
       })
 
-      dragSortApi && immediate && ids.length > 0 && this.$http.request({
+      if (ids.length === 0) {
+        return
+      }
+
+      // console.log(dragSortApi, needConfirm, ids)
+
+      const sortHandler = () => this.$http.request({
         method: 'POST',
         url: dragSortApi,
         data: {
@@ -1067,11 +1078,37 @@ export default defineComponent({
       }).then(res => {
         this.$message({
           type: 'success',
-          message: '排序更新成功'
+          message: '排序更新成功, 数据将刷新'
         })
+        this.$emit('dragSort')
         this.load()
       })
-      this.$emit('dragSort')
+
+      if (needConfirm) {
+        ElMessageBox.confirm(
+          '此操作将会改变数据顺序, 是否确认此操作?',
+          'Warning',
+          {
+            confirmButtonText: '确认',
+            cancelButtonText: '取消',
+            type: 'warning'
+          }
+        )
+          .then(() => {
+            sortHandler()
+          })
+          .catch(() => {
+            const currRow = this.tableList.splice(newIndex, 1)[0]
+            this.tableList.splice(oldIndex, 0, currRow)
+            this.tableKey++
+            ElMessage({
+              type: 'info',
+              message: '已取消'
+            })
+          })
+      } else {
+        sortHandler()
+      }
     },
     getListData() {
       return this.tableList
@@ -1155,23 +1192,31 @@ export default defineComponent({
 }
 </style>
 <style>
-.el-tabs--border-card > .el-tabs__content {
+.el-tabs--border-card>.el-tabs__content {
   padding: 0;
 }
 
-.table-highlight
-{
+.table-highlight {
   background: #67C23A;
-  animation:tableHighlight 2s;
+  animation: tableHighlight 2s;
   animation-iteration-count: infinite;
 }
 
-@keyframes tableHighlight
-{
-  0%   {background: #67C23A;}
-  25%  {background: #E6A23C;}
-  50%  {background: #F56C6C;}
-  100% {background:#67C23A;}
-}
+@keyframes tableHighlight {
+  0% {
+    background: #67C23A;
+  }
 
+  25% {
+    background: #E6A23C;
+  }
+
+  50% {
+    background: #F56C6C;
+  }
+
+  100% {
+    background: #67C23A;
+  }
+}
 </style>
