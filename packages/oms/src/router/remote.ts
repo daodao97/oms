@@ -90,7 +90,8 @@ const transRoute = (item: PageInfo): RouteRecordRaw => {
         hidden: true,
         menuType: MenuType.hidden,
         keepAlive: false,
-        pageId: item.id
+        pageId: item.id,
+        path: item.path
       }
     }, {
       path: createForm,
@@ -102,7 +103,8 @@ const transRoute = (item: PageInfo): RouteRecordRaw => {
         hidden: true,
         menuType: MenuType.hidden,
         keepAlive: false,
-        pageId: item.id
+        pageId: item.id,
+        path: item.path
       }
     }, {
       path: createEdit,
@@ -114,7 +116,8 @@ const transRoute = (item: PageInfo): RouteRecordRaw => {
         hidden: true,
         menuType: MenuType.hidden,
         keepAlive: false,
-        pageId: item.id
+        pageId: item.id,
+        path: item.path
       }
     }]
     route.children = [...children, ...route.children as RouteRecordRaw[]]

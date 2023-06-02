@@ -5,6 +5,7 @@ import { Message, MessageBox } from '../../plugins/element-plus'
 import { removeToken } from '../token'
 import { cancelRequestInterceptor, cancelResponseInterceptor } from './cache'
 import { isString } from '@okiss/utils'
+import router from '../../router'
 
 function getToken() {
   return store.state.user.token
@@ -25,6 +26,9 @@ const baseRequestInterceptor: InterceptorUse<AxiosRequestConfig, AxiosError> = {
     const token = getToken()
     if (token) {
       config.headers['X-Token'] = token
+    }
+    if (router.currentRoute.value.meta?.path) {
+      config.headers['X-Path'] = router.currentRoute.value.meta.path
     }
     return config
   }

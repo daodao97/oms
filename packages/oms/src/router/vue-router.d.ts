@@ -17,5 +17,6 @@ declare module 'vue-router' {
         title: string
         keepAlive?: boolean
         hidden?: boolean
+        path?: string
     }
 }
