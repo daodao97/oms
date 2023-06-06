@@ -14,8 +14,22 @@
         placeholder="密码"
         class="input"
       >
+      <div class="captcha">
+        <input
+          v-model="data.captcha"
+          type="text"
+          placeholder="验证码"
+          class="input-captcha"
+        >
+        <img
+          class="captcha-img"
+          :src="'/xapi/user/captcha?ts=' + ts"
+          title="点击刷新"
+          @click="onCaptchaClick"
+        >
+      </div>
       <div
-        class="input button"
+        :class="{input: true, button: true, 'no-ready': !onReady}"
         @click="login"
       >登录</div>
       <div class="tips">
@@ -38,22 +52,33 @@
 import { useRouter, useRoute } from 'vue-router'
 import store from '../store'
 import sso, { allSso } from '../utils/sso'
+import { MD5 } from 'crypto-js'
+import { computed } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
 const tips = computed(() => store.state.settings.loginTips)
 const allsso = () => allSso()
 
+const ts = ref(0)
+const onCaptchaClick = () => ts.value++
+const onReady = computed(() => {
+  return data.value.username.length > 0 && data.value.password.length >= 4 && data.value.captcha.length === 4
+})
+
 const data = ref({
   username: '',
-  password: ''
+  password: '',
+  captcha: '',
+  sing: ''
 })
 
 const login = () => {
-  if (data.value.username === '' || data.value.password === '') {
-    ElMessage.error('请填写用户名和密码')
+  if (data.value.username === '' || data.value.password === '' || data.value.captcha === '') {
+    ElMessage.error('用户名, 密码, 验证码是必须的')
     return
   }
+  data.value.sing = MD5(`${data.value.username}${data.value.password}${data.value.captcha}`).toString()
   store.dispatch('user/login', data.value).then(res => {
     router.push({ path: route.query?.redirect as string || '/' })
   })
@@ -82,6 +107,7 @@ const changLoginChannel = () => {
 <style lang="scss">
 $bg: #2d3a4b;
 $dark_gray: #889aa4;
+
 #login {
   width: 100%;
   height: 100%;
@@ -90,29 +116,60 @@ $dark_gray: #889aa4;
   display: flex;
   flex-direction: column;
   padding-top: 150px;
+
   #title {
     color: #fff;
   }
+
   #form {
     width: 300px;
     margin: 10px auto;
     display: flex;
     flex-direction: column;
     justify-content: center;
+
     .input {
       width: 300px;
       height: 40px;
       margin: 10px auto;
       padding: 10px;
     }
+
+    .captcha {
+      display: flex;
+      flex-direction: row;
+      justify-content: flex-start;
+      align-items: center;
+      padding: 10px 0;
+
+      .input-captcha {
+        width: 60%;
+        height: 40px;
+        margin-right: 10px;
+      }
+
+      .captcha-img {
+        height: 40px;
+        width: auto;
+      }
+    }
+
     .button {
       width: 300px;
       height: 40px;
       border: 1px solid #fff;
       background: #fff;
     }
+
+    .no-ready {
+      background: #909399 !important;
+      border: 1px solid #909399 !important;
+      color: #DCDFE6;
+    }
   }
-  .tips, .sso {
+
+  .tips,
+  .sso {
     padding: 10px 0;
     display: flex;
     justify-content: flex-start;
