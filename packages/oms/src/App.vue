@@ -10,6 +10,7 @@ onBeforeMount(() => {
   const loading = document.getElementById('preloader')
   if (loading !== null) {
     document.body.removeChild(loading)
+    document.getElementById('preloader')?.remove()
     addNewStyle('test-icon', '//at.alicdn.com/t/font_2246548_zclaqxwmzq8.css')
 
     const css = `.iconfont {

@@ -16,8 +16,8 @@ export default {
       default: ''
     },
     notice: {
-      type: String,
-      default: ''
+      type: Object,
+      default: () => {}
     }
   },
   data() {

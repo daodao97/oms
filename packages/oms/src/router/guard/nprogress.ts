@@ -2,6 +2,7 @@ import { Router } from 'vue-router'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import store from '../../store'
+import { showEleByClassName } from '@okiss/utils'
 
 NProgress.configure({ showSpinner: false })
 
@@ -19,5 +20,6 @@ export default function(router: Router) {
       })
     }
     NProgress.done()
+    showEleByClassName('is-active')
   })
 }

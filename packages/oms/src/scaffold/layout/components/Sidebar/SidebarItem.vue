@@ -24,7 +24,6 @@
       ref="subMenu"
       :index="to"
       :class="{ 'submenu-title-noDropdown': !isNest }"
-      popper-append-to-body
     >
       <template #title>
         <app-link

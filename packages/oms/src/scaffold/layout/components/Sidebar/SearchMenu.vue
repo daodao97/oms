@@ -40,6 +40,7 @@
 <script>
 import { mapGetters } from 'vuex'
 import { cloneDeep } from 'lodash'
+import { showEleByClassName } from '@okiss/utils'
 
 function filterHidden(arr) {
   return arr.filter(each => {
