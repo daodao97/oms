@@ -23,7 +23,7 @@
             <el-option
               v-if="group.meta.menuType !== 0"
               :label="(index === (group.children.length - 1) ? '└─' : '├─' )+ item.meta.title"
-              :value="item.path"
+              :value="getJumpPath(item)"
             />
           </template>
         </el-option-group>
@@ -31,7 +31,7 @@
       <template v-else>
         <el-option
           :label="'' + group.meta.title"
-          :value="group.path"
+          :value="getJumpPath(group)"
         />
       </template>
     </template>
@@ -40,7 +40,6 @@
 <script>
 import { mapGetters } from 'vuex'
 import { cloneDeep } from 'lodash'
-import { showEleByClassName } from '@okiss/utils'
 
 function filterHidden(arr) {
   return arr.filter(each => {
@@ -74,6 +73,18 @@ export default {
     }
   },
   methods: {
+    getJumpPath: function(route) {
+      let _route = route
+      if (route.meta.menuType === 1 && route.children.length > 0) {
+        for (let i = 0; i < route.children.length; i++) {
+          if (route.children[i].path.indexOf('/:') === -1) {
+            _route = route.children[i]
+            break
+          }
+        }
+      }
+      return this.$router.resolve(_route.redirect ? _route.redirect : _route).fullPath
+    },
     onselected: function(to) {
       this.$router.push(to)
       this.selected = ''

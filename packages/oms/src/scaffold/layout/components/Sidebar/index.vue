@@ -68,7 +68,8 @@ export default defineComponent({
 
       for (let i = m.length - 1; i >= 0; i--) {
         const tmp = m[i]
-        if (tmp.meta.menuType == MenuType.menu) {
+        if (tmp.meta.menuType === MenuType.menu) {
+          this.showActive()
           return this.$router.resolve(tmp.redirect ? tmp.redirect : tmp).fullPath
         }
       }
@@ -90,9 +91,12 @@ export default defineComponent({
     }
   },
   mounted() {
-    showEleByClassName('is-active')
+    this.showActive()
   },
   methods: {
+    showActive() {
+      showEleByClassName('is-active', 200)
+    },
     filterRoute(arr) {
       return arr.filter(item => {
         // console.log(item, [1, 2].indexOf(item.meta.menuType) > 0)
