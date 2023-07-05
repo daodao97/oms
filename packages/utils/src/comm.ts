@@ -48,7 +48,7 @@ export function ruleCompute(obj: Record<string, any>, rule: string[][] | string[
   return ret
 }
 
-export function showEleByClassName(class_name: string, block: string = 'center', behavior: string = 'smooth', index: number | string | boolean = false) {
+export function showEleByClassName(class_name: string, timeout: number = 100, block: string = 'center', behavior: string = 'smooth', index: number | string | boolean = false) {
   setTimeout(() => {
     const ele = document.getElementsByClassName(class_name)
     if (ele.length === 0) {
@@ -62,7 +62,7 @@ export function showEleByClassName(class_name: string, block: string = 'center',
     // @ts-ignore
     ele[elIndex].scrollIntoView(options)
     // isError[0].querySelector('input').focus()
-  }, 100)
+  }, timeout)
 }
 
 export function uuidv4() {

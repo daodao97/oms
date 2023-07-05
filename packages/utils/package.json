@@ -1,6 +1,6 @@
 {
   "name": "@okiss/utils",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "scripts": {
     "build": "cross-env pkg=utils vite build --config ../../build/lib.config.ts",
     "build:report": "cross-env pkg=utils EXPORT=true vite build --config ../../build/lib.config.ts",
@@ -9,9 +9,9 @@
     "release": "cross-env pkg=utils node ../../build/release.js"
   },
   "dependencies": {
-    "axios": "^0.27.2",
-    "dayjs": "^1.11.6",
-    "element-plus": "2.2.25",
+    "axios": "^1.4.0",
+    "dayjs": "^1.11.7",
+    "element-plus": "2.3.5",
     "handlebars": "^4.7.7",
     "lodash": "^4.17.21"
   },
