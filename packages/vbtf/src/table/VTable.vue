@@ -1035,20 +1035,26 @@ export default defineComponent({
       this.tableTableProps.defaultSort = {}
 
       const { newIndex, oldIndex } = event
+      console.log('event', event)
+      let currRow = {}
       if (this.tableList?.length > 0) {
-        const currRow = this.tableList.splice(oldIndex, 1)[0]
+        currRow = this.tableList.splice(oldIndex, 1)[0]
         this.tableList.splice(newIndex, 0, currRow)
         this.tableKey++
       }
 
       let dragSortApi = ''
       let needConfirm = false
+      let confirmMsg = '此操作将会改变数据顺序, {oldIndex} => {newIndex}, 是否确认此操作?'
       if (isString(this.$props.dragSort) && this.$props.dragSort) {
         dragSortApi = this.$props.dragSort
       }
       if (isObject(this.$props.dragSort) && this.$props.dragSort.sortApi) {
         dragSortApi = this.$props.dragSort.sortApi
         needConfirm = this.$props.dragSort.confirm === true
+        if (this.$props.dragSort.confirmMsg) {
+          confirmMsg = this.$props.dragSort.confirmMsg
+        }
         console.log('need', this.$props.dragSort, needConfirm)
       }
 
@@ -1086,7 +1092,7 @@ export default defineComponent({
 
       if (needConfirm) {
         ElMessageBox.confirm(
-          '此操作将会改变数据顺序, 是否确认此操作?',
+          strVarReplace(confirmMsg, { ...currRow, oldIndex: oldIndex + 1, newIndex: newIndex + 1 }),
           'Warning',
           {
             confirmButtonText: '确认',
