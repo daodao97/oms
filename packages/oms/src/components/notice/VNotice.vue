@@ -2,7 +2,7 @@
   <div>
     <el-alert
       v-if="hasNotice"
-      :title="title"
+      v-bind="noticeProps"
     />
   </div>
 </template>
@@ -22,19 +22,21 @@ export default {
   },
   data() {
     return {
-      title: '',
+      noticeProps: {},
       hasNotice: false
     }
   },
-  beforeCreate() {
+  mounted() {
+    console.log('dataApi', !!this.$props.dataApi)
     if (this.$props.dataApi) {
       this.$http.get(this.$props.dataApi).then(({ data }) => {
-        this.title = data.title
-        this.hasNotice = !!data.title
+        this.noticeProps = data
+        this.hasNotice = !!data
       })
       return
     } else {
-      this.title = this.notice.title
+      this.hasNotice = Object.keys(this.$props.notice).length > 0
+      this.noticeProps = this.$props.notice
     }
   }
 }

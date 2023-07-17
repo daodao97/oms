@@ -6,7 +6,6 @@
     style="margin: 0 0 20px 0"
     :closable="false"
   />
-
   <template v-if="env === 'prod' && serviceOffLine">
     <div
       class="offline-notice"
