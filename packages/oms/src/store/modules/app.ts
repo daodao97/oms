@@ -10,7 +10,8 @@ export const app: App = {
   device: 'desktop',
   pages: {},
   currentRouteMeta: {},
-  builderSchema: {}
+  builderSchema: {},
+  baseURL: ''
 }
 
 const _module: Module<App, any> = {
@@ -42,6 +43,9 @@ const _module: Module<App, any> = {
     },
     SET_BUILDER_SCHEMA: (state: App, data: Record<string, any>) => {
       state.builderSchema = data
+    },
+    SET_BASE_API: (state: App, data: string) => {
+      state.baseURL = data
     }
   },
   actions: {
@@ -62,6 +66,9 @@ const _module: Module<App, any> = {
     },
     setBuilderSchema({ commit }: ActionContext<App, App>, data: Record<string, any>) {
       commit('SET_BUILDER_SCHEMA', data)
+    },
+    setBaseAPI({ commit }: ActionContext<App, App>, data: string) {
+      commit('SET_BASE_API', data)
     }
   }
 }

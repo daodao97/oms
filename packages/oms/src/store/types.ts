@@ -38,6 +38,7 @@ export interface App {
     device: string,
     currentRouteMeta: Record<string, any>;
     builderSchema: Record<string, any>;
+    baseURL: String
 }
 
 export interface PageSchema {

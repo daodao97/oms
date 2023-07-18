@@ -23,7 +23,7 @@
         >
         <img
           class="captcha-img"
-          :src="'/xapi/user/captcha?ts=' + ts"
+          :src="baseAPI + '/user/captcha?ts=' + ts"
           title="点击刷新"
           @click="onCaptchaClick"
         >
@@ -58,6 +58,11 @@ import { computed } from 'vue'
 const router = useRouter()
 const route = useRoute()
 const tips = computed(() => store.state.settings.loginTips)
+const baseAPI = computed(() => {
+  console.log(store.state.app)
+  return store.state.app.baseURL
+})
+
 const allsso = () => allSso()
 
 const ts = ref(0)

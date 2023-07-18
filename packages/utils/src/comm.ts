@@ -59,8 +59,15 @@ export function showEleByClassName(class_name: string, timeout: number = 100, bl
       block: block || 'center', // 值有start,center,end,nearest，当前显示在视图区域中间
       behavior: behavior || 'smooth' // 值有auto,instant,smooth，缓动动画（当前是慢速的）
     }
+    const el = ele[elIndex]
+    var elementRect = el.getBoundingClientRect()
+    var isVisible = elementRect.top >= 0 && elementRect.bottom <= window.innerHeight
+    if (isVisible) {
+      return
+    }
+
     // @ts-ignore
-    ele[elIndex].scrollIntoView(options)
+    el.scrollIntoView(options)
     // isError[0].querySelector('input').focus()
   }, timeout)
 }

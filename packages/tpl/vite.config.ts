@@ -83,8 +83,8 @@ export default ({ mode }: any) => {
             console.log('proxy error', err)
           })
           proxy.on('proxyReq', (proxyReq, req, _res) => {
-            proxyReq.setHeader('Origin', 'http://uat-tv-cp.bilibili.co')
-            proxyReq.setHeader('Referer', 'http://uat-tv-cp.bilibili.co/')
+            proxyReq.setHeader('Origin', env.VITE_SERVER_API)
+            proxyReq.setHeader('Referer', env.VITE_SERVER_API + '/')
             console.log(
               'Sending Request:',
               req.method,

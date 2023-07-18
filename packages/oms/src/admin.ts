@@ -45,6 +45,7 @@ export function createAdmin(omsOptions?: OmsOptions) {
   http = instance(options.axios)
   store.dispatch('setHttp', http).then()
   store.dispatch('settings/updateSettings', omsOptions?.settings).then()
+  store.dispatch('app/setBaseAPI', options?.axios.baseURL).then()
   app.config.globalProperties.$http = http
   app.config.globalProperties.$router = router
   window.App = app
