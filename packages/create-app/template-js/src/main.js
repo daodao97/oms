@@ -21,6 +21,9 @@ const options = {
   plugins: [app],
   axios: {
     baseURL: env.VITE_BASE_API + ''
+  },
+  form: {
+    vsPath: isProdMode ? location.pathname + 'assets/monaco-editor/vs' : 'node_modules/monaco-editor/min/vs'
   }
 }
 

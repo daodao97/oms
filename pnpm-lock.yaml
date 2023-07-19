@@ -232,6 +232,9 @@ importers:
       eslint-plugin-vue:
         specifier: ^9.15.1
         version: 9.15.1(eslint@8.45.0)
+      monaco-editor:
+        specifier: ^0.38.0
+        version: 0.38.0
       rollup-plugin-copy:
         specifier: ^3.4.0
         version: 3.4.0
@@ -308,6 +311,9 @@ importers:
       eslint-plugin-vue:
         specifier: ^9.15.1
         version: 9.15.1(eslint@8.45.0)
+      monaco-editor:
+        specifier: ^0.38.0
+        version: 0.38.0
       rollup-plugin-copy:
         specifier: ^3.4.0
         version: 3.4.0
@@ -2708,7 +2714,7 @@ packages:
       '@babel/core': 7.20.12
       '@babel/plugin-transform-typescript': 7.21.3(@babel/core@7.20.12)
       '@vue/babel-plugin-jsx': 1.1.1(@babel/core@7.20.12)
-      vite: 4.4.4(@types/node@20.2.4)(sass@1.63.6)
+      vite: 4.4.4(@types/node@20.4.2)(sass@1.63.6)
       vue: 3.3.4
     transitivePeerDependencies:
       - supports-color
@@ -2754,7 +2760,7 @@ packages:
       vite: ^4.0.0
       vue: ^3.2.25
     dependencies:
-      vite: 4.4.4(@types/node@20.2.4)(sass@1.63.6)
+      vite: 4.4.4(@types/node@20.4.2)(sass@1.63.6)
       vue: 3.3.4
     dev: true
 
