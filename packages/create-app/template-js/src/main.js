@@ -4,7 +4,7 @@ import { defineAsyncComponent } from 'vue'
 import app from './app'
 
 // register dashboard
-setCmp('test', defineAsyncComponent(() => import('./views/dashboard/index.vue')))
+setCmp('dashboard', defineAsyncComponent(() => import('./views/dashboard/index.vue')))
 
 // register custom page views
 regViews(import.meta.globEager('./views/**/**.vue'))
