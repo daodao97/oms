@@ -1,4 +1,4 @@
-import { createAdmin, isProdMode, setCmp, OmsOptions, regViews } from '@okiss/oms'
+import { createAdmin, setCmp, OmsOptions, regViews } from '@okiss/oms'
 import '@okiss/oms/style.css'
 import { defineAsyncComponent } from 'vue'
 import app from './app'
@@ -9,16 +9,18 @@ setCmp('test', defineAsyncComponent(() => import('./views/dashboard/index.vue'))
 // register custom page views
 regViews(import.meta.globEager('./views/**/**.vue'))
 
+const env = import.meta.env
+const isProdMode = env.PROD
+
 const options: OmsOptions = {
-  mock: true,
+  // mock: true,
   settings: {
-    title: 'Admin',
-    logo: 'https://gitee.com/daodao97/asset/raw/master/devbox/rxANG9O3lX.png',
-    showPageJsonSchema: !isProdMode()
+    title: 'OmsAdmin',
+    showPageJsonSchema: !isProdMode
   },
   plugins: [app],
   axios: {
-    baseURL: import.meta.env.VITE_BASE_API + ''
+    baseURL: env.VITE_BASE_API + ''
   }
 }
 

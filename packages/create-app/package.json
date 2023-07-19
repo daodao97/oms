@@ -1,6 +1,6 @@
 {
   "name": "@okiss/create-app",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "bin": {
     "create-app": "./index.js"
@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "enquirer": "^2.3.6",
-    "kolorist": "^1.6.0",
-    "minimist": "^1.2.7"
+    "kolorist": "^1.8.0",
+    "minimist": "^1.2.8"
   }
 }
