@@ -1,6 +1,6 @@
 {
   "name": "@okiss/create-app",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "",
   "bin": {
     "create-app": "./index.js"
