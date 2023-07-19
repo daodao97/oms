@@ -80,6 +80,8 @@ export default ({ mode }: any) => {
     }
   }
 
+  const simpleName = (name: string) => name.split('@').filter(e => e)[0].replace('_', '-').replace('+', '-')
+
   return defineConfig({
     base: env.VITE_BASE,
     resolve: {
@@ -99,11 +101,11 @@ export default ({ mode }: any) => {
           manualChunks: (id) => {
             if (id.includes('node_modules/.pnpm')) {
               const m = id.match(/node_modules\/.pnpm\/([^/]+)/)
-              return m ? m[1] : undefined
+              return m ? simpleName(m[1]) : undefined
             }
             if (id.includes('node_modules')) {
               const m = id.match(/node_modules\/([^/]+)/)
-              return m ? m[1] : undefined
+              return m ? simpleName(m[1]) : undefined
             }
           }
         },

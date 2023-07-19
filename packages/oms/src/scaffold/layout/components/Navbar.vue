@@ -1,5 +1,9 @@
 <template>
-  <el-row ref="header" class="navbar" :style="{background: setting.envColor[user.env]}">
+  <el-row
+    ref="header"
+    class="navbar"
+    :style="{background: setting.envColor[user.env]}"
+  >
     <el-col :span="16">
       <hamburger
         :is-active="sidebar.opened"
@@ -118,12 +122,12 @@ export default {
         onClose: this.closeNavBarNotice
       })
     }
-    if (!!this.setting.envColor[this.user.env]) {
+    if (this.setting.envColor[this.user.env]) {
       waterMarker({
-        elRef: this.$refs.header.$el, 
+        elRef: this.$refs.header.$el,
         waterMark: this.user.env,
-        color:"skyblue",
-        size: "20"
+        color: 'skyblue',
+        size: '20'
       })
     }
   },

@@ -5,7 +5,7 @@ import { getCmp } from '../utils/container'
 export default defineComponent({
   name: 'Dashboard',
   setup() {
-    const custom = getCmp('test')
+    const custom = getCmp('dashboard')
     if (custom) {
       return () => <custom/>
     }

@@ -33,6 +33,7 @@
     "sass": "^1.63.6",
     "typescript": "^5.1.6",
     "unplugin-auto-import": "^0.16",
+    "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.4",
     "vite-svg-loader": "^4.0.0"
   }

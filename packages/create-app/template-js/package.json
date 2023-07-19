@@ -22,6 +22,7 @@
     "rollup-plugin-visualizer": "^5.9.2",
     "sass": "^1.63.6",
     "unplugin-auto-import": "^0.16",
+    "unplugin-vue-components": "^0.25.1",
     "vite": "^4.4.4",
     "vite-svg-loader": "^4.0.0"
   }

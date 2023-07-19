@@ -6,6 +6,8 @@
 npm init @okiss/app
 # or
 yarn create @okiss/app
+# or
+pnpm create @okiss/app
 
 # npm 6.x
 npm init @okiss/app m-app --template ts 
