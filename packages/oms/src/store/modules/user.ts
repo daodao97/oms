@@ -1,6 +1,6 @@
 import { ActionContext, Module } from 'vuex'
 import { RootState, strOrNum, User } from '../types'
-import { LoginForm, LoginTicket, RemoteModule, UserInfo } from '../../types'
+import { LoginForm, LoginTicket, RemoteModule, Settings, UserInfo } from '../../types'
 import { ApiResponse } from '../../utils/request/types'
 import { getToken, removeToken, setToken } from '../../utils/token'
 import { RouteRecordRaw } from 'vue-router'
@@ -102,6 +102,8 @@ const userModule: Module<User, any> = {
             // commit('updateState', { key: 'avatar', value: response.data?.avatar })
             commit('updateState', { key: 'roleIds', value: roleIds })
             commit('updateState', { key: 'env', value: response.data?.env })
+            const website = (response.data?.website || {}) as Settings
+            commit('settings/updateSettings', website, { root: true })
             // @ts-ignore
             !Cookies.get('username') && Cookies.set('username', response.data?.name)
             resolve(true)

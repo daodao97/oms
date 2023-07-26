@@ -74,6 +74,7 @@ export interface UserInfo {
     role_ids: Array<string>,
     resource: ResourceIds
     env: string,
+    website?: any
 }
 
 export type Resource = Record<string, boolean | Record<string, boolean>>
