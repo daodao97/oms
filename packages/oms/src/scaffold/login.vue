@@ -52,6 +52,7 @@
 import { useRouter, useRoute } from 'vue-router'
 import store from '../store'
 import sso, { allSso } from '../utils/sso'
+// @ts-ignore
 import { MD5 } from 'crypto-js'
 import { computed } from 'vue'
 

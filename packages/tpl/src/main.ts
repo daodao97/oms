@@ -1,4 +1,4 @@
-import { createAdmin, setCmp, regViews, OmsOptions, OmsPlugin } from '@okiss/oms'
+import { createAdmin, setCmp, regViews, OmsOptions, OmsPlugin, Github } from '@okiss/oms'
 import '@okiss/oms/style.css'
 import { defineAsyncComponent } from 'vue'
 import { MySSO } from './util/sso'
@@ -8,7 +8,7 @@ import { admin } from './store'
 import { regCustomFormComps } from '@okiss/vbtf'
 import VTest from './components/VTest.vue'
 
-setCmp('test', defineAsyncComponent(() => import('./views/dashboard/index.vue')))
+setCmp('dashboard', defineAsyncComponent(() => import('./views/dashboard/index.vue')))
 
 regCustomFormComps({ VTest })
 regViews(import.meta.globEager('./views/**/**.vue'))
@@ -41,7 +41,8 @@ const options: OmsOptions = {
 if (isProdMode) {
   options.settings = merge(options.settings, {
     sso: {
-      mysso: (p: Record<string, any>) => new MySSO(p)
+      mysso: () => new MySSO({})
+      // github: () => new Github({ client_id: '' })
     },
     activeSsoKey: 'mysso'
   })

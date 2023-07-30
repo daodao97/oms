@@ -6,7 +6,6 @@ import { Settings } from './types'
 const defaultAxios: AxiosRequestConfig = {
   baseURL: '/api',
   withCredentials: true,
-  timeout: 5000,
   cacheEnable: true
 }
 
@@ -18,7 +17,7 @@ export const defaultSettings: Settings = {
   closeNavNotice: false,
   navBarNotice: '',
   hasNewMessage: true,
-  showPageJsonSchema: true,
+  showPageJsonSchema: false,
   loginTips: '',
   sso: {},
   ElementPlus: {

@@ -8,7 +8,7 @@ import { Sso } from './utils/sso'
 export interface Nav {
 }
 
-export type newSso = (params: Record<string, any>) => Sso
+export type newSso = () => Sso
 
 export interface Settings {
     title?: string,
@@ -60,7 +60,8 @@ export interface LoginForm {
 }
 
 export interface LoginTicket {
-    ticket: string
+    ticket: string,
+    key: string
 }
 
 export type ResourceIds = Array<Array<string>>

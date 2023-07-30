@@ -1,6 +1,6 @@
 import Cookies from 'js-cookie'
 import { NavigationGuardNext } from 'vue-router'
-import { BaseSso, SsoType } from '@okiss/oms'
+import { BaseSso, SsoType, LoginTicket } from '@okiss/oms'
 
 export class MySSO extends BaseSso {
   type: SsoType = 'jump'
@@ -9,8 +9,11 @@ export class MySSO extends BaseSso {
     super()
   }
 
-  flag(): string | undefined {
-    return Cookies.get('username')
+  flag(): LoginTicket | undefined {
+    return {
+      ticket: Cookies.get('username') as string,
+      key: 'mysso'
+    }
   }
 
   jumpToLoginPage(next: NavigationGuardNext, path: string) {

@@ -2,6 +2,7 @@ import { Router } from 'vue-router'
 import store from '../../store'
 import { getToken, getWhiteRoutes } from './func'
 import sso from '../../utils/sso'
+import { isObject } from 'lodash'
 
 export default function(router: Router) {
   router.beforeEach(async(to, form, next) => {
@@ -21,14 +22,14 @@ export default function(router: Router) {
     }
     const redirect = to.query.redirect || to.path
 
-    const s = sso({})
+    const s = sso()
     if (!s) {
       next(`/login?redirect=${redirect}`)
       return
     }
 
     const flag = s.flag()
-    if (flag && await store.dispatch('user/login', { ticket: flag })) {
+    if (flag && await store.dispatch('user/login', isObject(flag) ? flag : { ticket: flag })) {
       next()
       return
     }
