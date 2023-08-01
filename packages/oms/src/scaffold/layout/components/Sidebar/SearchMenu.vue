@@ -75,7 +75,7 @@ export default {
   methods: {
     getJumpPath: function(route) {
       let _route = route
-      if (route.meta.menuType === 1 && route.children.length > 0) {
+      if (route.meta.menuType === 1 && route.children && route.children.length > 0) {
         for (let i = 0; i < route.children.length; i++) {
           if (route.children[i].path.indexOf('/:') === -1) {
             _route = route.children[i]
