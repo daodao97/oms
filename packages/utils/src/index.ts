@@ -1,7 +1,7 @@
-export * as Cache from './cache'
+import Cache from './cache'
+import pipe from './pipe'
 export * from './log'
 export * from './object'
-export * as pipe from './pipe'
 export * from './string'
 export * from './time'
 export * from './type'
@@ -12,3 +12,4 @@ export * from './comm'
 export * from './vueuse'
 export * from './wartermark'
 
+export { Cache, pipe }

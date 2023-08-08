@@ -51,7 +51,6 @@
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'vue-router'
 import store from '../store'
-import sso, { allSso } from '../utils/sso'
 // @ts-ignore
 import { MD5 } from 'crypto-js'
 import { computed } from 'vue'
@@ -63,8 +62,6 @@ const baseAPI = computed(() => {
   console.log(store.state.app)
   return store.state.app.baseURL
 })
-
-const allsso = () => allSso()
 
 const ts = ref(0)
 const onCaptchaClick = () => ts.value++
@@ -87,26 +84,10 @@ const login = () => {
   data.value.sing = MD5(`${data.value.username}${data.value.password}${data.value.captcha}`).toString()
   store.dispatch('user/login', data.value).then(res => {
     router.push({ path: route.query?.redirect as string || '/' })
+  }).catch(e => {
+    ts.value++
   })
   return
-}
-
-const loginType = ref()
-
-const changLoginChannel = () => {
-  if (loginType.value) {
-    return
-  }
-  const redirect_url = location.origin + location.pathname + '#' + (route.params.redirect || '')
-  const params = {
-    elId: 'sso-qrcode',
-    redirect_uri: redirect_url,
-    iframe: {
-      width: '280px',
-      height: '320px'
-    }
-  }
-  sso(params)?.showQrCode()
 }
 </script>
 

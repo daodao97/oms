@@ -183,7 +183,7 @@
 // todo ts
 import VForm from '../form/VForm.vue'
 import VButton from '../button/VBtn.vue'
-import { pipe, ruleCompute, firstUpperCase, isVarTplStr, strVarReplace, isArray, isBool, isFunc, isObject, isString, queryParams, setUrlParamsLikeAxios, showEleByClassName } from '@okiss/utils'
+import { pipe, ruleCompute, firstUpperCase, isVarTplStr, strVarReplace, isArray, isBool, isFunc, isObject, isString, queryParams, setUrlParamsLikeAxios, showEleByClassName, Cache } from '@okiss/utils'
 import { getPageTitle } from './lib'
 import ExportAddButton from './export/index.vue'
 import TableStyle from './TableSytle.vue'
@@ -316,6 +316,7 @@ export default defineComponent({
   },
   emits: ['cell-change', 'unshiftList', 'deleteList', 'updateList', 'topList', 'dragSort', 'selection'],
   data() {
+    console.log(Cache)
     const tableDefaultProps = {
       border: true,
       stripe: true,
@@ -332,7 +333,8 @@ export default defineComponent({
     if (this.$route && this.$route.query.tab) {
       activeTab = this.$route.query.tab
     }
-    const query = Object.assign({}, this.$route ? this.$route.query : {}, this.queryParams())
+    const cacheFilter = Cache.get('table_filter:' + this.$route.fullPath)
+    const query = Object.assign({}, this.$route ? this.$route.query : {}, cacheFilter, this.queryParams())
     Object.keys(query).forEach(key => {
       if (key.indexOf('[]') > -1) {
         query[key.replace('[]', '')] = query[key]
@@ -670,6 +672,7 @@ export default defineComponent({
           delete _params[k]
         }
       })
+      Cache.set('table_filter:' + this.$route.fullPath, _params, 86400 * 7)
       setUrlParamsLikeAxios(_params)
     },
     handleSelectionChange(rows) {

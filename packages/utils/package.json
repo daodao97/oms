@@ -1,6 +1,6 @@
 {
   "name": "@okiss/utils",
-  "version": "0.0.11",
+  "version": "0.0.12",
   "scripts": {
     "build": "cross-env pkg=utils vite build --config ../../build/lib.config.ts",
     "build:report": "cross-env pkg=utils EXPORT=true vite build --config ../../build/lib.config.ts",

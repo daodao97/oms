@@ -97,7 +97,6 @@ export default defineComponent({
 
     const showContainer = ref(false)
     const instance : Plugin<any> = plugins[props.type || 'base']
-    console.log(props.type, plugins)
     if (!instance) {
       console.error(`您所配置的 button.type=${props.type} 不存在, 仅支持` + Object.keys(plugins).join(', '))
       return {}

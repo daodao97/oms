@@ -20,8 +20,8 @@ export default defineConfig({
   resolve,
   plugins,
   esbuild: {
-    // drop: ['debugger'],
-    // pure: ['console.log', 'console.error', 'console.warn', 'console.debug', 'console.trace']
+    drop: ['debugger'],
+    pure: ['console.log', 'console.debug', 'console.trace']
   },
   build: {
     cssCodeSplit: false,
