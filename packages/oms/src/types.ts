@@ -29,6 +29,7 @@ export interface Settings {
     defaultAvatar?: string,
     envColor?: Record<string, string>,
     serviceOffLineNotice? : string,
+    formMutex?: boolean
 }
 
 export type UsePlugin = Plugin | [Plugin, any]

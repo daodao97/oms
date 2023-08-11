@@ -33,7 +33,8 @@ export const defaultSettings: Settings = {
     'uat': 'gray',
     'pre': 'green'
   },
-  serviceOffLineNotice: '当前页面功能正在维护, 请稍后再试~~~'
+  serviceOffLineNotice: '当前页面功能正在维护, 请稍后再试~~~',
+  formMutex: true
 }
 
 export const defaultOptions: OmsOptions = {

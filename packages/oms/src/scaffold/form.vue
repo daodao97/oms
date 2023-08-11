@@ -10,8 +10,14 @@ import { VForm } from '@okiss/vbtf'
 import PageLoad from '../components/PageLoad.vue'
 import { strVarReplace } from '@okiss/utils'
 import { merge } from 'lodash'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
+import { onMounted, onUnmounted } from 'vue'
+import http from '../utils/request'
+import { ElMessageBox } from 'element-plus'
+import store from '../store'
+
 const route = useRoute()
+const router = useRouter()
 
 const schemaHandler = (schema, project) => {
   const allowedProps = Object.keys(VForm.props)
@@ -46,5 +52,52 @@ const schemaHandler = (schema, project) => {
   }, schema)
 
   return schema
+}
+
+const mutexId = ref(0)
+const mutex = () => {
+  http.request({
+    url: '/form_mutex',
+    method: 'get',
+    params: {
+      path: route.fullPath
+    }
+  }).then(res => {
+    console.log(res)
+    if (res.data) {
+      clearInterval(mutexId.value)
+      ElMessageBox.alert(`${res.data}`, '操作提醒', {
+        showClose: false,
+        showCancelButton: true,
+        confirmButtonText: '返回',
+        cancelButtonText: '刷新',
+        callback: (action) => {
+          if (action === 'cancel') {
+            location.reload()
+          } else {
+            goBack()
+          }
+        }
+      })
+    }
+  })
+}
+
+onMounted(() => {
+  if (route.params.id !== undefined && store.state.settings.formMutex) {
+    mutex()
+    mutexId.value = setInterval(mutex, 2000)
+  }
+})
+onUnmounted(() => {
+  clearInterval(mutexId.value)
+})
+
+function goBack() {
+  if (route.query?.goback) {
+    router.push(route.query?.goback)
+  } else {
+    history.state.back && history.back()
+  }
 }
 </script>
