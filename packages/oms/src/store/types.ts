@@ -17,6 +17,7 @@ export interface User {
     resource: Resource,
     path: string
     env: string
+    expired: boolean
 }
 
 export interface RootState {

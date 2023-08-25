@@ -11,6 +11,10 @@ function getToken() {
   return store.state.user.token
 }
 
+function expired() {
+  return store.state.user.expired
+}
+
 function errMsg(message: string) {
   Message({
     message: message,
@@ -40,6 +44,10 @@ const baseResponseInterceptor: InterceptorUse<AxiosResponse, AxiosError> = {
     if (!notHoldApiErr && response.data.code !== 0) {
       const message = response.data.message || `接口请求错误 ${response.config.method}::${response.config.url?.split('?')[0]}`
       if (response.data.code === 401) {
+        if (expired()) {
+          return
+        }
+        store.dispatch('user/SetExpired')
         MessageBox.alert('登录信息已过期或未登录, 是否跳转登录', '操作提醒', {
           showClose: false,
           confirmButtonText: '重新登录',
@@ -52,6 +60,7 @@ const baseResponseInterceptor: InterceptorUse<AxiosResponse, AxiosError> = {
               location.href = location.origin + location.pathname + location.hash.replace('#', '#/?redirect=')
               location.reload()
             }
+            store.dispatch('user/SetExpired')
           }
         })
         return

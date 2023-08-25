@@ -18,7 +18,8 @@ export const user: User = {
   resource: {},
   roleIds: [],
   path: '',
-  env: ''
+  env: '',
+  expired: false
 }
 
 const userModule: Module<User, any> = {
@@ -56,8 +57,12 @@ const userModule: Module<User, any> = {
         resource: {},
         roleIds: [],
         path: '',
-        env: ''
+        env: '',
+        expired: false
       })
+    },
+    SET_EXPIRED: (state: User) => {
+      state.expired = !state.expired
     }
   },
   actions: {
@@ -130,6 +135,9 @@ const userModule: Module<User, any> = {
           reject(error)
         })
       })
+    },
+    SetExpired({ commit }: ActionContext<User, RootState>) {
+      commit('SET_EXPIRED')
     }
   }
 }
