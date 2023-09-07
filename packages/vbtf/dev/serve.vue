@@ -7,6 +7,7 @@
     <VButton v-bind="api" />
     <el-divider /> -->
     <VButton v-bind="form" />
+    <VButton v-bind="api" />
     <VForm
       v-model="form1Data"
       v-bind="form.extra"
@@ -54,8 +55,11 @@ const api = {
     type: 'danger'
   },
   extra: {
-    method: 'DELETE',
-    url: '/delete'
+    method: 'POST',
+    url: '/delete',
+    data: {
+      a: 1
+    }
   },
   confirm: true
 }
@@ -96,7 +100,14 @@ const form = {
             {
               field: 'name',
               rules: 'required'
-
+            },
+            {
+              field: 'select',
+              type: 'select',
+              props: {
+                'filterable': true,
+                selectApi: '/api?name={{ $.name }}'
+              }
             }
           ]
         }

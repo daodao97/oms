@@ -126,6 +126,7 @@ export default defineComponent({
   provide() {
     return {
       formData: this.formData,
+      rootData: this.$props.rootData,
       dev: this.dev,
       mod: this.mod
     }
@@ -571,7 +572,7 @@ export default defineComponent({
         console.log(111, response, message)
         this.$emit('submit', this.formData, response)
       } catch (e) {
-        console.log("submit err", e)
+        console.log('submit err', e)
         this.submiting = false
       }
     },

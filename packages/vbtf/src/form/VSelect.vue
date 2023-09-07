@@ -54,7 +54,7 @@ type P = Promise<Array<Record<string, any>>>
 
 export default defineComponent({
   name: 'VSelect',
-  inject: ['formData'],
+  inject: ['formData', 'rootData'],
   props: {
     options: {
       type: [Array, Function, Object],
@@ -220,7 +220,7 @@ export default defineComponent({
     },
     search(kw: any) {
       const api : string = isFunc(this.$props.selectApi) ? (this.$props.selectApi as Function)(kw, this.formData) : this.$props.selectApi
-      const url = strVarReplace(api, this.formData)
+      const url = strVarReplace(api, { ...this.formData, '$': (this.rootData as Function)() })
       this.loading = true
       if (isArray(kw)) {
         kw = kw.join(',')
