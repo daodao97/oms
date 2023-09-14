@@ -63,6 +63,7 @@ onBeforeMount(() => {
     loading.value = true
     $http?.request(extra).then((res: any) => {
       show.value = strVarReplace(props.tpl, { ...res.data, ...props.extraData, resp: res.data })
+      console.log(extra.url, props.tpl, { ...res.data, ...props.extraData, resp: res.data })
       loading.value = false
     }).catch((e : any) => {
       loading.value = false
