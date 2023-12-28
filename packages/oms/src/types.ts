@@ -30,6 +30,7 @@ export interface Settings {
     envColor?: Record<string, string>,
     serviceOffLineNotice? : string,
     formMutex?: boolean
+    captcha?: boolean
 }
 
 export type UsePlugin = Plugin | [Plugin, any]

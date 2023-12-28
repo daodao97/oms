@@ -14,7 +14,7 @@
         placeholder="密码"
         class="input"
       >
-      <div class="captcha">
+      <div v-if="captcha" class="captcha">
         <input
           v-model="data.captcha"
           type="text"
@@ -58,6 +58,7 @@ import { computed } from 'vue'
 const router = useRouter()
 const route = useRoute()
 const tips = computed(() => store.state.settings.loginTips)
+const captcha = computed(() => store.state.settings.captcha)
 const baseAPI = computed(() => {
   console.log(store.state.app)
   return store.state.app.baseURL
@@ -66,7 +67,7 @@ const baseAPI = computed(() => {
 const ts = ref(0)
 const onCaptchaClick = () => ts.value++
 const onReady = computed(() => {
-  return data.value.username.length > 0 && data.value.password.length >= 4 && data.value.captcha.length === 4
+  return data.value.username.length > 0 && data.value.password.length >= 4 && (captcha.value ? data.value.captcha.length === 4 : true)
 })
 
 const data = ref({
@@ -77,11 +78,13 @@ const data = ref({
 })
 
 const login = () => {
-  if (data.value.username === '' || data.value.password === '' || data.value.captcha === '') {
+  if (data.value.username === '' || data.value.password === '' || (captcha.value && data.value.captcha === '')) {
     ElMessage.error('用户名, 密码, 验证码是必须的')
     return
   }
-  data.value.sing = MD5(`${data.value.username}${data.value.password}${data.value.captcha}`).toString()
+  if (captcha.value) {
+    data.value.sing = MD5(`${data.value.username}${data.value.password}${data.value.captcha}`).toString()
+  }
   store.dispatch('user/login', data.value).then(res => {
     router.push({ path: route.query?.redirect as string || '/' })
   }).catch(e => {

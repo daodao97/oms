@@ -34,7 +34,8 @@ export const defaultSettings: Settings = {
     'pre': 'green'
   },
   serviceOffLineNotice: '当前页面功能正在维护, 请稍后再试~~~',
-  formMutex: true
+  formMutex: true,
+  captcha: true
 }
 
 export const defaultOptions: OmsOptions = {

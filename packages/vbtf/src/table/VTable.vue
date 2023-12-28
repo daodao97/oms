@@ -187,7 +187,7 @@ import { pipe, ruleCompute, firstUpperCase, isVarTplStr, strVarReplace, isArray,
 import { getPageTitle } from './lib'
 import ExportAddButton from './export/index.vue'
 import TableStyle from './TableSytle.vue'
-import { cloneDeep, findIndex, merge } from 'lodash'
+import { cloneDeep, findIndex, merge, get } from 'lodash'
 import { SortableEvent } from 'sortablejs'
 import { getComponentValue } from '../form/util'
 import { exportJson2Excel } from './excel'
@@ -542,7 +542,7 @@ export default defineComponent({
     },
     cellProps(column, scope) {
       let base = {
-        data: scope.row[scope.column.property],
+        data: get(scope.row, scope.column.property),
         column: column,
         scope: scope
       }
