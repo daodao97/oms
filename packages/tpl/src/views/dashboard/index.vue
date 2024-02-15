@@ -1,12 +1,14 @@
 <template>
   <div class="dashboard-container">
-    <div class="dashboard-text">Hi {{ name }}</div>
+    <div class="dashboard-text">Hi {{ name }} {{ route.fullPath }}</div>
   </div>
 </template>
 <script setup>
 import { useStore } from 'vuex'
+import { useRoute } from 'vue-router'
 const store = useStore()
 const name = computed(() => store.getters.name)
+const route = useRoute()
 
 </script>
 

@@ -13,6 +13,7 @@
         <el-menu-item
           :index="to"
           :class="{ 'submenu-title-noDropdown': !isNest }"
+          @click="itemClick"
         >
           <menu-content :meta="item.meta" />
         </el-menu-item>
@@ -53,6 +54,7 @@
 import AppLink from './Link.vue'
 import FixiOSBug from './FixiOSBug'
 import MenuContent from './MenuContent.vue'
+import { Cache } from '@okiss/utils'
 
 export default {
   name: 'SidebarItem',
@@ -77,9 +79,13 @@ export default {
     }
   },
   methods: {
+    itemClick() {
+      Cache.remove('table_filter:' + this.$props.to)
+    },
     getTo(child) {
       try {
-        return this.$router.resolve(child.redirect ? child.redirect : child).fullPath
+        const to = this.$router.resolve(child.redirect ? child.redirect : child)
+        return to.fullPath
       } catch (e) {
         console.error('路由解析错误')
         return '/'
