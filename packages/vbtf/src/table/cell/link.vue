@@ -1,10 +1,22 @@
 <template>
-  <el-link v-bind="linkProps">{{ column.label }}</el-link>
+  <el-link
+    v-if="link == ''"
+    v-bind="linkProps"
+  >{{ column.label }}</el-link>
+  <el-link
+    v-else
+    v-bind="linkProps2"
+  >{{ data }}</el-link>
 </template>
 <script lang="ts" setup>
 import { merge } from 'lodash'
+import { strVarReplace } from '@okiss/utils'
 
 const props = defineProps({
+  link: {
+    type: String,
+    default: ''
+  },
   data: {
     type: String,
     default: ''
@@ -16,12 +28,20 @@ const props = defineProps({
   },
   row: {
     type: Object,
-    default: () => {}
+    default: () => { }
   },
   scope: {
     type: Object,
-    default: () => {}
+    default: () => { }
+  },
+  extraData: {
+    type: Object,
+    default: () => { }
   }
+})
+
+onBeforeMount(() => {
+  console.log(props)
 })
 
 const linkProps = computed(() => {
@@ -34,4 +54,16 @@ const linkProps = computed(() => {
     props.column.props || {}
   )
 })
+
+const linkProps2 = computed(() => {
+  return merge(
+    {
+      type: 'primary',
+      href: strVarReplace(props.link, { ...props.row, ...props.extraData }),
+      target: '_blank'
+    },
+    props.column.props || {}
+  )
+})
+
 </script>

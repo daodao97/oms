@@ -8,10 +8,7 @@
     <el-divider /> -->
     <VButton v-bind="form" />
     <VButton v-bind="api" />
-    <VForm
-      v-model="form1Data"
-      v-bind="form.extra"
-    />
+    <VForm v-model="form1Data" v-bind="form.extra" />
     <!-- <el-divider />
     <VButtonGroup :buttons="buttons" />
     <el-divider />
@@ -19,9 +16,9 @@
     <el-divider />
     <VForm v-model="form2Data" v-bind="form2" />
     <el-divider />
-    <VTable :table-props="{ emptyText: '~没有了~' }" />
     <el-divider />
     <MonacoEditor class="editor" /> -->
+    <VTable v-bind="tableOpt" :table-props="{ emptyText: '~没有了~' }" />
   </div>
 </template>
 <script setup lang="ts">
@@ -69,6 +66,17 @@ const form = {
   text: '模态框/表单',
   extra: {
     formItems: [
+      {
+        "field": "deprecated",
+        "label": "弃用",
+        "type": "select",
+        "options": [
+          { "value": 1, "label": "已弃用" },
+          { "value": 0, "label": "正常使用" },
+        ],
+        "value": 0,
+        "valueType": "number",
+      },
       {
         section: 'xxx',
         field: 'test',
@@ -210,6 +218,10 @@ const form2 = {
       type: 'daterange'
     }
   ]
+}
+
+const tableOpt = {
+  filter: form.extra.formItems
 }
 </script>
 

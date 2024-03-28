@@ -434,7 +434,13 @@ export default defineComponent({
       priority.reverse().forEach(key => {
         _source.push(source[key])
       })
-      return merge(_source[0], _source[1], _source[2])
+      const data = merge(_source[0], _source[1], _source[2])
+      formItems.forEach((item) => {
+        if (data[item.field] !== undefined) {
+          data[item.field] = this.parseType(item, data[item.field])
+        }
+      })
+      return data
     },
     init(formItems) {
       const formData = this.getFormData(formItems)

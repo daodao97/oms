@@ -316,7 +316,6 @@ export default defineComponent({
   },
   emits: ['cell-change', 'unshiftList', 'deleteList', 'updateList', 'topList', 'dragSort', 'selection'],
   data() {
-    console.log(Cache, this.$route, 'table_filter:' + this.$route.path)
     const tableDefaultProps = {
       border: true,
       stripe: true,
@@ -333,7 +332,7 @@ export default defineComponent({
     if (this.$route && this.$route.query.tab) {
       activeTab = this.$route.query.tab
     }
-    const cacheFilter = Cache.get('table_filter:' + this.$route.path)
+    const cacheFilter = Cache.get('table_filter:' + this.$route?.path)
     const query = Object.assign({}, this.$route ? this.$route.query : {}, cacheFilter, this.queryParams())
     Object.keys(query).forEach(key => {
       if (key.indexOf('[]') > -1) {
