@@ -661,7 +661,8 @@ export default defineComponent({
       if (!this.syncUrl) {
         return
       }
-      const _params = merge({}, cloneDeep(this.queryParams()), cloneDeep(params))
+      console.log({}, cloneDeep(this.queryParams()), cloneDeep(params))
+      const _params = merge({}, cloneDeep(params))
       const defaultParams = {
         _pn: 1,
         _ps: 20
