@@ -104,6 +104,7 @@ export default defineComponent({
     const metaData = () => isFunc(props.metaData) ? props.metaData() : props.metaData
     const injectData = () => isFunc(props.injectData) ? props.injectData(props.extra) : props.injectData
     const clickHandler = (e) => {
+      loading.value = true
       ctx.emit('click', e)
       if (!props.preCheck(props)) {
         return
@@ -135,6 +136,7 @@ export default defineComponent({
         if (['api'].indexOf(props.type) > -1) {
           ctx.emit('action')
         }
+        loading.value = false
       })
     }
     const relText = computed(() => strVarReplace(props.text || '', metaData()))
@@ -145,7 +147,6 @@ export default defineComponent({
     watch(() => showContainer.value, () => {
       containerProps.value = getContainerProps(props.container, props)
       xsubComp.value = instance.getSubComp ? instance.getSubComp(props.extra || {}) : 'span'
-      console.log(222, instance, xsubComp.value)
       xsubProps.value = instance.getSubProps ? instance.getSubProps(props.extra, metaData()) : {}
       xsubEvent.value = instance.getSubEvent ? instance.getSubEvent(props, ctx, showContainer, props.extra) : {}
     })
@@ -158,11 +159,16 @@ export default defineComponent({
     const closeModal = () => {
       showContainer.value = false
     }
+
+    const loading = ref(false)
     const transBtnProps = (old) => {
       if (old && old.icon && isString(old.icon)) {
         const iconName = snakeToCamel(old.icon.replace('el-icon-', ''), '-')
         old.icon = shallowRef(Icon[iconName])
       }
+      old = old || {}
+
+      old.loading = loading.value
       return old
     }
     return {

@@ -151,7 +151,9 @@ const api : Plugin<AxiosRequestConfig> = {
         duration: 5 * 1000
       })
     }).catch((err: any) => {
+      console.error(111, err)
       ctx.emit('apiError', err)
+      callback()
     })
   },
   getSubProps(extra: any, metaData) {

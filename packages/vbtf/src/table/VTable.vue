@@ -608,7 +608,7 @@ export default defineComponent({
         return
       }
       console.log('searchAction')
-      this.load()
+      this.load({resetPage: true})
     },
     load(args = {}, extraPrams = {}) {
       if (!this.tableListApi) {
@@ -642,6 +642,7 @@ export default defineComponent({
           params[this.tableTabs[tabIndex].field] = this.activeTab
         }
       }
+      console.log('query params', params)
       this.syncParamsToUrl(params)
       this.$http
         .request({

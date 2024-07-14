@@ -28,9 +28,10 @@ const options: OmsOptions = {
     title: 'OMS',
     showPageJsonSchema: !isProdMode
   },
-  plugins: [myapp],
+  // plugins: [myapp],
   axios: {
-    baseURL: env.VITE_BASE_API + ''
+    // @ts-ignore
+    baseURL: (window?.BASE_URL || env.VITE_BASE_API) + ''
     // cacheTime: 1000
   },
   form: {
@@ -38,14 +39,14 @@ const options: OmsOptions = {
   }
 }
 
-if (isProdMode) {
-  options.settings = merge(options.settings, {
-    sso: {
-      mysso: () => new MySSO({})
-      // github: () => new Github({ client_id: '' })
-    },
-    activeSsoKey: 'mysso'
-  })
-}
+// if (isProdMode) {
+//   options.settings = merge(options.settings, {
+//     sso: {
+//       mysso: () => new MySSO({})
+//       // github: () => new Github({ client_id: '' })
+//     },
+//     activeSsoKey: 'mysso'
+//   })
+// }
 
 createAdmin(options)
