@@ -5,6 +5,7 @@ import { strVarReplace, isFunc, isObject } from '@okiss/utils'
 import { Ref, UnwrapRef } from 'vue'
 import { ElMessage as Message } from 'element-plus'
 import { get } from 'lodash'
+import { ElLoading } from 'element-plus'
 
 export interface formExtra {
   reset?: () => void
@@ -140,10 +141,24 @@ const api : Plugin<AxiosRequestConfig> = {
       conf.data = { ...(conf.data || {}), ...data }
     }
 
+    let loading = null
+    // @ts-ignore
+    if (extra.isGrup) {
+      loading = ElLoading.service({
+        lock: true,
+        text: '正在提交',
+        background: 'rgba(0, 0, 0, 0.7)',
+      })
+    }
+
     // @ts-ignore
     root.$http.request(conf).then((response : any) => {
       ctx.emit('apiSuccess', response)
       callback()
+      // @ts-ignore
+      if (extra.isGrup && loading) {
+        loading.close()
+      }
       Message({
         // @ts-ignore
         message: response?.data?.message || '操作成功',
@@ -151,8 +166,17 @@ const api : Plugin<AxiosRequestConfig> = {
         duration: 5 * 1000
       })
     }).catch((err: any) => {
-      console.error(111, err)
+      // @ts-ignore
+      if (extra.isGrup && loading) {
+        loading.close()
+      }
       ctx.emit('apiError', err)
+      callback()
+    }).finally(() => {
+      // @ts-ignore
+      if (extra.isGrup && loading) {
+        loading.close()
+      }
       callback()
     })
   },

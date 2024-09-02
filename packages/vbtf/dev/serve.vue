@@ -8,6 +8,7 @@
     <el-divider /> -->
     <VButton v-bind="form" />
     <VButton v-bind="api" />
+    <VButtonGroup v-bind="btnGroup" />
     <VForm v-model="form1Data" v-bind="form.extra" />
     <!-- <el-divider />
     <VButtonGroup :buttons="buttons" />
@@ -59,6 +60,13 @@ const api = {
     }
   },
   confirm: true
+}
+
+const btnGroup = {
+  text: '按钮组',
+  buttons: [
+    api,
+  ]
 }
 
 const form = {

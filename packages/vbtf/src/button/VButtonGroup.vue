@@ -1,42 +1,27 @@
 <template>
   <span class="v-btn">
     <!-- 按钮 -->
-    <el-dropdown
-      v-bind="dropProps"
-      @command="clickHandle"
-    >
+    <el-dropdown v-bind="dropProps" @command="clickHandle">
       <template v-if="dropProps.splitButton">
-        更多
+        {{ text }}
       </template>
       <template v-else>
         <el-button :type="dropProps.type">
-          更多<el-icon class="el-icon--right"><arrow-down /></el-icon>
+          {{ text }}
+          <el-icon class="el-icon--right"><arrow-down /></el-icon>
         </el-button>
       </template>
       <template #dropdown>
         <el-dropdown-menu>
-          <el-dropdown-item
-            v-for="(item, index) in buttons"
-            :key="index + 'button-group'"
-            :command="index + 1"
-          >{{ item.text }}</el-dropdown-item>
+          <el-dropdown-item v-for="(item, index) in buttons" :key="index + 'button-group'" :command="index + 1">{{
+            item.text }}</el-dropdown-item>
         </el-dropdown-menu>
       </template>
     </el-dropdown>
     <!-- 弹窗容器 -->
-    <component
-      :is="'el-' + container"
-      v-if="showContainer"
-      v-model="showContainer"
-      v-bind="containerProps"
-      :before-close="beforeClose"
-      :title="containerTitle"
-    >
-      <component
-        :is="xsubComp"
-        v-bind="xsubProps"
-        v-on="xsubEvent"
-      />
+    <component :is="'el-' + container" v-if="showContainer" v-model="showContainer" v-bind="containerProps"
+      :before-close="beforeClose" :title="containerTitle">
+      <component :is="xsubComp" v-bind="xsubProps" v-on="xsubEvent" />
     </component>
   </span>
 </template>
@@ -49,6 +34,7 @@ import { isString, isFunc, strVarReplace } from '@okiss/utils'
 import { ArrowDown } from '@element-plus/icons-vue'
 import { merge } from 'lodash'
 import { ElDialog, ElDrawer } from 'element-plus'
+import { ElLoading } from 'element-plus'
 
 type Buttons = BaseButtonProps[]
 interface DropProps {
@@ -56,7 +42,7 @@ interface DropProps {
   type?: string
 }
 
-const defaultDropProps : DropProps = {
+const defaultDropProps: DropProps = {
   splitButton: false
 }
 
@@ -73,6 +59,10 @@ export default defineComponent({
       type: Array as unknown as Buttons,
       default: () => []
     },
+    text: {
+      type: String,
+      default: '更多'
+    },
     ...baseProps
   },
   emits: events,
@@ -80,7 +70,7 @@ export default defineComponent({
     const app = getCurrentInstance()
     const root = app.appContext.config.globalProperties
 
-    const dropProps : DropProps = { ...defaultDropProps, ...props.props }
+    const dropProps: DropProps = { ...defaultDropProps, ...props.props }
     const replaceText: (string) => string = (str) => {
       return strVarReplace(str, props.metaData)
     }
@@ -93,7 +83,7 @@ export default defineComponent({
       return ''
     })
 
-    const instance : Plugin<any> = ref(null)
+    const instance: Plugin<any> = ref(null)
     const clickHandle = (index) => {
       index = index - 1
       if (!props.preCheck(props)) {
@@ -101,7 +91,7 @@ export default defineComponent({
       }
       const btn = props.buttons[index]
       const metaData = () => isFunc(btn['meta-data']) ? btn['meta-data']() : btn['meta-data']
-      const realTarget : Function = () => strVarReplace(btn.target || '', metaData())
+      const realTarget: Function = () => strVarReplace(btn.target || '', metaData())
       instance.value = plugins[btn.type || 'base']
       let extra = btn.extra || {}
       if (extra.url === undefined) {
@@ -124,7 +114,7 @@ export default defineComponent({
           conf[key] = strVarReplace(conf[key], data || {})
         }
       })
-      instance.value.onclick(realTarget, root, ctx, conf, () => {
+      instance.value.onclick(realTarget, root, ctx, {...conf, isGrup: true}, () => {
         activeIndex.value = index
         if (['modal', 'form', 'table'].indexOf(btn.type) > -1) {
           showContainer.value = true
@@ -160,6 +150,18 @@ export default defineComponent({
       xsubEvent.value = (instance.value && instance.value.getSubEvent) ? instance.value.getSubEvent(btn, ctx, showContainer) : {}
     })
 
+
+    const openFullScreen2 = () => {
+      const loading = ElLoading.service({
+        lock: true,
+        text: 'Loading',
+        background: 'rgba(0, 0, 0, 0.7)',
+      })
+      setTimeout(() => {
+        loading.close()
+      }, 2000)
+    }
+
     return {
       dropProps,
       showText,
@@ -171,7 +173,8 @@ export default defineComponent({
       xsubComp,
       xsubProps,
       xsubEvent,
-      containerTitle
+      containerTitle,
+      openFullScreen2
     }
   }
 })
