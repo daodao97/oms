@@ -9,14 +9,14 @@
     "release": "cross-env pkg=utils node ../../build/release.js"
   },
   "dependencies": {
-    "dayjs": "^1.11.7",
-    "element-plus": "2.3.5",
-    "handlebars": "^4.7.7",
+    "dayjs": "^1.11.13",
+    "element-plus": "2.8.1",
+    "handlebars": "^4.7.8",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/lodash": "^4.14.195",
-    "@types/node": "^20.3.3"
+    "@types/lodash": "^4.17.7",
+    "@types/node": "^22.5.2"
   },
   "files": [
     "dist/*"
