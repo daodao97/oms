@@ -97,7 +97,7 @@ export default {
   width: 100%;
   padding: 15px 20px 0 20px;
 
-  ::v-deep(.el-input__wrapper) {
+  ::v-deep(.el-select__wrapper) {
     background-color: #304156;
     border: 1px dashed gray;
     border-radius: var(--el-input-border-radius,var(--el-border-radius-base));

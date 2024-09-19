@@ -76,9 +76,6 @@ const resizeHandler = () => {
 
 .app-wrapper {
   @include clearfix;
-  position: relative;
-  height: 100%;
-  width: 100%;
 
   &.mobile.openSidebar {
     position: fixed;

@@ -1,4 +1,4 @@
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 import { AxiosRequestConfig } from 'axios'
 import { OmsOptions } from './types'
 import { Settings } from './types'
@@ -23,7 +23,7 @@ export const defaultSettings: Settings = {
   ElementPlus: {
     size: 'default',
     zIndex: 3000,
-    locale: locale
+    locale: zhCn
   },
   nav: [],
   whiteRoutes: ['/login'],

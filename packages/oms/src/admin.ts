@@ -17,7 +17,7 @@ import './styles/index.scss'
 import '@okiss/vbtf/style.css'
 
 import ElementPlus from './plugins/element-plus'
-import locale from 'element-plus/lib/locale/lang/zh-cn'
+import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 import store from './store'
 import router from './router'
@@ -115,7 +115,7 @@ export function createOmsPlugin(options: OmsOptions): OmsPlugin {
     use: [
       store,
       router,
-      [ElementPlus, { locale, ...options.settings?.ElementPlus }]
+      [ElementPlus, { locale: zhCn, ...options.settings?.ElementPlus }]
     ]
   }
 }
