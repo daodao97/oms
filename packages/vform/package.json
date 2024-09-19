@@ -14,10 +14,10 @@
     "@okiss/utils": "latest",
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
-    "element-plus": "2.8.1",
+    "element-plus": "2.8.3",
     "inputmask": "^5.0.9",
     "lodash": "^4.17.21",
-    "vue": "^3.4.38",
+    "vue": "^3.5.6",
     "vuedraggable": "^4.0.3"
   },
   "devDependencies": {

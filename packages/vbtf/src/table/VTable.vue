@@ -1130,6 +1130,11 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
+  ::v-deep(.el-form--inline .el-select) {
+    width: 150px;
+  }
+</style>
+<style lang="scss" scoped>
 .filter-form {
   ::v-deep(.el-form-item__label) {
     /*text-align-last: justify;*/

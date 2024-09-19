@@ -1,6 +1,6 @@
 {
   "name": "@okiss/vbtf",
-  "version": "0.0.86",
+  "version": "0.0.88",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "cross-env pkg=vbtf vite --config ../../build/dev.config.ts",
@@ -13,13 +13,13 @@
     "@okiss/utils": "latest",
     "axios": "^1.7.7",
     "dayjs": "^1.11.13",
-    "element-plus": "2.8.1",
+    "element-plus": "2.8.3",
     "file-saver": "^2.0.5",
     "inputmask": "^5.0.9",
     "lodash": "^4.17.21",
     "sortablejs": "^1.15.3",
-    "vue": "^3.4.38",
-    "vue-router": "^4.4.3",
+    "vue": "^3.5.6",
+    "vue-router": "^4.4.5",
     "vuedraggable": "^4.0.3",
     "xlsx": "^0.18.5"
   },
