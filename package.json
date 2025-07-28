@@ -8,7 +8,8 @@
     "docs:build": "vitepress build docs",
     "docs:serve": "vitepress serve docs",
     "eslint": "eslint --fix --ext .tsx --ext .ts --ext .js --ext .vue core/ src/",
-    "release.btf": "cross-env pkg=vbtf node build/release.js"
+    "release.btf": "cross-env pkg=vbtf node build/release.js",
+    "release.form": "cross-env pkg=vform node build/release.js"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.1",

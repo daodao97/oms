@@ -1,6 +1,6 @@
 {
   "name": "@okiss/vform",
-  "version": "0.0.60",
+  "version": "0.0.62",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "cross-env pkg=vform vite --config ../../build/dev.config.ts",

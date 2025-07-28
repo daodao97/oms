@@ -3,7 +3,7 @@
     <span
       v-if="!loading"
       :key="key"
-      v-html="showTpl"
+      v-html="modelValue || showTpl"
     />
     <el-button
       v-if="!auto"
@@ -48,8 +48,13 @@ export default defineComponent({
     timeout: {
       type: Number,
       default: 0
+    },
+    modelValue: {
+      type: String,
+      default: ''
     }
   },
+  emits: ['update:modelValue'],
   data() {
     if (this.auto) {
       const onwatch = debounce((newVal) => {
@@ -66,7 +71,7 @@ export default defineComponent({
     }
 
     return {
-      showTpl: '',
+      showTpl: "",
       key: 0,
       loading: false,
       instance: undefined,
@@ -104,7 +109,21 @@ export default defineComponent({
           url: strVarReplace(this.$props.dataApi, { ...this.formData })
         }).then(({ data }) => {
           const tmp = Object.assign({}, newVal, data)
-          this.showTpl = strVarReplace(this.getTpl(tmp), tmp)
+
+          // this.showTpl = strVarReplace(this.getTpl(tmp), tmp)
+ 
+          if (data.formData != undefined) {
+            Object.keys(data.formData).forEach(key => {
+                this.formData[key] = data.formData[key]
+                this.$emit('update:modelValue', key, data.formData[key])
+            })
+
+            this.showTpl = strVarReplace(this.getTpl(tmp), tmp)
+
+            this.$emit('update:modelValue', this.showTpl)
+            console.warn("showTpl5", this.showTpl)
+          }
+
 
           if (this.$props.interval && data.state === 'done') {
             clearInterval(this.instance)
@@ -147,6 +166,7 @@ export default defineComponent({
         }
       } else {
         this.showTpl = strVarReplace(this.getTpl(), newVal)
+        
       }
       this.key++
     }

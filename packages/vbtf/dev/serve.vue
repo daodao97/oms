@@ -207,7 +207,7 @@ const form1Data = ref({
 })
 const form1 = {
   options: {
-    inline: true
+    inline: false,
   },
   formItems: [
     {
@@ -250,7 +250,23 @@ const form1 = {
         { value: '2', label: '2' }
       ],
       info: '字段提示, 可以写html, <a target="_blank" href="https://github.com/daodao97/oms">点我跳转</a>'
-    }
+    },
+    {
+      "field": "auth_url",
+      "label": "授权地址",
+      "type": "VShow",
+      "props": {
+        "auto": false,
+        "text": "点击生成授权地址",
+        "dataApi": "/test",
+        "tpl": "<a href='{{auth_url}}' target='_blank' class='el-link el-link--primary'>点我打开</a>"
+      },
+      "tips": "请在浏览器中打开授权地址，登录后复制授权码"
+    },
+    {
+      "field": "session_id",
+      "label": "会话ID"
+    },
   ]
 }
 
