@@ -4,10 +4,12 @@
   </div>
 </template>
 <script setup>
-import { useStore } from 'vuex'
 import { useRoute } from 'vue-router'
-const store = useStore()
-const name = computed(() => store.getters.name)
+import { computed } from 'vue'
+import { useUserStore } from '@okiss/oms'
+
+const userStore = useUserStore()
+const name = computed(() => userStore.name)
 const route = useRoute()
 
 </script>

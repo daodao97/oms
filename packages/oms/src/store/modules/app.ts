@@ -1,8 +1,8 @@
-import { ActionContext, Module } from 'vuex'
+import { defineStore } from 'pinia'
 import { App, PageSchema, Sidebar } from '../types'
 import Cookies from 'js-cookie'
 
-export const app: App = {
+export const appState: App = {
   sidebar: {
     opened: Cookies.get('sidebarStatus') ? !!Cookies.get('sidebarStatus') : true,
     withoutAnimation: false
@@ -14,63 +14,44 @@ export const app: App = {
   baseURL: ''
 }
 
-const _module: Module<App, any> = {
-  namespaced: true,
-  state: app,
-  mutations: {
-    TOGGLE_SIDEBAR: (state: App) => {
-      state.sidebar.opened = !state.sidebar.opened
-      state.sidebar.withoutAnimation = false
-      if (state.sidebar.opened) {
-        Cookies.set('sidebarStatus', '1')
-      } else {
-        Cookies.set('sidebarStatus', '0')
-      }
-    },
-    CLOSE_SIDEBAR: (state: App, withoutAnimation: boolean) => {
-      Cookies.set('sidebarStatus', '0')
-      state.sidebar.opened = false
-      state.sidebar.withoutAnimation = withoutAnimation
-    },
-    TOGGLE_DEVICE: (state: App, device: string) => {
-      state.device = device
-    },
-    SET_PAGE_JSON_SCHEMA: (state: App, { page, json }: PageSchema) => {
-      state.pages[page] = json
-    },
-    SET_CURRENT_META: (state: App, data: Record<string, any>) => {
-      state.currentRouteMeta = data
-    },
-    SET_BUILDER_SCHEMA: (state: App, data: Record<string, any>) => {
-      state.builderSchema = data
-    },
-    SET_BASE_API: (state: App, data: string) => {
-      state.baseURL = data
-    }
-  },
+export const useAppStore = defineStore('app', {
+  state: (): App => ({ ...appState }),
   actions: {
-    toggleSideBar({ commit }: ActionContext<App, App>) {
-      commit('TOGGLE_SIDEBAR')
+    TOGGLE_SIDEBAR() {
+      this.sidebar.opened = !this.sidebar.opened
+      this.sidebar.withoutAnimation = false
+      Cookies.set('sidebarStatus', this.sidebar.opened ? '1' : '0')
     },
-    closeSideBar({ commit }: ActionContext<App, App>, { withoutAnimation }: Sidebar) {
-      commit('CLOSE_SIDEBAR', withoutAnimation)
+    CLOSE_SIDEBAR(withoutAnimation: boolean) {
+      Cookies.set('sidebarStatus', '0')
+      this.sidebar.opened = false
+      this.sidebar.withoutAnimation = withoutAnimation
     },
-    toggleDevice({ commit }: ActionContext<App, App>, device: string) {
-      commit('TOGGLE_DEVICE', device)
+    TOGGLE_DEVICE(device: string) {
+      this.device = device
     },
-    setPageJsonSchema({ commit }: ActionContext<App, App>, data: PageSchema) {
-      commit('SET_PAGE_JSON_SCHEMA', data)
+    SET_PAGE_JSON_SCHEMA({ page, json }: PageSchema) {
+      this.pages[page] = json
     },
-    setCurrentMeta({ commit }: ActionContext<App, App>, data: Record<string, any>) {
-      commit('SET_CURRENT_META', data)
+    SET_CURRENT_META(data: Record<string, any>) {
+      this.currentRouteMeta = data
     },
-    setBuilderSchema({ commit }: ActionContext<App, App>, data: Record<string, any>) {
-      commit('SET_BUILDER_SCHEMA', data)
+    SET_BUILDER_SCHEMA(data: Record<string, any>) {
+      this.builderSchema = data
     },
-    setBaseAPI({ commit }: ActionContext<App, App>, data: string) {
-      commit('SET_BASE_API', data)
-    }
-  }
-}
+    SET_BASE_API(data: string) {
+      this.baseURL = data
+    },
 
-export default _module
+    // Vuex-compat method names
+    toggleSideBar() { this.TOGGLE_SIDEBAR() },
+    closeSideBar({ withoutAnimation }: Sidebar) { this.CLOSE_SIDEBAR(withoutAnimation) },
+    toggleDevice(device: string) { this.TOGGLE_DEVICE(device) },
+    setPageJsonSchema(data: PageSchema) { this.SET_PAGE_JSON_SCHEMA(data) },
+    setCurrentMeta(data: Record<string, any>) { this.SET_CURRENT_META(data) },
+    setBuilderSchema(data: Record<string, any>) { this.SET_BUILDER_SCHEMA(data) },
+    setBaseAPI(data: string) { this.SET_BASE_API(data) }
+  }
+})
+
+export default useAppStore

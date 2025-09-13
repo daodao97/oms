@@ -8,6 +8,7 @@
 <script setup>
 import PageLoad from '../components/PageLoad.vue'
 import Report from '../components/report/index.vue'
+import { useRoute } from 'vue-router'
 const route = useRoute()
 
 const schemaapi = computed(() => {

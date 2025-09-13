@@ -46,11 +46,13 @@ const _data = computed<Array<String|Number>>(() => {
   return data?.value as Array<String|Number>
 })
 
-const type = (val: any) => {
-  const allowed = ['success', 'info', 'warning', 'danger']
-  const state = column.value?.state ? column.value?.state : allowed
-  const v = state[val] ? state[val] : val
-  return allowed.indexOf(v) > -1 ? v + '' : ''
+const allowed = ['success', 'info', 'warning', 'danger', 'primary'] as const
+type TagType = typeof allowed[number]
+const type = (val: any): TagType => {
+  const state = (column.value as any)?.state || {}
+  const v = state[val] ?? val
+  const s = String(v)
+  return (allowed as readonly string[]).includes(s) ? (s as TagType) : 'info'
 }
 const getLabel = (val: any) => {
   if (val === '') {

@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios'
-import store from '../../store'
+import { pinia, useUserStore } from '../../store'
 import { Interceptor, InterceptorUse } from './types'
 import { Message, MessageBox } from '../../plugins/element-plus'
 import { removeToken } from '../token'
@@ -8,11 +8,11 @@ import { isString } from '@okiss/utils'
 import router from '../../router'
 
 function getToken() {
-  return store.state.user.token
+  return useUserStore(pinia).token
 }
 
 function expired() {
-  return store.state.user.expired
+  return useUserStore(pinia).expired
 }
 
 function errMsg(message: string) {
@@ -47,7 +47,7 @@ const baseResponseInterceptor: InterceptorUse<AxiosResponse, AxiosError> = {
         if (expired()) {
           return
         }
-        store.dispatch('user/SetExpired')
+        useUserStore(pinia).SetExpired()
         MessageBox.alert('登录信息已过期或未登录, 是否跳转登录', '操作提醒', {
           showClose: false,
           confirmButtonText: '重新登录',
@@ -60,7 +60,7 @@ const baseResponseInterceptor: InterceptorUse<AxiosResponse, AxiosError> = {
               location.href = location.origin + location.pathname + location.hash.replace('#', '#/?redirect=')
               location.reload()
             }
-            store.dispatch('user/SetExpired')
+            useUserStore(pinia).SetExpired()
           }
         })
         return

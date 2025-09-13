@@ -26,72 +26,57 @@
   </template>
 
 </template>
-<script lang="ts">
+<script lang="ts" setup>
 import VLoading from './VLoading.vue'
 import { isObject, isString, isArray } from '@okiss/utils'
-import store from '../store'
 import VNotice from './notice/VNotice.vue'
+import { useAppStore, useSettingsStore, useUserStore } from '../store'
+import { useRoute } from 'vue-router'
 
-export default defineComponent({
-  components: { VLoading, VNotice },
-  props: {
-    schemaHandler: {
-      type: Function,
-      default: function(val: any, project: string) { return val }
-    },
-    schemaApi: {
-      type: String,
-      default: ''
-    }
-  },
-  data() {
-    return {
-      loading: true,
-      haveNotice: false,
-      notice: {},
-      noticeApi: '',
-      schema: {},
-      owners: [],
-      serviceOffLine: false
-    }
-  },
-  computed: {
-    env() {
-      return this.$store.state.user.env
-    },
-    setting() {
-      return this.$store.state.settings
-    }
-  },
-  beforeCreate() {
-    const token = this.$route.path.split('/').filter(item => item)
-    const project = token.length > 1 ? token.slice(0, token.length - 1).join('/') : token[0]
-    const api = '/schema' + this.$route.meta.path
-    // const conf = { cacheTime: 10 * 60 * 1000, params: this.$route.params }
-    const conf = { params: this.$route.params }
-    this.$http.get(this.$props.schemaApi || api, conf).then(({ data }) => {
-      this.loading = false
-      if (isObject(data)) {
-        if (data.notice !== undefined) {
-          this.haveNotice = true
-          if (isString(data.notice)) {
-            this.notice = {
-              title: data.notice
-            }
-          } else if (isObject(data.notice)) {
-            this.notice = data.notice
-            this.noticeApi = data.notice.noticeApi
-          }
-          delete data['notice']
+const props = withDefaults(defineProps<{ schemaHandler?: (val: any, project: string) => any, schemaApi?: string }>(), {
+  schemaHandler: (val: any) => val,
+  schemaApi: ''
+})
+const appStore = useAppStore(); const settingsStore = useSettingsStore(); const userStore = useUserStore()
+const route = useRoute()
+const loading = ref(true)
+const haveNotice = ref(false)
+const notice = ref<any>({})
+const noticeApi = ref('')
+const schema = ref<any>({})
+const owners = ref<string[]>([])
+const serviceOffLine = ref<boolean | string>(false)
+
+const env = computed(() => userStore.env)
+const setting = computed(() => settingsStore)
+
+onBeforeMount(() => {
+  const token = route.path.split('/').filter(item => item)
+  const project = token.length > 1 ? token.slice(0, token.length - 1).join('/') : token[0]
+  const api = '/schema' + (route.meta as any).path
+  const conf = { params: route.params }
+  // @ts-ignore
+  const http = window?.App?.config?.globalProperties?.$http
+  http.get(props.schemaApi || api, conf).then(({ data }) => {
+    loading.value = false
+    if (isObject(data)) {
+      if (data.notice !== undefined) {
+        haveNotice.value = true
+        if (isString(data.notice)) {
+          notice.value = { title: data.notice }
+        } else if (isObject(data.notice)) {
+          notice.value = data.notice
+          // @ts-ignore
+          noticeApi.value = data.notice.noticeApi
         }
-        this.owners = data.ownerNames || []
-        this.serviceOffLine = data.serviceOffLine || false
-
+        delete data['notice']
       }
-      this.schema = this.$props.schemaHandler(data, project)
-      store.commit('app/SET_PAGE_JSON_SCHEMA', { page: this.$route.path, json: this.schema })
-    })
-  }
+      owners.value = data.ownerNames || []
+      serviceOffLine.value = data.serviceOffLine || false
+    }
+    schema.value = props.schemaHandler(data, project)
+    appStore.SET_PAGE_JSON_SCHEMA({ page: route.path, json: schema.value })
+  })
 })
 </script>
 

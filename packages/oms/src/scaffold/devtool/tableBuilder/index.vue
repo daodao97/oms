@@ -127,7 +127,7 @@
     </template>
   </dev-layout>
 </template>
-<script>
+<script lang="ts">
 import DevLayout from '../DevLayout.vue'
 import { VTable, VForm, VBtn as VButton, JsonView } from '@okiss/vbtf'
 import { compactObject } from '@okiss/utils'
@@ -199,7 +199,8 @@ export default {
       }
     },
     currentBuilderSchema() {
-      return this.$store.state.app.builderSchema
+      // @ts-ignore
+      return this.$pinia?.state?.value?.app?.builderSchema
     }
   },
   watch: {
@@ -280,7 +281,12 @@ export default {
   },
   methods: {
     updateBuilderSchema() {
-      this.$store.dispatch('app/setBuilderSchema', this.builderSchema)
+      // Using Pinia app store
+      // @ts-ignore
+      const appStore = (this as any).$pinia?._s?.get('app') || null
+      if (appStore && appStore.setBuilderSchema) {
+        appStore.setBuilderSchema(this.builderSchema)
+      }
     },
     onDevAction(btnType, path) {
       this.activeIndex = path

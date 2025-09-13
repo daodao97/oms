@@ -2,7 +2,7 @@ import type { App, Component, Directive } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import type { OmsOptions, OmsPlugin, UsePlugin } from './types'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
-import type { Module } from 'vuex'
+// Vuex Module removed in Pinia migration
 
 import AppComp from './App.vue'
 import { startMock, regMockApis } from './mock'
@@ -19,7 +19,7 @@ import '@okiss/vbtf/style.css'
 import ElementPlus from './plugins/element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
-import store from './store'
+import { setupStore, pinia, useAppStore, useSettingsStore, useUserStore, setHttp } from './store'
 import router from './router'
 import * as directives from './directive'
 import { defaultOptions } from './default'
@@ -43,9 +43,13 @@ export function createAdmin(omsOptions?: OmsOptions) {
     startMock()
   }
   http = instance(options.axios)
-  store.dispatch('setHttp', http).then()
-  store.dispatch('settings/updateSettings', omsOptions?.settings).then()
-  store.dispatch('app/setBaseAPI', options?.axios.baseURL).then()
+  // install pinia
+  setupStore(app)
+  const appStore = useAppStore(pinia)
+  const settingsStore = useSettingsStore(pinia)
+  setHttp(http)
+  settingsStore.updateSettings(omsOptions?.settings || {})
+  appStore.setBaseAPI(options?.axios.baseURL as any)
   app.config.globalProperties.$http = http
   app.config.globalProperties.$router = router
   window.App = app
@@ -68,7 +72,7 @@ function regRoutes(routes: RouteRecordRaw[] = []) {
   routes.forEach(item => {
     router.addRoute(item)
   })
-  store.commit('user/setCustomRoutes', routes)
+  useUserStore(pinia).setCustomRoutes(routes)
 }
 
 function regUse(app: App, use: UsePlugin[]) {
@@ -88,14 +92,15 @@ function regDirective(app: App, directives: Record<string, Directive> = {}) {
   })
 }
 
-function regStoreModule(modules: Record<string, Module<any, any>> = {}) {
+function regStoreModule(modules: Record<string, any> = {}) {
   const keepModuleNames = ['app', 'settings', 'user']
   Object.keys(modules).forEach(item => {
     if (keepModuleNames.indexOf(item) !== -1) {
       console.warn(`storeModule name [${item}] is use by base, please change it!`)
       return
     }
-    store.registerModule(item, modules[item])
+    // Pinia does not support dynamic Vuex-style module registration
+    console.warn('[store] plugin storeModules are not supported under Pinia. Ignored:', item)
   })
 }
 
@@ -113,7 +118,6 @@ export function createOmsPlugin(options: OmsOptions): OmsPlugin {
     components: { VIcon },
     directives: directives,
     use: [
-      store,
       router,
       [ElementPlus, { locale: zhCn, ...options.settings?.ElementPlus }]
     ]

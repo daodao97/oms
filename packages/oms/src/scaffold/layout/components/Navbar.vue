@@ -67,104 +67,85 @@
   </el-row>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup lang="ts">
 import Breadcrumb from './Breadcrumb/index.vue'
 import Hamburger from './Hamburger/index.vue'
 import PageEditor from './PageEditor.vue'
 import { showEleByClassName, Cache, waterMarker } from '@okiss/utils'
 import { VBtn as VButton } from '@okiss/vbtf'
+import { useAppStore, useSettingsStore, useUserStore } from '../../../store'
+import { computed, ref, onMounted } from 'vue'
 
-export default {
-  components: {
-    Breadcrumb,
-    Hamburger,
-    VButton,
-    PageEditor
-  },
-  data() {
-    return {
-      showExportPop: false,
-      modulesList: this.getSetting('system_module'),
-      showJsonSchema: false,
-      json: '',
-      key: 0,
-      defaultAvatar: this.getSetting('defaultAvatar')
-    }
-  },
-  computed: {
-    ...mapGetters(['sidebar', 'avatar', 'name', 'nickname', 'nav']),
-    hasNewMessage() {
-      return this.$store.state.settings.hasNewMessage
-    },
-    moduleName() {
-      return this.$store.state.app.moduleName
-    },
-    setting() {
-      return this.$store.state.settings
-    },
-    user() {
-      return this.$store.state.user
-    },
-    showPageJsonSchemaIcon() {
-      return this.$store.state.settings.showPageJsonSchema || false
-    }
-  },
-  mounted() {
-    showEleByClassName('el-submenu is-active')
-    const noticeStr = this.getSetting('navBarNotice')
-    if (noticeStr.length > 0 && !this.getSetting('closeNavNotice') && this.showNotice(noticeStr)) {
-      this.$notify({
-        title: '提示',
-        message: noticeStr,
-        dangerouslyUseHTMLString: true,
-        duration: 0,
-        onClose: this.closeNavBarNotice
-      })
-    }
-    if (this.setting.envColor[this.user.env]) {
-      waterMarker({
-        elRef: this.$refs.header.$el,
-        waterMark: this.user.env,
-        color: 'skyblue',
-        size: '20'
-      })
-    }
-  },
-  methods: {
-    toggleSideBar() {
-      this.$store.dispatch('app/toggleSideBar')
-    },
-    async logout() {
-      await this.$store.dispatch('user/logout')
-      location.reload(`${location.origin}/#/login?redirect=${this.$route.fullPath}`)
-    },
-    getSetting(name) {
-      return this.$store.state.settings[name]
-    },
-    async closeNavBarNotice() {
-      await this.$store.commit('settings/updateSettings', { closeNavNotice: true })
-      this.closeNotice(this.getSetting('navBarNotice'))
-    },
-    showPopover() {
-      this.showExportPop = true
-    },
-    showNotice(text) {
-      const key = 'dismiss:navbar_notice'
-      if (!Cache.exist(key)) {
-        return true
-      }
-      return Cache.get(key) !== text
-    },
-    closeNotice(text) {
-      const key = 'dismiss:navbar_notice'
-      Cache.set(key, text)
-    },
-    gotoMenuEdit() {
-      if (this.$route?.meta?.pageId) {
-        window.open(location.origin + location.pathname + '#/menu/' + this.$route?.meta?.pageId)
-      }
-    }
+const appStore = useAppStore()
+const settingsStore = useSettingsStore()
+const userStore = useUserStore()
+
+const showExportPop = ref(false)
+const showJsonSchema = ref(false)
+const json = ref('')
+const key = ref(0)
+const defaultAvatar = computed(() => settingsStore.defaultAvatar)
+const sidebar = computed(() => appStore.sidebar)
+const avatar = computed(() => userStore.avatar)
+const name = computed(() => userStore.name)
+const nickname = computed(() => userStore.nickname)
+const nav = computed(() => (settingsStore as any).nav)
+const setting = computed(() => settingsStore)
+const user = computed(() => userStore)
+const showPageJsonSchemaIcon = computed(() => settingsStore.showPageJsonSchema || false)
+
+onMounted(() => {
+  showEleByClassName('el-submenu is-active')
+  const noticeStr = getSetting('navBarNotice') || ''
+  if (noticeStr.length > 0 && !getSetting('closeNavNotice') && showNotice(noticeStr)) {
+    // @ts-ignore
+    window?.App?.config?.globalProperties?.$notify({
+      title: '提示',
+      message: noticeStr,
+      dangerouslyUseHTMLString: true,
+      duration: 0,
+      onClose: closeNavBarNotice
+    })
+  }
+  if (setting.value.envColor?.[user.value.env]) {
+    // @ts-ignore
+    waterMarker({
+      elRef: header.value.$el,
+      waterMark: user.value.env,
+      color: 'skyblue',
+      size: '20'
+    })
+  }
+})
+
+const header = ref()
+function toggleSideBar() { appStore.toggleSideBar() }
+async function logout() {
+  await userStore.logout()
+  // @ts-ignore
+  const route = window?.App?.config?.globalProperties?.$router?.currentRoute?.value
+  location.reload(`${location.origin}/#/login?redirect=${route?.fullPath || '/'}`)
+}
+function getSetting(name: string): any { return (settingsStore as any)[name] }
+async function closeNavBarNotice() {
+  settingsStore.updateSettings({ closeNavNotice: true } as any)
+  closeNotice(getSetting('navBarNotice'))
+}
+function showPopover() { showExportPop.value = true }
+function showNotice(text: string) {
+  const key = 'dismiss:navbar_notice'
+  if (!Cache.exist(key)) return true
+  return Cache.get(key) !== text
+}
+function closeNotice(text: string) {
+  const key = 'dismiss:navbar_notice'
+  Cache.set(key, text)
+}
+function gotoMenuEdit() {
+  // @ts-ignore
+  const route = window?.App?.config?.globalProperties?.$router?.currentRoute?.value
+  if (route?.meta?.pageId) {
+    window.open(location.origin + location.pathname + '#/menu/' + route?.meta?.pageId)
   }
 }
 </script>

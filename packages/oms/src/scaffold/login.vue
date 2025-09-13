@@ -50,18 +50,18 @@
 
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'vue-router'
-import store from '../store'
+import { useSettingsStore, useAppStore, useUserStore } from '../store'
 import CryptoJS from 'crypto-js'
 import { computed } from 'vue'
 
 const router = useRouter()
 const route = useRoute()
-const tips = computed(() => store.state.settings.loginTips)
-const captcha = computed(() => store.state.settings.captcha)
-const baseAPI = computed(() => {
-  console.log(store.state.app)
-  return store.state.app.baseURL
-})
+const settingsStore = useSettingsStore()
+const appStore = useAppStore()
+const userStore = useUserStore()
+const tips = computed(() => settingsStore.loginTips)
+const captcha = computed(() => settingsStore.captcha)
+const baseAPI = computed(() => appStore.baseURL)
 
 const ts = ref(0)
 const onCaptchaClick = () => ts.value++
@@ -84,7 +84,7 @@ const login = () => {
   if (captcha.value) {
     data.value.sing = CryptoJS.MD5(`${data.value.username}${data.value.password}${data.value.captcha}`).toString()
   }
-  store.dispatch('user/login', data.value).then(res => {
+  userStore.login(data.value).then(res => {
     router.push({ path: route.query?.redirect as string || '/' })
   }).catch(e => {
     ts.value++

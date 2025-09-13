@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "dayjs": "^1.11.18",
-    "element-plus": "2.8.3",
+    "element-plus": "2.11.2",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21"
   },

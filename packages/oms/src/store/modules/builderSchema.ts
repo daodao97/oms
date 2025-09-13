@@ -3,27 +3,23 @@
  * 存储pageEditor 编辑模式下时子组件联动相关的状态数据
  */
 
-import { ActionContext, Module } from 'vuex'
-
+import { defineStore } from 'pinia'
 import { BuilderSchema } from '../types'
 
-export const builderSchema: BuilderSchema = {
+export const builderSchemaState: BuilderSchema = {
   currentCellItem: {} // form/sub-form 当前单元格编辑数据
 }
 
-const builderSchemaModule: Module<BuilderSchema, any> = {
-  namespaced: true,
-  state: builderSchema,
-  mutations: {
-    SET_CURRENT_CELLITEM: (state: BuilderSchema, data: Record<string, any>) => {
-      state.currentCellItem = data
-    }
-  },
+export const useBuilderSchemaStore = defineStore('builderSchema', {
+  state: (): BuilderSchema => ({ ...builderSchemaState }),
   actions: {
-    setCurrentCellItem({ commit }: ActionContext<BuilderSchema, BuilderSchema>, data: Record<string, any>) {
-      commit('SET_CURRENT_CELLITEM', data)
+    SET_CURRENT_CELLITEM(data: Record<string, any>) {
+      this.currentCellItem = data
+    },
+    setCurrentCellItem(data: Record<string, any>) {
+      this.SET_CURRENT_CELLITEM(data)
     }
   }
-}
+})
 
-export default builderSchemaModule
+export default useBuilderSchemaStore

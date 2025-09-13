@@ -37,9 +37,11 @@
     </template>
   </el-select>
 </template>
-<script>
-import { mapGetters } from 'vuex'
+<script setup lang="ts">
 import { cloneDeep } from 'lodash'
+import { useUserStore } from '../../../../store'
+import { useRouter } from 'vue-router'
+const userStore = useUserStore()
 
 function filterHidden(arr) {
   return arr.filter(each => {
@@ -56,41 +58,29 @@ function filterHidden(arr) {
   })
 }
 
-export default {
-  data() {
-    return {
-      selected: ''
-    }
-  },
-  computed: {
-    ...mapGetters(['remoteRouter']),
-    filterRoutes() {
-      let routes = []
-      this.remoteRouter.forEach(item => {
-        routes = routes.concat(cloneDeep(item.routes))
-      })
-      return filterHidden(routes)
-    }
-  },
-  methods: {
-    getJumpPath: function(route) {
-      let _route = route
-      if (route.meta.menuType === 1 && route.children && route.children.length > 0) {
-        for (let i = 0; i < route.children.length; i++) {
-          if (route.children[i].path.indexOf('/:') === -1) {
-            _route = route.children[i]
-            break
-          }
-        }
+const selected = ref('')
+const remoteRouter = computed(() => userStore.remoteRouter)
+const router = useRouter()
+
+const filterRoutes = computed(() => {
+  let routes: any[] = []
+  remoteRouter.value.forEach(item => { routes = routes.concat(cloneDeep(item.routes)) })
+  return filterHidden(routes)
+})
+
+function getJumpPath(route: any) {
+  let _route = route
+  if (route.meta.menuType === 1 && route.children && route.children.length > 0) {
+    for (let i = 0; i < route.children.length; i++) {
+      if (route.children[i].path.indexOf('/:') === -1) {
+        _route = route.children[i]
+        break
       }
-      return this.$router.resolve(_route.redirect ? _route.redirect : _route).fullPath
-    },
-    onselected: function(to) {
-      this.$router.push(to)
-      this.selected = ''
     }
   }
+  return router.resolve(_route.redirect ? _route.redirect : _route).fullPath
 }
+function onselected(to: string) { router.push(to); selected.value = '' }
 </script>
 <style lang="scss" scoped>
 .search-menu {

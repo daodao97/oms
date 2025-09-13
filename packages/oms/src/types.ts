@@ -1,7 +1,6 @@
 import { AxiosRequestConfig } from './utils/request'
 import type { RouteRecordRaw } from 'vue-router'
 import { Component, Directive, Plugin } from 'vue'
-import { Module } from 'vuex'
 import { MockApi } from './mock/types'
 import { Sso } from './utils/sso'
 
@@ -41,7 +40,10 @@ export interface OmsPlugin {
     directives?: Record<string, Directive>,
     mockApis?: MockApi[],
     routes?: RouteRecordRaw[],
-    storeModules?: Record<string, Module<any, any>>
+    // Pinia does not support dynamic registration like Vuex modules;
+    // this field is deprecated and ignored in Pinia migration.
+    // Kept for backward compatibility with type 'any'.
+    storeModules?: Record<string, any>
 }
 
 export interface OmsOptions {

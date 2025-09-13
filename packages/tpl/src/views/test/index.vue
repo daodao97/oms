@@ -10,11 +10,10 @@
 <script setup>
 import { VForm, VButton, VIcon } from '@okiss/vbtf'
 import { computed } from 'vue'
-import { useStore } from 'vuex'
-const store = useStore()
-const name = computed(() => {
-  return store.getters.nickname || store.getters.name
-})
+import { useUserStore } from '@okiss/oms'
+
+const userStore = useUserStore()
+const name = computed(() => userStore.nickname || userStore.name)
 // eslint-disable-next-line no-unused-vars
 
 const value = ref({ a: [960] })

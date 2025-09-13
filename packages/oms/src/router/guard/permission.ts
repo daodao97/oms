@@ -1,5 +1,5 @@
 import { Router } from 'vue-router'
-import store from '../../store'
+import { pinia, useUserStore } from '../../store'
 import { getToken, getWhiteRoutes } from './func'
 import sso from '../../utils/sso'
 import { isObject } from 'lodash'
@@ -29,7 +29,8 @@ export default function(router: Router) {
     }
 
     const flag = s.flag()
-    if (flag && await store.dispatch('user/login', isObject(flag) ? flag : { ticket: flag })) {
+    const user = useUserStore(pinia)
+    if (flag && await user.login(isObject(flag) ? flag : { ticket: flag })) {
       next()
       return
     }

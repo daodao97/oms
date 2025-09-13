@@ -38,24 +38,14 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: 'SidebarLogo',
-  props: {
-    collapse: {
-      type: Boolean,
-      required: true
-    }
-  },
-  computed: {
-    title() {
-      return this.$store.state.settings.title
-    },
-    logo() {
-      return this.$store.state.settings.logo
-    }
-  }
-}
+<script setup lang="ts">
+import { useSettingsStore } from '../../../../store'
+import { computed } from 'vue'
+
+defineProps<{ collapse: boolean }>()
+const settings = useSettingsStore()
+const title = computed(() => settings.title as any)
+const logo = computed(() => settings.logo as any)
 </script>
 
 <style lang="scss" scoped>

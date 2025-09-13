@@ -1,26 +1,14 @@
-import { ActionContext, Module } from 'vuex'
+import { defineStore } from 'pinia'
 
-interface Store {
-  test : string
-}
-
-export const store: Store = {
-  test: 'default_test'
-}
-
-const _module: Module<Store, any> = {
-  namespaced: true,
-  state: store,
-  mutations: {
-    TEST: (state: Store, val) => {
-      state.test = val
-    }
-  },
+export const useAdminStore = defineStore('admin', {
+  state: () => ({
+    test: 'default_test'
+  }),
   actions: {
-    toggleSideBar({ commit }: ActionContext<Store, Store>) {
-      commit('TEST', 'abc')
+    toggleSideBar() {
+      this.test = 'abc'
     }
   }
-}
+})
 
-export default _module
+export default useAdminStore

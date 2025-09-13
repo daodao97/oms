@@ -1,12 +1,14 @@
-import { ActionContext, Module } from 'vuex'
-import { RootState, strOrNum, User } from '../types'
+import { defineStore } from 'pinia'
+import { strOrNum, User } from '../types'
 import { LoginForm, LoginTicket, RemoteModule, Settings, UserInfo } from '../../types'
 import { ApiResponse } from '../../utils/request/types'
 import { getToken, removeToken, setToken } from '../../utils/token'
 import { RouteRecordRaw } from 'vue-router'
 import Cookies from 'js-cookie'
+import { getHttp } from '../http'
+import { useSettingsStore } from './settings'
 
-export const user: User = {
+export const userState: User = {
   name: '',
   nickname: '',
   avatar: '',
@@ -22,105 +24,87 @@ export const user: User = {
   expired: false
 }
 
-const userModule: Module<User, any> = {
-  namespaced: true,
-  state: user,
-  mutations: {
-    updateToken(state: User, token: string) {
-      state.token = token
+export const useUserStore = defineStore('user', {
+  state: (): User => ({ ...userState }),
+  actions: {
+    updateToken(token: string) {
+      this.token = token
       setToken(token)
     },
-    removeToken(state: User) {
-      state.token = ''
+    removeToken() {
+      this.token = ''
       removeToken()
     },
-    updateRemoteRouter(state: User, routes: RemoteModule[]) {
-      state.remoteRouter = routes
-      state.isLodeRemoteRoutes = true
+    updateRemoteRouter(routes: RemoteModule[]) {
+      this.remoteRouter = routes
+      this.isLodeRemoteRoutes = true
     },
-    setCustomRoutes(state: User, routes: RouteRecordRaw[]) {
-      state.customRouter = state.customRouter.concat(routes)
+    setCustomRoutes(routes: RouteRecordRaw[]) {
+      this.customRouter = this.customRouter.concat(routes)
     },
-    updateState<K extends keyof User>(state: User, { key, value }: { key: K, value: any }) {
-      state[key] = value
+    updateState<K extends keyof User>({ key, value }: { key: K, value: any }) {
+      // @ts-ignore
+      this[key] = value
     },
-    resetUser(state: User) {
-      state = Object.assign({
-        name: '',
-        nickname: '',
-        avatar: '',
-        token: getToken(),
-        customRouter: [],
-        remoteRouter: [],
-        menuRoutes: [],
-        isLodeRemoteRoutes: false,
-        resource: {},
-        roleIds: [],
-        path: '',
-        env: '',
-        expired: false
-      })
+    resetUser() {
+      const fresh: User = { ...userState, token: getToken() }
+      Object.assign(this, fresh)
     },
-    SET_EXPIRED: (state: User) => {
-      state.expired = !state.expired
-    }
-  },
-  actions: {
-    login({
-      commit,
-      state,
-      rootState
-    }: ActionContext<User, RootState>, data: LoginForm | LoginTicket): Promise<boolean> {
+    SET_EXPIRED() {
+      this.expired = !this.expired
+    },
+
+    // async actions
+    login(data: LoginForm | LoginTicket): Promise<boolean> {
       return new Promise<boolean>((resolve, reject) => {
-        if (!rootState.http) {
+        const http = getHttp()
+        if (!http) {
           reject('http client not init')
-        } else {
-          rootState.http.request<UserInfo, ApiResponse<UserInfo>>({
-            url: '/user/login',
-            method: 'POST',
-            data: data
-          }).then((response: ApiResponse<UserInfo>) => {
-            commit('updateToken', response.data?.token)
-            resolve(true)
-          }).catch(error => {
-            reject(error)
-          })
+          return
         }
+        http.request<UserInfo, ApiResponse<UserInfo>>({
+          url: '/user/login',
+          method: 'POST',
+          data
+        }).then((response: ApiResponse<UserInfo>) => {
+          this.updateToken(response.data?.token || '')
+          resolve(true)
+        }).catch(error => reject(error))
       })
     },
-    logout({ commit }: ActionContext<User, RootState>) {
-      commit('removeToken')
-      commit('resetUser')
+    logout() {
+      this.removeToken()
+      this.resetUser()
     },
-    info({ commit, rootState }: ActionContext<User, RootState>): Promise<boolean> {
+    info(): Promise<boolean> {
       return new Promise<boolean>((resolve, reject) => {
-        if (!rootState.http) {
+        const http = getHttp()
+        if (!http) {
           reject('http client not init')
-        } else {
-          rootState.http.request<UserInfo, ApiResponse<UserInfo>>({
-            url: '/user/info',
-            method: 'GET'
-          }).then((response: ApiResponse<UserInfo>) => {
-            const roleIds: strOrNum[] = response.data?.role_ids || []
-            commit('updateState', { key: 'name', value: response.data?.name })
-            commit('updateState', { key: 'nickname', value: response.data?.nickname })
-            // commit('updateState', { key: 'avatar', value: response.data?.avatar })
-            commit('updateState', { key: 'roleIds', value: roleIds })
-            commit('updateState', { key: 'env', value: response.data?.env })
-            const website = (response.data?.website || {}) as Settings
-            commit('settings/updateSettings', website, { root: true })
-            // @ts-ignore
-            !Cookies.get('username') && Cookies.set('username', response.data?.name)
-            resolve(true)
-          }).catch(error => {
-            reject(error)
-          })
+          return
         }
+        http.request<UserInfo, ApiResponse<UserInfo>>({
+          url: '/user/info',
+          method: 'GET'
+        }).then((response: ApiResponse<UserInfo>) => {
+          const roleIds: strOrNum[] = response.data?.role_ids || []
+          this.updateState({ key: 'name', value: response.data?.name })
+          this.updateState({ key: 'nickname', value: response.data?.nickname })
+          this.updateState({ key: 'roleIds', value: roleIds })
+          this.updateState({ key: 'env', value: response.data?.env })
+          const website = (response.data?.website || {}) as Settings
+          useSettingsStore().updateSettings(website)
+          // @ts-ignore
+          !Cookies.get('username') && Cookies.set('username', response.data?.name)
+          // We cannot directly import settings store here without circular concerns in some flows.
+          resolve(true)
+        }).catch(error => reject(error))
       })
     },
-    loadRemoteRoutes({ state, rootState }: ActionContext<User, RootState>): Promise<RemoteModule[]> {
+    loadRemoteRoutes(): Promise<RemoteModule[]> {
       return new Promise<RemoteModule[]>((resolve, reject) => {
-        rootState.http?.request<RemoteModule, ApiResponse<RemoteModule[]>>({
+        const http = getHttp()
+        http?.request<RemoteModule, ApiResponse<RemoteModule[]>>({
           url: '/user/routes',
           method: 'get'
         }).then((response: ApiResponse<RemoteModule[]>) => {
@@ -136,10 +120,10 @@ const userModule: Module<User, any> = {
         })
       })
     },
-    SetExpired({ commit }: ActionContext<User, RootState>) {
-      commit('SET_EXPIRED')
+    SetExpired() {
+      this.SET_EXPIRED()
     }
   }
-}
+})
 
-export default userModule
+export default useUserStore

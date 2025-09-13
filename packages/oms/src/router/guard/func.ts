@@ -1,13 +1,13 @@
-import store from '../../store'
+import { pinia, useUserStore, useSettingsStore } from '../../store'
 
 export function isLodeRemoteRoutes(): boolean {
-  return store.state.user.isLodeRemoteRoutes
+  return useUserStore(pinia).isLodeRemoteRoutes
 }
 
 export function getWhiteRoutes(): Array<string | RegExp> {
-  return store.state.settings.whiteRoutes || []
+  return useSettingsStore(pinia).whiteRoutes || []
 }
 
 export function getToken() {
-  return store.state.user.token
+  return useUserStore(pinia).token
 }

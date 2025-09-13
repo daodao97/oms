@@ -14,7 +14,7 @@ import { useRoute, useRouter } from 'vue-router'
 import { onMounted, onUnmounted } from 'vue'
 import http from '../utils/request'
 import { ElMessageBox } from 'element-plus'
-import store from '../store'
+import { useSettingsStore } from '../store'
 
 const route = useRoute()
 const router = useRouter()
@@ -84,7 +84,8 @@ const mutex = () => {
 }
 
 onMounted(() => {
-  if (route.params.id !== undefined && store.state.settings.formMutex) {
+  const settings = useSettingsStore()
+  if (route.params.id !== undefined && settings.formMutex) {
     mutex()
     mutexId.value = setInterval(mutex, 2000)
   }

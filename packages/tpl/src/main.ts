@@ -4,7 +4,6 @@ import { defineAsyncComponent } from 'vue'
 import { MySSO } from './util/sso'
 import { merge } from 'lodash'
 import { routes } from './router'
-import { admin } from './store'
 import { regCustomFormComps } from '@okiss/vbtf'
 import VTest from './components/VTest.vue'
 
@@ -14,8 +13,7 @@ regCustomFormComps({ VTest })
 regViews(import.meta.globEager('./views/**/**.vue'))
 
 const myapp : OmsPlugin = {
-  routes: routes,
-  storeModules: { admin }
+  routes: routes
 }
 
 const env = import.meta.env

@@ -21,23 +21,16 @@
 <script setup>
 import { Navbar, Sidebar, AppMain } from './components'
 import { useEventListener } from '@vueuse/core'
-import { useStore } from 'vuex'
-
-const store = useStore()
+import { useAppStore, useSettingsStore } from '../../store'
 const { body } = document
 const WIDTH = 992 // refer to Bootstrap's responsive design
 
-const sidebar = computed(() => {
-  return store.state.app.sidebar
-})
+const appStore = useAppStore()
+const settingsStore = useSettingsStore()
 
-const device = computed(() => {
-  return store.state.app.device
-})
-
-const fixedHeader = computed(() => {
-  return store.state.settings.fixedHeader
-})
+const sidebar = computed(() => appStore.sidebar)
+const device = computed(() => appStore.device)
+const fixedHeader = computed(() => settingsStore.fixedHeader)
 
 const classObj = computed(() => {
   return {
@@ -55,17 +48,13 @@ const isMobile = () => {
 
 useEventListener(window, 'resize', () => resizeHandler())
 
-const handleClickOutside = () => {
-  store.dispatch('app/closeSideBar', { withoutAnimation: false })
-}
+const handleClickOutside = () => appStore.closeSideBar({ withoutAnimation: false })
 
 const resizeHandler = () => {
   if (!document.hidden) {
     const ismobile = isMobile()
-    store.dispatch('app/toggleDevice', ismobile ? 'mobile' : 'desktop')
-    if (ismobile) {
-      store.dispatch('app/closeSideBar', { withoutAnimation: true })
-    }
+    appStore.toggleDevice(ismobile ? 'mobile' : 'desktop')
+    if (ismobile) appStore.closeSideBar({ withoutAnimation: true })
   }
 }
 </script>

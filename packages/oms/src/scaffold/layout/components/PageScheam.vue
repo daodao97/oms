@@ -27,22 +27,15 @@
     />
   </el-drawer>
 </template>
-<script>
+<script setup>
 import JsonView from '../../../components/jsonview/index.vue'
-import store from '../../store'
+import { useAppStore } from '../../store'
+import { useRoute } from 'vue-router'
 
-export default {
-  name: 'PageScheme',
-  components: { JsonView },
-  setup() {
-    const show = ref(false)
-    const key = ref(1)
-    const direction = 'rtl'
-    const route = useRoute()
-    const pageSchema = computed(() => {
-      return store.state.app.pages[route.path]
-    })
-    return { show, key, direction, pageSchema }
-  }
-}
+const show = ref(false)
+const key = ref(1)
+const direction = 'rtl'
+const route = useRoute()
+const appStore = useAppStore()
+const pageSchema = computed(() => appStore.pages[route.path])
 </script>

@@ -2,8 +2,9 @@ export default {
   computed: {
     // @ts-ignore
     device() {
+      // Access device from Pinia state without importing
       // @ts-ignore
-      return this.$store.state.app.device
+      return this.$pinia?.state?.value?.app?.device || 'desktop'
     }
   },
   mounted() {

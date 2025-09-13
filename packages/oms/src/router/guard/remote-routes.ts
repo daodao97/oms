@@ -1,5 +1,5 @@
 import { Router } from 'vue-router'
-import store from '../../store'
+import { pinia, useUserStore } from '../../store'
 import { OmsModule, RemoteModule } from '../../types'
 import { transRemoteModules } from '../remote'
 import Layout from '../../scaffold/layout/index.vue'
@@ -15,8 +15,9 @@ export default function(router: Router) {
       next()
       return
     }
-    await store.dispatch('user/info')
-    const remoteRoute: RemoteModule[] = await store.dispatch('user/loadRemoteRoutes')
+    const user = useUserStore(pinia)
+    await user.info()
+    const remoteRoute: RemoteModule[] = await user.loadRemoteRoutes()
     const routeModules: OmsModule[] = transRemoteModules(remoteRoute)
     routeModules.forEach(item => {
       item.routes.forEach(each => {
@@ -28,7 +29,7 @@ export default function(router: Router) {
       })
     })
     router.addRoute({ name: '404', path: '/:pathMatch(.*)*', redirect: '/404', hidden: true })
-    store.commit('user/updateRemoteRouter', routeModules)
+    user.updateRemoteRouter(routeModules)
     await router.replace(to)
     next()
   })

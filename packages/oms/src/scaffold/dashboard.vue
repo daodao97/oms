@@ -1,12 +1,12 @@
 <script lang="jsx">
-import { useStore } from 'vuex'
+    import { useUserStore } from '../store'
 import { getCmp } from '../utils/container'
 import { computed } from 'vue'
 
 export default defineComponent({
   name: 'Dashboard',
   setup() {
-    const store = useStore()
+    // use global store shim
     // const roleIds = computed(() => store.state.settings.loginTips)
     const custom = getCmp('dashboard')
     if (custom) {
@@ -14,7 +14,7 @@ export default defineComponent({
         <custom/>
       </span>
     }
-    const name = computed(() => store.getters.name)
+    const name = computed(() => useUserStore().name)
     return () => <div class='dashboard-container'>
       <div class='dashboard-text'>Hi { name.value } 😄</div>
     </div>

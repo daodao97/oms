@@ -33,85 +33,72 @@
   </div>
 </template>
 
-<script>
-import { mapGetters } from 'vuex'
+<script setup lang="ts">
 import Logo from './Logo.vue'
 import SidebarItem from './SidebarItem.vue'
 import SearchMenu from './SearchMenu.vue'
 import { cloneDeep } from 'lodash'
 import { MenuType } from '../../../../types'
 import { showEleByClassName } from '@okiss/utils'
+import { useAppStore, useUserStore, useSettingsStore } from '../../../../store'
+import { useRouter, useRoute } from 'vue-router'
 
-export default defineComponent({
-  components: { SidebarItem, Logo, SearchMenu },
-  computed: {
-    ...mapGetters(['sidebar', 'remoteRouter', 'customRouter']),
-    routes() {
-      let localRoutes = []
-      this.$router.options.routes.concat(this.customRouter || []).forEach(item => {
-        if (item.path === '/') {
-          localRoutes = localRoutes.concat(item.children || [])
-        } else {
-          localRoutes.push(item)
-        }
-      })
-      return cloneDeep([
-        {
-          label: '',
-          routes: localRoutes
-        },
-        ...this.remoteRouter
-      ])
-    },
-    activeMenu() {
-      const m = this.$route.matched
+const appStore = useAppStore()
+const userStore = useUserStore()
+const settingsStore = useSettingsStore()
 
-      for (let i = m.length - 1; i >= 0; i--) {
-        const tmp = m[i]
-        if (tmp.meta.menuType === MenuType.menu) {
-          this.showActive()
-          return this.$router.resolve(tmp.redirect ? tmp.redirect : tmp).fullPath
-        }
-      }
+const sidebar = computed(() => appStore.sidebar)
+const remoteRouter = computed(() => userStore.remoteRouter)
+const customRouter = computed(() => userStore.customRouter)
 
-      return ''
-    },
-    showLogo() {
-      return this.$store.state.settings.sidebarLogo
-    },
-    variables() {
-      return {
-        menuBg: '#304156',
-        menuText: '#bfcbd9',
-        menuActiveText: '#409EFF'
-      }
-    },
-    isCollapse() {
-      return !this.sidebar.opened
+const router = useRouter()
+const route = useRoute()
+
+const routes = computed(() => {
+  let localRoutes: any[] = []
+  router.options.routes.concat(customRouter.value || []).forEach(item => {
+    if (item.path === '/') {
+      localRoutes = localRoutes.concat(item.children || [])
+    } else {
+      localRoutes.push(item)
     }
-  },
-  mounted() {
-    this.showActive()
-  },
-  methods: {
-    showActive() {
-      showEleByClassName('is-active', 200)
-    },
-    filterRoute(arr) {
-      return arr.filter(item => {
-        // console.log(item, [1, 2].indexOf(item.meta.menuType) > 0)
-        // 1 目录 2 菜单
-        return [MenuType.dir, MenuType.menu].indexOf(item.meta.menuType) !== -1
-      }).map(item => {
-        item = Object.assign({}, item)
-        if (item.children) {
-          item.children = this.filterRoute(item.children)
-        }
-        return item
-      })
+  })
+  return cloneDeep([
+    { label: '', routes: localRoutes },
+    ...remoteRouter.value
+  ])
+})
+
+const activeMenu = computed(() => {
+  const m = route.matched
+  for (let i = m.length - 1; i >= 0; i--) {
+    const tmp = m[i]
+    if (tmp.meta.menuType === MenuType.menu) {
+      showActive()
+      return router.resolve(tmp.redirect ? tmp.redirect : tmp).fullPath
     }
   }
+  return ''
 })
+
+const showLogo = computed(() => settingsStore.sidebarLogo)
+const variables = computed(() => ({
+  menuBg: '#304156',
+  menuText: '#bfcbd9',
+  menuActiveText: '#409EFF'
+}))
+const isCollapse = computed(() => !sidebar.value.opened)
+
+onMounted(() => showActive())
+function showActive() { showEleByClassName('is-active', 200) }
+function filterRoute(arr: any[]) {
+  return arr.filter(item => [MenuType.dir, MenuType.menu].indexOf(item.meta.menuType) !== -1)
+    .map(item => {
+      item = Object.assign({}, item)
+      if (item.children) item.children = filterRoute(item.children)
+      return item
+    })
+}
 </script>
 <style scoped>
 ::v-deep(.el-scrollbar__wrap) {

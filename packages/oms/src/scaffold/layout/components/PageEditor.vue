@@ -22,25 +22,16 @@
     />
   </el-drawer>
 </template>
-<script>
+<script setup>
 import FormBuilder from '../../devtool/formBuilder/index.vue'
 import TableBuilder from '../../devtool/tableBuilder/index.vue'
-import store from '../../../store'
+import { useAppStore } from '../../../store'
 import { useRoute } from 'vue-router'
 
-export default {
-  name: 'PageEditor',
-  components: { FormBuilder, TableBuilder },
-  setup() {
-    const show = ref(false)
-    const key = ref(1)
-    const direction = 'rtl'
-    const route = useRoute()
-    const pageSchema = computed(() => {
-      return store.state.app.pages[route.path]
-    })
-
-    return { show, key, direction, pageSchema: pageSchema }
-  }
-}
+const show = ref(false)
+const key = ref(1)
+const direction = 'rtl'
+const route = useRoute()
+const appStore = useAppStore()
+const pageSchema = computed(() => appStore.pages[route.path])
 </script>

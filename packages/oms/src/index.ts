@@ -11,6 +11,7 @@ export * from './utils/request'
 export * from './utils/container'
 export * from './utils/sso'
 export * from './router/remote'
+export * from './store'
 
 export { BaseSso } from './utils/sso'
 export type { SsoType } from './utils/sso'
