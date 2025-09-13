@@ -1,9 +1,9 @@
-import { defineConfig, loadEnv, ServerOptions, splitVendorChunkPlugin } from 'vite'
+import { defineConfig, loadEnv, ServerOptions } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import copy from 'rollup-plugin-copy'
+import fs from 'fs'
+import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
-import vueSetupExtend from 'vite-plugin-vue-setup-extend'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import svgLoader from 'vite-svg-loader'
@@ -44,7 +44,6 @@ const ordered = Object.keys(pkg).sort((a, b) => b.length - a.length).reduce<Reco
 
 const plugins = [
   vue(),
-  vueSetupExtend(),
   vueJsx({ transformOn: true }),
   AutoImport({
     imports: ['vue', 'vue-router'],
@@ -54,7 +53,6 @@ const plugins = [
     resolvers: [ElementPlusResolver()]
   }),
   svgLoader(),
-  splitVendorChunkPlugin(),
   _export ? visualizer({
     open: true,
     gzipSize: true,
@@ -127,20 +125,25 @@ export default ({ mode }: any) => {
       rollupOptions: {
         output: {
           manualChunks: ordered
-        },
-        plugins: [
-          copy({
-            targets: [
-              {
-                src: 'node_modules/monaco-editor/min/vs/**/*',
-                dest: 'dist/assets/monaco-editor/vs'
-              }
-            ],
-            hook: 'writeBundle'
-          })
-        ]
+        }
       }
     },
-    plugins
+    plugins: [
+      ...plugins,
+      (function copyMonaco(){
+        return {
+          name: 'copy-monaco-editor',
+          apply: 'build',
+          closeBundle() {
+            const src = path.resolve(process.cwd(), 'node_modules/monaco-editor/min/vs')
+            const dest = path.resolve(process.cwd(), 'dist/assets/monaco-editor/vs')
+            if (fs.existsSync(src)) {
+              fs.mkdirSync(path.dirname(dest), { recursive: true })
+              fs.cpSync(src, dest, { recursive: true })
+            }
+          }
+        }
+      })()
+    ]
   })
 }

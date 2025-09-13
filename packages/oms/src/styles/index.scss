@@ -1,8 +1,8 @@
-@import 'variables';
-@import 'mixin';
-@import 'transition';
-@import 'element-ui';
-@import 'sidebar';
+@use 'variables' as *;
+@use 'mixin' as *;
+@use 'transition' as *;
+@use 'element-ui' as *;
+@use 'sidebar' as *;
 @import "loading.css";
 
 body {
@@ -141,4 +141,3 @@ span[class^="dev-action-"] {
     background-color: #fdeaea;
   }
 }
-

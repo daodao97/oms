@@ -1,22 +1,24 @@
 {
   "name": "@okiss/utils",
-  "version": "0.0.12",
+  "version": "0.0.15",
   "scripts": {
-    "build": "cross-env pkg=utils vite build --config ../../build/lib.config.ts",
-    "build:report": "cross-env pkg=utils EXPORT=true vite build --config ../../build/lib.config.ts",
-    "dev": "cross-env pkg=utils vite --config ../../build/dev.config.ts",
-    "ts": "vue-tsc --declaration --emitDeclarationOnly --skipLibCheck",
+    "build": "cross-env pkg=utils vite build --config ../../build/lib.config.mts",
+    "build:report": "cross-env pkg=utils EXPORT=true vite build --config ../../build/lib.config.mts",
+    "dev": "cross-env pkg=utils vite --config ../../build/dev.config.mts",
+    "ts": "pnpm -w exec vue-tsc -p tsconfig.build.json",
     "release": "cross-env pkg=utils node ../../build/release.js"
   },
   "dependencies": {
-    "dayjs": "^1.11.13",
-    "element-plus": "2.8.1",
+    "dayjs": "^1.11.18",
+    "element-plus": "2.8.3",
     "handlebars": "^4.7.8",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.7",
-    "@types/node": "^22.5.2"
+    "@types/node": "^22.5.2",
+    "typescript": "^5.9.2",
+    "vue-tsc": "^2.2.12"
   },
   "files": [
     "dist/*"

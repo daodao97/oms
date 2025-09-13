@@ -268,8 +268,7 @@ export default {
 }
 </script>
 <style scoped lang="scss">
-@import "./style/index";
-@import "./style/on-dark";
-@import "./style/vs-code";
+@use "./style/index";
+@use "./style/on-dark";
+@use "./style/vs-code";
 </style>
-

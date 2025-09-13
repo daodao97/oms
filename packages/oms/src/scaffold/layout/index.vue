@@ -71,8 +71,8 @@ const resizeHandler = () => {
 </script>
 
 <style lang="scss" scoped>
-@import "../../styles/mixin";
-@import "../../styles/variables";
+@use "../../styles/mixin" as *;
+@use "../../styles/variables" as *;
 
 .app-wrapper {
   @include clearfix;

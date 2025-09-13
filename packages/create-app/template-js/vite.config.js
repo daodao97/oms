@@ -1,15 +1,14 @@
-import { defineConfig, loadEnv, splitVendorChunkPlugin } from 'vite'
+import { defineConfig, loadEnv } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import copy from 'rollup-plugin-copy'
+import fs from 'fs'
+import path from 'path'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import { ElementPlusResolver } from 'unplugin-vue-components/resolvers'
 import svgLoader from 'vite-svg-loader'
 // @ts-ignore
 import visualizer from 'rollup-plugin-visualizer'
-// @ts-ignore
-import path from 'path'
 
 const _export = process.env.EXPORT === 'true'
 
@@ -24,7 +23,20 @@ const plugins = [
     resolvers: [ElementPlusResolver()]
   }),
   svgLoader(),
-  splitVendorChunkPlugin(),
+  (function copyMonaco(){
+    return {
+      name: 'copy-monaco-editor',
+      apply: 'build',
+      closeBundle() {
+        const src = path.resolve(process.cwd(), 'node_modules/monaco-editor/min/vs')
+        const dest = path.resolve(process.cwd(), 'dist/assets/monaco-editor/vs')
+        if (fs.existsSync(src)) {
+          fs.mkdirSync(path.dirname(dest), { recursive: true })
+          fs.cpSync(src, dest, { recursive: true })
+        }
+      }
+    }
+  })(),
   _export ? visualizer({
     open: true,
     gzipSize: true,
@@ -108,18 +120,7 @@ export default ({ mode }) => {
               return m ? simpleName(m[1]) : undefined
             }
           }
-        },
-        plugins: [
-          copy({
-            targets: [
-              {
-                src: 'node_modules/monaco-editor/min/vs/**/*',
-                dest: 'dist/assets/monaco-editor/vs'
-              }
-            ],
-            hook: 'writeBundle'
-          })
-        ]
+        }
       }
     },
     plugins

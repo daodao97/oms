@@ -51,8 +51,7 @@
 <script lang="ts" setup>
 import { useRouter, useRoute } from 'vue-router'
 import store from '../store'
-// @ts-ignore
-import { MD5 } from 'crypto-js'
+import CryptoJS from 'crypto-js'
 import { computed } from 'vue'
 
 const router = useRouter()
@@ -83,7 +82,7 @@ const login = () => {
     return
   }
   if (captcha.value) {
-    data.value.sing = MD5(`${data.value.username}${data.value.password}${data.value.captcha}`).toString()
+    data.value.sing = CryptoJS.MD5(`${data.value.username}${data.value.password}${data.value.captcha}`).toString()
   }
   store.dispatch('user/login', data.value).then(res => {
     router.push({ path: route.query?.redirect as string || '/' })

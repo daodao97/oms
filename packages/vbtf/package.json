@@ -1,38 +1,41 @@
 {
   "name": "@okiss/vbtf",
-  "version": "0.0.106",
+  "version": "0.0.108",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
-    "dev": "cross-env pkg=vbtf vite --config ../../build/dev.config.ts",
-    "build": "cross-env pkg=vbtf vite build --config ../../build/lib.config.ts",
-    "ts": "vue-tsc --declaration --emitDeclarationOnly --skipLibCheck",
+    "dev": "cross-env pkg=vbtf vite --config ../../build/dev.config.mts",
+    "build": "cross-env pkg=vbtf vite build --config ../../build/lib.config.mts",
+    "ts": "pnpm -w exec vue-tsc -p tsconfig.build.json",
     "release": "cross-env pkg=vbtf node ../../build/release.js"
   },
   "dependencies": {
-    "@element-plus/icons-vue": "^2.3.1",
-    "@okiss/utils": "latest",
-    "axios": "^1.7.7",
-    "dayjs": "^1.11.13",
-    "element-plus": "2.8.3",
+    "@element-plus/icons-vue": "^2.3.2",
+    "axios": "^1.12.1",
+    "dayjs": "^1.11.18",
     "file-saver": "^2.0.5",
     "inputmask": "^5.0.9",
     "lodash": "^4.17.21",
-    "sortablejs": "^1.15.3",
-    "vue": "^3.5.6",
-    "vue-router": "^4.4.5",
-    "vuedraggable": "^4.0.3",
+    "sortablejs": "^1.15.6",
+    "vuedraggable": "^4.1.0",
     "xlsx": "^0.18.5"
   },
+  "peerDependencies": {
+    "@okiss/utils": ">=0.0.12",
+    "vue": "^3.5.21",
+    "vue-router": "^4.5.1",
+    "element-plus": "2.8.3"
+  },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^5.1.4",
-    "@vitejs/plugin-vue-jsx": "^4.0.1",
-    "@vue/compiler-sfc": "^3.5.6",
-    "eslint": "^9.10.0",
-    "eslint-plugin-vue": "^9.28.0",
+    "@vitejs/plugin-vue": "^6.0.0",
+    "@vitejs/plugin-vue-jsx": "^5.0.0",
+    "@vue/compiler-sfc": "^3.5.21",
+    "eslint": "^9.35.0",
+    "eslint-plugin-vue": "^9.33.0",
     "monaco-editor": "^0.51.0",
-    "sass": "^1.79.1",
-    "typescript": "^5.6.2",
-    "vite": "^5.4.6"
+    "sass": "^1.92.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.0.0",
+    "vue-tsc": "^2.2.12"
   },
   "files": [
     "dist/*"

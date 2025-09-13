@@ -42,6 +42,120 @@ yarn
 yarn serve
 ```
 
+### 常用命令
+
+建议使用 pnpm 进行工作区管理。
+
+安装依赖
+
+```bash
+pnpm i
+```
+
+开发调试（按包）
+
+```bash
+# OMS 核心
+pnpm -F @okiss/oms dev
+
+# 低代码基础组件 vbtf
+pnpm -F @okiss/vbtf dev
+
+# 表单引擎 vform
+pnpm -F @okiss/vform dev
+
+# 工具库 utils
+pnpm -F @okiss/utils dev
+
+# 模板应用 template
+pnpm -F @okiss/template dev
+
+# 开发者工具插件 plugin-devtool
+pnpm -F @okiss/plugin-devtool dev
+```
+
+构建与类型检查
+
+```bash
+# 构建对应包
+pnpm -F @okiss/oms build
+pnpm -F @okiss/vbtf build
+pnpm -F @okiss/vform build
+pnpm -F @okiss/utils build
+
+# 仅生成类型声明（如有）
+pnpm -F @okiss/oms ts
+pnpm -F @okiss/vbtf ts
+pnpm -F @okiss/vform ts
+pnpm -F @okiss/utils ts
+```
+
+发布（内部脚本）
+
+```bash
+pnpm -F @okiss/oms release
+pnpm -F @okiss/vbtf release
+pnpm -F @okiss/vform release
+pnpm -F @okiss/utils release
+pnpm -F @okiss/plugin-devtool release
+
+# 一键按依赖顺序发布（utils -> vbtf -> vform -> oms）
+pnpm release.all
+```
+
+文档相关
+
+```bash
+# 本地启动文档站点
+pnpm docs:dev
+
+# 构建文档
+pnpm docs:build
+
+# 本地预览构建后的文档
+pnpm docs:serve
+```
+
+预览/服务（示例）
+
+```bash
+# 模板应用预览
+pnpm -F @okiss/template preview
+
+# 插件示例预览
+pnpm -F @okiss/plugin-devtool serve
+```
+
+### 使用 @okiss/oms 时的 Peer 依赖
+
+为避免重复安装和版本冲突，`@okiss/oms` 将以下依赖声明为 peer（请在你的项目中同时安装）：
+
+```bash
+pnpm add vue@^3.5 vue-router@^4.5 element-plus@^2.8 @okiss/utils@^0.0.12 @okiss/vbtf@^0.0.106
+```
+
+### 使用 @okiss/vbtf 或 @okiss/vform 的 Peer 依赖
+
+若在项目中直接使用组件库包，需要安装其 peer 依赖：
+
+```bash
+# vbtf
+pnpm add vue@^3.5 vue-router@^4.5 element-plus@^2.8 @okiss/utils@^0.0.12
+
+# vform
+pnpm add vue@^3.5 element-plus@^2.8 @okiss/utils@^0.0.12
+```
+
+### 使用 @okiss/plugin-devtool 的 Peer 依赖
+
+`@okiss/plugin-devtool` 依赖于 `@okiss/oms` 与 `vue`，请在宿主项目中安装：
+
+```bash
+pnpm add vue@^3.5 @okiss/oms@^0.0.65
+
+# 同时确保已安装 @okiss/oms 所需的 peer 依赖（见上文）
+```
+
 ### 运行流程
 
 <div align="center">
@@ -61,4 +175,3 @@ yarn serve
   辅助开发组件, 注册页面构建工具的菜单及功能实现
 
 > Don't Repeat Yourself
-

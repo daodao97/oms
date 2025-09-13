@@ -19,6 +19,14 @@ const libName = () => {
 export default defineConfig({
   resolve,
   plugins,
+  css: {
+    preprocessorOptions: {
+      scss: {
+        silenceDeprecations: ['legacy-js-api', 'import'],
+        quietDeps: true
+      }
+    }
+  },
   esbuild: {
     drop: ['debugger'],
     pure: ['console.log', 'console.debug', 'console.trace']
