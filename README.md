@@ -80,13 +80,11 @@ pnpm -F @okiss/plugin-devtool dev
 # 构建对应包
 pnpm -F @okiss/oms build
 pnpm -F @okiss/vbtf build
-pnpm -F @okiss/vform build
 pnpm -F @okiss/utils build
 
 # 仅生成类型声明（如有）
 pnpm -F @okiss/oms ts
 pnpm -F @okiss/vbtf ts
-pnpm -F @okiss/vform ts
 pnpm -F @okiss/utils ts
 ```
 
@@ -95,7 +93,6 @@ pnpm -F @okiss/utils ts
 ```bash
 pnpm -F @okiss/oms release
 pnpm -F @okiss/vbtf release
-pnpm -F @okiss/vform release
 pnpm -F @okiss/utils release
 pnpm -F @okiss/plugin-devtool release
 

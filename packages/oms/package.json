@@ -1,6 +1,6 @@
 {
   "name": "@okiss/oms",
-  "version": "0.0.70",
+  "version": "0.0.72",
   "scripts": {
     "dev": "cross-env pkg=oms vite --config ../../build/dev.config.mts",
     "build": "cross-env pkg=oms vite build --config ../../build/lib.config.mts",
@@ -13,7 +13,7 @@
     "axios": "^1.12.1",
     "crypto-js": "^4.2.0",
     "dayjs": "^1.11.18",
-    "element-plus": "2.11.2",
+    "element-plus": "^2.11.3",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "mitt": "^3.0.1",
@@ -31,8 +31,8 @@
   },
   "peerDependencies": {
     "@okiss/utils": ">=0.0.12",
-    "@okiss/vbtf": ">=0.0.106",
-    "element-plus": "2.11.2",
+    "@okiss/vbtf": ">=0.0.110",
+    "element-plus": "^2.11.3",
     "vue": "^3.5.21",
     "vue-router": "^4.5.1"
   },
