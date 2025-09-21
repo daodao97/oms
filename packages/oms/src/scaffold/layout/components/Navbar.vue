@@ -2,7 +2,7 @@
   <el-row
     ref="header"
     class="navbar"
-    :style="{background: setting.envColor[user.env]}"
+    :style="navbarStyle"
   >
     <el-col :span="16">
       <hamburger
@@ -14,12 +14,6 @@
     </el-col>
     <el-col :span="8">
       <div class="right-content">
-        <div class="right-item">
-          <VIcon
-            name="ra-code"
-            @click="gotoMenuEdit"
-          />
-        </div>
         <div
           v-if="showPageJsonSchemaIcon"
           class="right-item"
@@ -32,6 +26,23 @@
         >
           <v-button :buttons="nav" />
         </div>
+        <el-tooltip
+          placement="bottom"
+          :content="isDark ? '切换为明亮模式' : '切换为暗黑模式'"
+        >
+          <div
+            class="right-item theme-toggle"
+            role="button"
+            tabindex="0"
+            @click="toggleTheme"
+            @keydown.enter.prevent="toggleTheme"
+            @keydown.space.prevent="toggleTheme"
+          >
+            <el-icon>
+              <component :is="isDark ? Moon : Sunny" />
+            </el-icon>
+          </div>
+        </el-tooltip>
         <el-dropdown
           class="right-item"
           trigger="click"
@@ -74,7 +85,9 @@ import PageEditor from './PageEditor.vue'
 import { showEleByClassName, Cache, waterMarker } from '@okiss/utils'
 import { VBtn as VButton } from '@okiss/vbtf'
 import { useAppStore, useSettingsStore, useUserStore } from '../../../store'
+import { useThemeMode } from '../../../composables/useThemeMode'
 import { computed, ref, onMounted } from 'vue'
+import { Sunny, Moon } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
 const settingsStore = useSettingsStore()
@@ -93,6 +106,29 @@ const nav = computed(() => (settingsStore as any).nav)
 const setting = computed(() => settingsStore)
 const user = computed(() => userStore)
 const showPageJsonSchemaIcon = computed(() => settingsStore.showPageJsonSchema || false)
+const { isDark, toggleTheme } = useThemeMode()
+const navbarStyle = computed(() => {
+  const envColor = setting.value.envColor?.[user.value.env]
+  if (isDark.value) {
+    return {
+      background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.55) 0%, rgba(37, 99, 235, 0.45) 45%, rgba(15, 23, 42, 0.92) 100%)',
+      borderBottom: '1px solid rgba(148, 163, 184, 0.35)',
+      boxShadow: '0 1px 8px rgba(15, 23, 42, 0.7)'
+    }
+  }
+  if (envColor) {
+    return {
+      background: `linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 60%, ${envColor} 100%)`,
+      borderBottom: '1px solid rgba(15, 23, 42, 0.08)',
+      boxShadow: '0 1px 4px rgba(15, 23, 42, 0.08)'
+    }
+  }
+  return {
+    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 70%, #ffffff 100%)',
+    borderBottom: '1px solid rgba(15, 23, 42, 0.08)',
+    boxShadow: '0 1px 4px rgba(15, 23, 42, 0.05)'
+  }
+})
 
 onMounted(() => {
   showEleByClassName('el-submenu is-active')
@@ -231,6 +267,14 @@ function gotoMenuEdit() {
 
     &:hover {
       background: rgba(0, 0, 0, 0.025);
+    }
+  }
+
+  .theme-toggle {
+    justify-content: center;
+
+    .el-icon {
+      font-size: 18px;
     }
   }
 

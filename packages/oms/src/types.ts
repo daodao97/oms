@@ -30,6 +30,7 @@ export interface Settings {
     serviceOffLineNotice? : string,
     formMutex?: boolean
     captcha?: boolean
+    themeMode?: 'light' | 'dark'
 }
 
 export type UsePlugin = Plugin | [Plugin, any]

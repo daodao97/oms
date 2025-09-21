@@ -1,5 +1,5 @@
 <script lang="jsx">
-    import { useUserStore } from '../store'
+import { useUserStore } from '../store'
 import { getCmp } from '../utils/container'
 import { computed } from 'vue'
 

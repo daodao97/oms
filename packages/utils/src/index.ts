@@ -11,5 +11,6 @@ export * from './array'
 export * from './comm'
 export * from './vueuse'
 export * from './wartermark'
+export * from './theme'
 
 export { Cache, pipe }

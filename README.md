@@ -103,6 +103,12 @@ pnpm -F @okiss/plugin-devtool release
 pnpm release.all
 ```
 
+升级
+
+```bash
+pnpm up @okiss/vbtf --latest
+```
+
 文档相关
 
 ```bash

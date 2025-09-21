@@ -63,8 +63,9 @@ const logo = computed(() => settings.logo as any)
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: #2b2f3a;
+  background: var(--sidebar-logo-bg, #2b2f3a);
   text-align: center;
+  color: var(--sidebar-logo-text-color, #fff);
   overflow: hidden;
 
   & .sidebar-logo-link {
@@ -81,7 +82,7 @@ const logo = computed(() => settings.logo as any)
     & .sidebar-title {
       display: inline-block;
       margin: 0;
-      color: #fff;
+      color: var(--sidebar-logo-text-color, #fff);
       font-weight: 600;
       line-height: 50px;
       font-size: 14px;

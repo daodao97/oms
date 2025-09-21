@@ -5,6 +5,9 @@
 <script setup lang="ts">
 import { addNewStyle, addNewStyleTag } from '@okiss/utils'
 import { provide } from 'vue'
+import { useThemeMode } from './composables/useThemeMode'
+
+useThemeMode()
 
 onBeforeMount(() => {
   const loading = document.getElementById('preloader')

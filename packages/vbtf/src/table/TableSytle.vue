@@ -6,7 +6,7 @@
     :load="loadChildren"
     style="width: 100%"
     v-bind="props"
-    :header-cell-style="{background:'#eef1f6',color:'#606266'}"
+    :header-cell-style="headerCellStyle"
     :row-class-name="rowClassName"
     @selection-change="handleSelectionChange"
     @sort-change="sortTable"
@@ -80,6 +80,7 @@ import CellEdit from './cell-edit/index.vue'
 // import { useAffix } from './affix'
 import Sortable, { SortableEvent } from 'sortablejs'
 import { Warning } from '@element-plus/icons-vue'
+import { bindThemeToRef, type ThemeMode } from '@okiss/utils'
 
 export default defineComponent({
   name: 'TableStyle',
@@ -146,8 +147,26 @@ export default defineComponent({
   },
   emits: ['select-change', 'sort-change', 'cell-change', 'btn-action', 'mounted', 'drag-sort'],
   setup(props, { emit }) {
+    const themeMode = ref<ThemeMode>('light')
+    const headerCellStyle = ref({ background: '#eef1f6', color: '#303133' })
+    let unbindTheme: (() => void) | null = null
+    let stopThemeWatch: (() => void) | null = null
+    const syncHeaderTheme = (mode: ThemeMode) => {
+      headerCellStyle.value = mode === 'dark'
+        ? { background: '#1f2937', color: '#e5e7eb' }
+        : { background: '#eef1f6', color: '#303133' }
+    }
     onMounted(() => {
       props.dragSort && rowDrop()
+      syncHeaderTheme(themeMode.value)
+      unbindTheme = bindThemeToRef(themeMode)
+      stopThemeWatch = watch(themeMode, mode => {
+        syncHeaderTheme(mode)
+      }, { immediate: true })
+    })
+    onBeforeUnmount(() => {
+      unbindTheme?.()
+      stopThemeWatch?.()
     })
     const rowKey = ref(0)
     const actionWidth = computed<number>(() => {
@@ -217,7 +236,8 @@ export default defineComponent({
       tabledom,
       rowAction,
       indexs,
-      rowClassName
+      rowClassName,
+      headerCellStyle
     }
   }
 })
