@@ -13,6 +13,7 @@ const THEME_STORAGE_KEY = 'oms-theme'
 const themeMode = ref<ThemeMode>('light')
 let initialized = false
 let stopWatch: (() => void) | null = null
+let stopSystemListener: (() => void) | null = null
 
 function detectInitialTheme(storeMode: unknown): ThemeMode {
   const fromStore = normalizeTheme((storeMode as string) ?? undefined)
@@ -43,8 +44,42 @@ function applyTheme(mode: ThemeMode) {
   persistTheme(normalized)
 }
 
+function setupSystemThemeListener(onChange: (mode: ThemeMode) => void) {
+  if (typeof window === 'undefined' || typeof window.matchMedia !== 'function') {
+    stopSystemListener = null
+    return
+  }
+  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
+  const listener = (event: MediaQueryListEvent) => {
+    const matches = event.matches ?? mediaQuery.matches
+    onChange(matches ? 'dark' : 'light')
+  }
+  if (typeof mediaQuery.addEventListener === 'function') {
+    mediaQuery.addEventListener('change', listener)
+  } else {
+    mediaQuery.addListener(listener)
+  }
+  stopSystemListener = () => {
+    if (typeof mediaQuery.removeEventListener === 'function') {
+      mediaQuery.removeEventListener('change', listener)
+    } else {
+      mediaQuery.removeListener(listener)
+    }
+    stopSystemListener = null
+  }
+}
+
 export function useThemeMode() {
   const settingsStore = useSettingsStore()
+
+  const setTheme = (next: ThemeMode) => {
+    const normalized = normalizeTheme(next)
+    if (settingsStore.themeMode !== normalized) {
+      settingsStore.updateSettings({ themeMode: normalized } as any)
+    } else {
+      applyTheme(normalized)
+    }
+  }
 
   if (!initialized) {
     initialized = true
@@ -61,19 +96,14 @@ export function useThemeMode() {
       },
       { immediate: true }
     )
+    stopSystemListener?.()
+    setupSystemThemeListener((mode) => {
+      setTheme(mode)
+    })
   }
 
   const mode = computed(() => themeMode.value)
   const isDark = computed(() => mode.value === 'dark')
-
-  const setTheme = (next: ThemeMode) => {
-    const normalized = normalizeTheme(next)
-    if (settingsStore.themeMode !== normalized) {
-      settingsStore.updateSettings({ themeMode: normalized } as any)
-    } else {
-      applyTheme(normalized)
-    }
-  }
 
   const toggleTheme = () => {
     setTheme(isDark.value ? 'light' : 'dark')
@@ -97,5 +127,7 @@ export function getThemeMode(): ThemeMode {
 export function stopThemeWatcher() {
   stopWatch?.()
   stopWatch = null
+  stopSystemListener?.()
+  stopSystemListener = null
   initialized = false
 }
