@@ -138,14 +138,40 @@ export default defineComponent({
       return replaceText(btn.text || '')
     })
     const containerProps = ref({})
-    const xsubComp = ref('span')
+    const xsubComp = shallowRef('span')
     const xsubProps = ref({})
     const xsubEvent = ref({})
+    const resolveSubComponent = (comp) => {
+      if (!comp) {
+        return ''
+      }
+      if (typeof comp === 'string') {
+        const name = comp.trim()
+        if (!name) {
+          return ''
+        }
+        if (/^[a-z]/.test(name)) {
+          return name
+        }
+        if (baseComps[name]) {
+          return baseComps[name]
+        }
+        const registered = app?.appContext?.components?.[name]
+        if (!registered) {
+          console.error(`[VButtonGroup] schema 中定义的组件 ${name} 未找到，请确认已注册。`)
+          return ''
+        }
+        return name
+      }
+      return comp
+    }
+
     watch(() => activeIndex.value, () => {
       const btn = props.buttons[activeIndex.value]
       containerProps.value = getContainerProps(props.container, props)
       const metaData = isFunc(btn['meta-data']) ? btn['meta-data']() : btn['meta-data']
-      xsubComp.value = (instance.value && instance.value.getSubComp) ? instance.value.getSubComp(btn.extra || {}) : 'span'
+      const comp = (instance.value && instance.value.getSubComp) ? instance.value.getSubComp(btn.extra || {}) : 'span'
+      xsubComp.value = resolveSubComponent(comp)
       xsubProps.value = (instance.value && instance.value.getSubProps) ? instance.value.getSubProps(btn.extra, metaData) : {}
       xsubEvent.value = (instance.value && instance.value.getSubEvent) ? instance.value.getSubEvent(btn, ctx, showContainer) : {}
     })

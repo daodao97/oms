@@ -1,11 +1,13 @@
 <template>
   <div>
-    <!-- <VButton v-bind="base" />
+    <VButton v-bind="btnOpt" />
+    <VButton v-bind="formBtnOpt" />
+    <VButton v-bind="base" />
     <el-divider />
     <VButton v-bind="jump" />
     <el-divider />
     <VButton v-bind="api" />
-    <el-divider /> -->
+    <el-divider />
     <!-- <VButton v-bind="form" />
     <VButton v-bind="api" />
     <VButtonGroup v-bind="btnGroup" />
@@ -71,6 +73,28 @@ const onSubmit = () => {
 
 
 regCustomFormComps({ VTest })
+
+
+const btnOpt = {
+  text: 'modal',
+  extra: {
+    type: "VTest"
+  },
+  type: "modal"
+
+}
+
+const formBtnOpt = {
+  text: 'form',
+  extra: {
+    formItems: [
+      {
+        field: 'test'
+      }
+    ]
+  },
+  type: "form"
+}
 
 const base = {
   text: '常规按钮',
@@ -293,6 +317,7 @@ const form2 = {
 const tableOpt = {
   filter: form.extra.formItems
 }
+
 </script>
 
 <style>

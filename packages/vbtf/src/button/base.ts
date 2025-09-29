@@ -77,15 +77,26 @@ export const baseProps = {
   }
 }
 
-export const baseComps: Record<string, Component> = {
+const initialBaseComps: Record<string, Component> = {
   VForm: defineAsyncComponent(() => import('../form/VForm.vue')),
   VTable: defineAsyncComponent(() => import('../table/VTable.vue')),
   VPlayer: defineAsyncComponent(() => import('../VPlayer.vue'))
 }
 
+const GLOBAL_BASE_COMPS_KEY = '__OKISS_VBTF_BASE_COMPS__'
+const globalBaseComps = (globalThis as any)[GLOBAL_BASE_COMPS_KEY]
+
+if (globalBaseComps && typeof globalBaseComps === 'object') {
+  Object.assign(globalBaseComps, initialBaseComps)
+} else {
+  (globalThis as any)[GLOBAL_BASE_COMPS_KEY] = initialBaseComps
+}
+
+export const baseComps: Record<string, Component> = (globalThis as any)[GLOBAL_BASE_COMPS_KEY]
+
 export interface Plugin<T> {
   getSubProps?: (extra: T, metaData: Record<string, any>) => void,
-  getSubComp?: (extra: T) => string,
+  getSubComp?: (extra: T) => string | Component,
   getSubEvent?: (props: VButtonProps, ctx: SetupContext, showContainer: Ref<UnwrapRef<boolean>>, extra?:Record<any, any>) => any,
   getContainerProps? :(container: string) => any,
   onclick(target: Function, root: any, ctx: SetupContext, extra: T, callback: () => void): void
@@ -193,7 +204,7 @@ const form: Plugin<any> = {
     callback()
   },
   getSubComp() {
-    return 'VForm'
+    return baseComps['VForm'] || 'VForm'
   },
   getSubProps(extra: any, metaData) {
     Object.keys(extra).forEach(key => {
@@ -238,20 +249,26 @@ const modal: Plugin<any> = {
   onclick(target: Function, root:any, ctx: SetupContext, extra: any, callback: () => void) {
     callback()
   },
-  getSubComp(extra: Record<string, any>) {
-    const type = extra.type
-    return type ? 'v-' + type : ''
+  getSubComp(extra: Record<string, any> = {}) {
+    const type = extra?.type
+    if (!type) {
+      return ''
+    }
+    if (typeof type === 'string') {
+      return baseComps[type] || type
+    }
+    return type
   },
-  getSubProps(extra: any, metaData) {
+  getSubProps(extra: any = {}, metaData) {
     const props : Record<string, any> = {}
-    Object.keys(extra).forEach(key => {
+    const data = metaData || {}
+    Object.keys(extra || {}).forEach(key => {
       if (/.*Api$/.test(key)) {
-        props[key] = strVarReplace(extra[key], metaData)
-      } else if (extra[key] !== 'type') {
+        props[key] = strVarReplace(extra[key], data)
+      } else if (key !== 'type') {
         props[key] = extra[key]
       }
     })
-    console.log(props, metaData)
     return props
   },
   getSubEvent(props, ctx: SetupContext, showContainer) {
@@ -264,7 +281,7 @@ const table: Plugin<FormProps> = {
     callback()
   },
   getSubComp() {
-    return 'VTable'
+    return baseComps['VTable'] || 'VTable'
   },
   getSubProps(extra: any, metaData) {
     Object.keys(extra).forEach(key => {
@@ -318,4 +335,5 @@ export function RegComponents(cps : Record<string, Component>) {
   Object.keys(cps).forEach(key => {
     baseComps[key] = cps[key]
   })
+  console.log("baseComps", baseComps)
 }

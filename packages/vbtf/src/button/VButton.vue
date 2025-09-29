@@ -141,12 +141,38 @@ export default defineComponent({
     }
     const relText = computed(() => strVarReplace(props.text || '', metaData()))
     const containerProps = ref({})
-    const xsubComp = ref('span')
+    const xsubComp = shallowRef('span')
     const xsubProps = ref({})
     const xsubEvent = ref({})
+    const resolveSubComponent = (comp) => {
+      if (!comp) {
+        return ''
+      }
+      if (typeof comp === 'string') {
+        const name = comp.trim()
+        if (!name) {
+          return ''
+        }
+        if (/^[a-z]/.test(name)) {
+          return name
+        }
+        if (baseComps[name]) {
+          return baseComps[name]
+        }
+        const registered = app?.appContext?.components?.[name]
+        if (!registered) {
+          console.error(`[VButton] schema 中定义的组件 ${name} 未找到，请确认已注册。`)
+          return ''
+        }
+        return name
+      }
+      return comp
+    }
+
     watch(() => showContainer.value, () => {
       containerProps.value = getContainerProps(props.container, props)
-      xsubComp.value = instance.getSubComp ? instance.getSubComp(props.extra || {}) : 'span'
+      const comp = instance.getSubComp ? instance.getSubComp(props.extra || {}) : 'span'
+      xsubComp.value = resolveSubComponent(comp)
       xsubProps.value = instance.getSubProps ? instance.getSubProps(props.extra, metaData()) : {}
       xsubEvent.value = instance.getSubEvent ? instance.getSubEvent(props, ctx, showContainer, props.extra) : {}
     })
@@ -186,4 +212,3 @@ export default defineComponent({
   }
 })
 </script>
-

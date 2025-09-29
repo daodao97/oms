@@ -1,11 +1,13 @@
 {
   "name": "@okiss/oms",
-  "version": "0.0.74",
+  "version": "0.0.76",
   "scripts": {
     "dev": "cross-env pkg=oms vite --config ../../build/dev.config.mts",
+    "prebuild": "pnpm run update:peers",
     "build": "cross-env pkg=oms vite build --config ../../build/lib.config.mts",
     "ts": "pnpm -w exec vue-tsc -p tsconfig.build.json",
-    "release": "cross-env pkg=oms node ../../build/release.js"
+    "release": "cross-env pkg=oms node ../../build/release.js",
+    "update:peers": "node ./scripts/update-peers.mjs"
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
@@ -30,8 +32,8 @@
     "vuedraggable": "^4.1.0"
   },
   "peerDependencies": {
-    "@okiss/utils": ">=0.0.12",
-    "@okiss/vbtf": ">=0.0.110",
+    "@okiss/utils": ">=0.0.19",
+    "@okiss/vbtf": ">=0.0.117",
     "element-plus": "^2.11.3",
     "vue": "^3.5.21",
     "vue-router": "^4.5.1"

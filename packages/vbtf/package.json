@@ -1,6 +1,6 @@
 {
   "name": "@okiss/vbtf",
-  "version": "0.0.112",
+  "version": "0.0.117",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "cross-env pkg=vbtf vite --config ../../build/dev.config.mts",

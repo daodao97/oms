@@ -9,7 +9,7 @@
     "docs:serve": "vitepress serve docs",
     "eslint": "eslint --fix --ext .tsx --ext .ts --ext .js --ext .vue core/ src/",
     "release.btf": "cross-env pkg=vbtf node build/release.js",
-    "release.form": "cross-env pkg=vform node build/release.js",
+    "release.oms": "cross-env pkg=oms node build/release.js",
     "release.all": "pnpm -F @okiss/utils release && pnpm -F @okiss/vbtf release && pnpm -F @okiss/oms release"
   },
   "dependencies": {

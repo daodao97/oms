@@ -3,9 +3,10 @@ import Dev from './serve.vue'
 // import ElementPlus from 'element-plus'
 // import 'element-plus/dist/index.css'
 import axios from 'axios'
-
 import { RegComponents, VForm } from '../src'
-RegComponents({ VForm })
+import VTest from './VTest.vue'
+
+RegComponents({ VForm, VTest })
 
 const app = createApp(Dev)
 
