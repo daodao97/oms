@@ -1,6 +1,6 @@
 {
   "name": "@okiss/oms",
-  "version": "0.0.76",
+  "version": "0.0.77",
   "scripts": {
     "dev": "cross-env pkg=oms vite --config ../../build/dev.config.mts",
     "prebuild": "pnpm run update:peers",
@@ -32,8 +32,8 @@
     "vuedraggable": "^4.1.0"
   },
   "peerDependencies": {
-    "@okiss/utils": ">=0.0.19",
-    "@okiss/vbtf": ">=0.0.117",
+    "@okiss/utils": ">=0.0.20",
+    "@okiss/vbtf": ">=0.0.118",
     "element-plus": "^2.11.3",
     "vue": "^3.5.21",
     "vue-router": "^4.5.1"

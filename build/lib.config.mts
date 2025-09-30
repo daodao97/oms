@@ -4,7 +4,12 @@ import { ROOT, resolve, plugins, pkgJson, firstUpperCase } from './base'
 
 export const external = (): Array<RegExp> => {
   const tmp: Array<RegExp> = []
-  Object.keys(pkgJson()['dependencies']).forEach(key => {
+  const pkg = pkgJson()
+  const externals = {
+    ...(pkg.dependencies || {}),
+    ...(pkg.peerDependencies || {})
+  }
+  Object.keys(externals).forEach(key => {
     tmp.push(new RegExp('^' + key))
   })
   return tmp
