@@ -72,7 +72,8 @@ const transRoute = (item: PageInfo): RouteRecordRaw => {
       hidden: !isShow,
       path: item.path,
       menuType: item.type,
-      keepAlive: false
+      keepAlive: false,
+      role: item.role
     },
     children: item.children ? item.children.map(each => transRoute(each)) : []
   }

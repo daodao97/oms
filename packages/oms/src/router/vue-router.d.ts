@@ -3,10 +3,7 @@ import 'vue-router'
 declare module 'vue-router' {
     interface _RouteRecordBase {
         hidden?: boolean
-    }
-
-    interface RouteLocationNormalized {
-        preHash: string
+        role?: string
     }
 
     interface RouteMeta {
@@ -18,5 +15,6 @@ declare module 'vue-router' {
         keepAlive?: boolean
         hidden?: boolean
         path?: string
+        role?: string
     }
 }

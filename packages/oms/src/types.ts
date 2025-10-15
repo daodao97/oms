@@ -102,6 +102,7 @@ export interface PageInfo {
     is_show: number,
     type: number,
     page_type: PageType,
+    role?: string,
     children?: PageInfo[],
     code: string
 }

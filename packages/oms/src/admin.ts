@@ -9,7 +9,7 @@ import { startMock, regMockApis } from './mock'
 import { instance } from './utils/request'
 import { isObject } from '@okiss/utils'
 import { VIcon, setUploadHeaderHandle } from '@okiss/vbtf'
-import { getToken } from './utils'
+import { getRolesFromJwt, getToken } from './utils'
 import { merge } from 'lodash'
 
 import 'normalize.css/normalize.css'
@@ -21,6 +21,7 @@ import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 import { setupStore, pinia, useAppStore, useSettingsStore, useUserStore, setHttp } from './store'
 import router from './router'
+import { filterRoutesByRole } from './router/permission'
 import * as directives from './directive'
 import { defaultOptions } from './default'
 
@@ -69,10 +70,12 @@ function regComponents(app: App, components: Record<string, Component> = {}) {
 }
 
 function regRoutes(routes: RouteRecordRaw[] = []) {
-  routes.forEach(item => {
+  const userRoles = getRolesFromJwt(getToken())
+  const permittedRoutes = filterRoutesByRole(routes, userRoles)
+  permittedRoutes.forEach(item => {
     router.addRoute(item)
   })
-  useUserStore(pinia).setCustomRoutes(routes)
+  useUserStore(pinia).setCustomRoutes(permittedRoutes)
 }
 
 function regUse(app: App, use: UsePlugin[]) {
