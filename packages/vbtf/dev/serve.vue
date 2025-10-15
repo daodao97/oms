@@ -78,7 +78,8 @@ regCustomFormComps({ VTest })
 const btnOpt = {
   text: 'modal',
   extra: {
-    type: "VTest"
+    type: "VTest",
+    test: 1,
   },
   type: "modal"
 

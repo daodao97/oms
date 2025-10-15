@@ -269,6 +269,8 @@ const modal: Plugin<any> = {
         props[key] = extra[key]
       }
     })
+    props.metaData = metaData
+    console.log("form getSubProps", props)
     return props
   },
   getSubEvent(props, ctx: SetupContext, showContainer) {

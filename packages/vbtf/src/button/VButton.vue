@@ -174,6 +174,7 @@ export default defineComponent({
       const comp = instance.getSubComp ? instance.getSubComp(props.extra || {}) : 'span'
       xsubComp.value = resolveSubComponent(comp)
       xsubProps.value = instance.getSubProps ? instance.getSubProps(props.extra, metaData()) : {}
+      console.log('xsubProps.value', xsubProps.value)
       xsubEvent.value = instance.getSubEvent ? instance.getSubEvent(props, ctx, showContainer, props.extra) : {}
     })
     const beforeClose = () => {
