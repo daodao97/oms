@@ -10,16 +10,21 @@
         class="sidebar-logo-link"
         to="/"
       >
-        <img
-          v-if="logo"
-          :src="logo"
+        <el-image
+          v-if="showLogoImage"
+          :src="logo || ''"
+          fit="contain"
           class="sidebar-logo"
+          @error="handleLogoError"
         >
-        <h1
-          v-else
-          class="sidebar-title"
-        >{{ title }}</h1>
-        <div>系统</div>
+          <template #error>
+            <div class="sidebar-logo-fallback">{{ logoFallback }}</div>
+          </template>
+        </el-image>
+        <template v-else>
+          <div class="sidebar-logo-fallback">{{ logoFallback }}</div>
+        </template>
+        <div class="sidebar-subtitle">系统</div>
       </router-link>
       <router-link
         v-else
@@ -27,11 +32,20 @@
         class="sidebar-logo-link"
         to="/"
       >
-        <img
-          v-if="logo"
-          :src="logo"
+        <el-image
+          v-if="showLogoImage"
+          :src="logo || ''"
+          fit="contain"
           class="sidebar-logo"
+          @error="handleLogoError"
         >
+          <template #error>
+            <div class="sidebar-logo-fallback">{{ logoFallback }}</div>
+          </template>
+        </el-image>
+        <template v-else>
+          <div class="sidebar-logo-fallback">{{ logoFallback }}</div>
+        </template>
         <h1 class="sidebar-title">{{ title }}</h1>
       </router-link>
     </transition>
@@ -40,12 +54,27 @@
 
 <script setup lang="ts">
 import { useSettingsStore } from '../../../../store'
-import { computed } from 'vue'
+import { computed, ref, watch } from 'vue'
 
 defineProps<{ collapse: boolean }>()
 const settings = useSettingsStore()
 const title = computed(() => settings.title as any)
 const logo = computed(() => settings.logo as any)
+const logoError = ref(false)
+
+const showLogoImage = computed(() => !!logo.value && !logoError.value)
+const logoFallback = computed(() => {
+  const text = title.value || 'OMS'
+  return text ? text.toString().trim().charAt(0).toUpperCase() : 'O'
+})
+
+watch(logo, () => {
+  logoError.value = false
+}, { immediate: true })
+
+function handleLogoError() {
+  logoError.value = true
+}
 </script>
 
 <style lang="scss" scoped>
@@ -89,10 +118,33 @@ const logo = computed(() => settings.logo as any)
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }
+
+    & .sidebar-logo-fallback {
+      width: 32px;
+      height: 32px;
+      line-height: 32px;
+      border-radius: 6px;
+      background: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      font-weight: 600;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 12px;
+    }
+
+    & .sidebar-subtitle {
+      font-size: 12px;
+      color: rgba(255, 255, 255, 0.78);
+    }
   }
 
   &.collapse {
     .sidebar-logo {
+      margin-right: 0px;
+    }
+
+    .sidebar-logo-fallback {
       margin-right: 0px;
     }
   }

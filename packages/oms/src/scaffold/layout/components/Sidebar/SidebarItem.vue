@@ -5,48 +5,62 @@
   >
     <!-- 没有子菜单 -->
     <template v-if="item.meta && item.meta.menuType === 2">
-      <app-link
-        v-if="item.meta"
-        :to="to"
-        :new-tab="item.meta.newTab"
+      <el-tooltip
+        :disabled="!isCollapse"
+        effect="dark"
+        placement="right"
+        :content="item.meta?.title"
       >
-        <el-menu-item
-          :index="to"
-          :class="{ 'submenu-title-noDropdown': !isNest }"
-          @click="itemClick"
+        <app-link
+          v-if="item.meta"
+          :to="to"
+          :new-tab="item.meta.newTab"
         >
-          <menu-content :meta="item.meta" />
-        </el-menu-item>
-      </app-link>
+          <el-menu-item
+            :index="to"
+            :class="{ 'submenu-title-noDropdown': !isNest }"
+            @click="itemClick"
+          >
+            <menu-content :meta="item.meta" />
+          </el-menu-item>
+        </app-link>
+      </el-tooltip>
     </template>
     <!-- 有子菜单 -->
-    <el-sub-menu
+    <el-tooltip
       v-else-if="item.meta && item.meta.menuType === 1"
-      ref="subMenu"
-      :index="to"
-      :class="{ 'submenu-title-noDropdown': !isNest }"
+      :disabled="!isCollapse"
+      effect="dark"
+      placement="right"
+      :content="item.meta?.title"
     >
-      <template #title>
-        <app-link
-          v-if="item.redirect && item.redirect !== '#'"
-          :to="to"
-        >
-          <menu-content :meta="item.meta" />
-        </app-link>
-        <menu-content
-          v-else
-          :meta="item.meta"
+      <el-sub-menu
+        ref="subMenu"
+        :index="to"
+        :class="{ 'submenu-title-noDropdown': !isNest }"
+      >
+        <template #title>
+          <app-link
+            v-if="item.redirect && item.redirect !== '#'"
+            :to="to"
+          >
+            <menu-content :meta="item.meta" />
+          </app-link>
+          <menu-content
+            v-else
+            :meta="item.meta"
+          />
+        </template>
+        <sidebar-item
+          v-for="child in item.children"
+          :key="child.path"
+          :is-nest="true"
+          :item="child"
+          :to="getTo(child)"
+          class="nest-menu"
         />
-      </template>
-      <sidebar-item
-        v-for="child in item.children"
-        :key="child.path"
-        :is-nest="true"
-        :item="child"
-        :to="getTo(child)"
-        class="nest-menu"
-      />
-    </el-sub-menu>
+      </el-sub-menu>
+    </el-tooltip>
   </div>
 </template>
 
@@ -76,6 +90,10 @@ export default {
     to: {
       type: String,
       default: ''
+    },
+    isCollapse: {
+      type: Boolean,
+      default: false
     }
   },
   methods: {

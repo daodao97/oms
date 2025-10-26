@@ -2,9 +2,28 @@ import { defineStore } from 'pinia'
 import { App, PageSchema, Sidebar } from '../types'
 import Cookies from 'js-cookie'
 
+const SIDEBAR_STATUS_KEY = 'sidebarStatus'
+
+function getStoredSidebarStatus() {
+  if (typeof window === 'undefined')
+    return undefined
+  const local = window.localStorage.getItem(SIDEBAR_STATUS_KEY)
+  if (local !== null)
+    return local === '1'
+  const cookie = Cookies.get(SIDEBAR_STATUS_KEY)
+  if (cookie !== undefined)
+    return !!cookie
+}
+
+function persistSidebarStatus(opened: boolean) {
+  if (typeof window !== 'undefined')
+    window.localStorage.setItem(SIDEBAR_STATUS_KEY, opened ? '1' : '0')
+  Cookies.set(SIDEBAR_STATUS_KEY, opened ? '1' : '0')
+}
+
 export const appState: App = {
   sidebar: {
-    opened: Cookies.get('sidebarStatus') ? !!Cookies.get('sidebarStatus') : true,
+    opened: getStoredSidebarStatus() ?? true,
     withoutAnimation: false
   },
   device: 'desktop',
@@ -20,11 +39,11 @@ export const useAppStore = defineStore('app', {
     TOGGLE_SIDEBAR() {
       this.sidebar.opened = !this.sidebar.opened
       this.sidebar.withoutAnimation = false
-      Cookies.set('sidebarStatus', this.sidebar.opened ? '1' : '0')
+      persistSidebarStatus(this.sidebar.opened)
     },
     CLOSE_SIDEBAR(withoutAnimation: boolean) {
-      Cookies.set('sidebarStatus', '0')
       this.sidebar.opened = false
+      persistSidebarStatus(this.sidebar.opened)
       this.sidebar.withoutAnimation = withoutAnimation
     },
     TOGGLE_DEVICE(device: string) {

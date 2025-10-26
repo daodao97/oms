@@ -48,11 +48,13 @@
           trigger="click"
         >
           <div class="user-info">
-            <img
-              :src="avatar ? avatar : defaultAvatar"
+            <el-avatar
               class="user-avatar"
-              alt="头像"
-            > <span class="user-name">{{ nickname || name }}</span>
+              :size="32"
+              :src="currentAvatar || undefined"
+              @error="handleAvatarError"
+            >{{ avatarFallback }}</el-avatar>
+            <span class="user-name">{{ nickname || name }}</span>
           </div>
           <template #dropdown>
             <el-dropdown-menu class="user-dropdown">
@@ -86,7 +88,7 @@ import { showEleByClassName, Cache, waterMarker } from '@okiss/utils'
 import { VBtn as VButton } from '@okiss/vbtf'
 import { useAppStore, useSettingsStore, useUserStore } from '../../../store'
 import { useThemeMode } from '../../../composables/useThemeMode'
-import { computed, ref, onMounted } from 'vue'
+import { computed, ref, onMounted, watch } from 'vue'
 import { Sunny, Moon } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
@@ -155,6 +157,18 @@ onMounted(() => {
 })
 
 const header = ref()
+const currentAvatar = ref('')
+const avatarError = ref(false)
+
+watch([avatar, defaultAvatar], () => {
+  avatarError.value = false
+  currentAvatar.value = avatar.value || defaultAvatar.value || ''
+}, { immediate: true })
+
+const avatarFallback = computed(() => {
+  const text = nickname.value || name.value || settingsStore.title || '用户'
+  return text ? text.toString().trim().charAt(0).toUpperCase() : '用'
+})
 function toggleSideBar() { appStore.toggleSideBar() }
 async function logout() {
   await userStore.logout()
@@ -183,6 +197,13 @@ function gotoMenuEdit() {
   if (route?.meta?.pageId) {
     window.open(location.origin + location.pathname + '#/menu/' + route?.meta?.pageId)
   }
+}
+
+function handleAvatarError() {
+  if (avatarError.value)
+    return
+  avatarError.value = true
+  currentAvatar.value = ''
 }
 </script>
 
@@ -289,17 +310,17 @@ function gotoMenuEdit() {
   .user-info {
     height: 50px;
     line-height: 50px;
+    display: inline-flex;
+    align-items: center;
   }
 
   .user-avatar {
-    width: 24px;
-    height: 24px;
-    line-height: 24px;
-    border-radius: 50%;
     margin: 0 10px 0 0;
-    color: #1890ff;
-    vertical-align: middle;
-    background: hsla(0, 0%, 100%, 0.85);
+    color: #fff;
+    background: #1890ff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .user-name {

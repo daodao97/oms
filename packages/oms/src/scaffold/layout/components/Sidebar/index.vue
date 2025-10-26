@@ -26,6 +26,7 @@
             :key="route.path"
             :item="route"
             :to="$router.resolve(route.redirect ? route.redirect : route).fullPath"
+            :is-collapse="isCollapse"
           />
         </template>
       </el-menu>

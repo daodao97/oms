@@ -28,10 +28,13 @@
           @click="onCaptchaClick"
         >
       </div>
-      <div
-        :class="{input: true, button: true, 'no-ready': !onReady}"
+      <el-button
+        class="login-button"
+        type="primary"
+        :loading="loading"
+        :disabled="!onReady"
         @click="login"
-      >登录</div>
+      >登录</el-button>
       <div class="tips">
         <div>{{ tips }}</div>
       </div>
@@ -64,6 +67,7 @@ const captcha = computed(() => settingsStore.captcha)
 const baseAPI = computed(() => appStore.baseURL)
 
 const ts = ref(0)
+const loading = ref(false)
 const onCaptchaClick = () => ts.value++
 const onReady = computed(() => {
   return data.value.username.length > 0 && data.value.password.length >= 4 && (captcha.value ? data.value.captcha.length === 4 : true)
@@ -77,6 +81,8 @@ const data = ref({
 })
 
 const login = () => {
+  if (loading.value)
+    return
   if (data.value.username === '' || data.value.password === '' || (captcha.value && data.value.captcha === '')) {
     ElMessage.error('用户名, 密码, 验证码是必须的')
     return
@@ -84,10 +90,13 @@ const login = () => {
   if (captcha.value) {
     data.value.sing = CryptoJS.MD5(`${data.value.username}${data.value.password}${data.value.captcha}`).toString()
   }
+  loading.value = true
   userStore.login(data.value).then(res => {
     router.push({ path: route.query?.redirect as string || '/' })
   }).catch(e => {
     ts.value++
+  }).finally(() => {
+    loading.value = false
   })
   return
 }
@@ -143,17 +152,9 @@ $dark_gray: #889aa4;
       }
     }
 
-    .button {
+    .login-button {
       width: 300px;
       height: 40px;
-      border: 1px solid #fff;
-      background: #fff;
-    }
-
-    .no-ready {
-      background: #909399 !important;
-      border: 1px solid #909399 !important;
-      color: #DCDFE6;
     }
   }
 
