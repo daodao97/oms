@@ -1,6 +1,6 @@
 {
   "name": "@okiss/oms",
-  "version": "0.0.87",
+  "version": "0.0.88",
   "scripts": {
     "dev": "cross-env pkg=oms vite --config ../../build/dev.config.mts",
     "prebuild": "pnpm run update:peers",

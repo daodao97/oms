@@ -3,7 +3,6 @@ import Test from './views/index.vue'
 import Dash from './views/dash.vue'
 
 
-
 const app = {
   routes: [
     {
@@ -17,7 +16,8 @@ const app = {
           path: '/dash',
           name: 'dash',
           component: Dash,
-          meta: { title: 'dash', icon: 'el-icon-help', menuType: 2, keepAlive: true }
+          meta: { title: 'dash', icon: 'el-icon-help', menuType: 2, keepAlive: true },
+          role: "root"
         },
       ]
     }

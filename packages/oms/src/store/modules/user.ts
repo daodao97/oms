@@ -24,6 +24,10 @@ export const userState: User = {
   expired: false
 }
 
+const getRouteKey = (route: RouteRecordRaw): string => {
+  return typeof route.name === 'string' ? route.name : route.path
+}
+
 export const useUserStore = defineStore('user', {
   state: (): User => ({ ...userState }),
   actions: {
@@ -40,7 +44,11 @@ export const useUserStore = defineStore('user', {
       this.isLodeRemoteRoutes = true
     },
     setCustomRoutes(routes: RouteRecordRaw[]) {
-      this.customRouter = this.customRouter.concat(routes)
+      const existed = new Set(this.customRouter.map(route => getRouteKey(route)))
+      const append = routes.filter(route => !existed.has(getRouteKey(route)))
+      if (append.length) {
+        this.customRouter = this.customRouter.concat(append)
+      }
     },
     updateState<K extends keyof User>({ key, value }: { key: K, value: any }) {
       // @ts-ignore

@@ -44,10 +44,12 @@ const hasPermission = (routeRoles: string[], userRoles: string[]): boolean => {
 }
 
 export const filterRoutesByRole = (routes: RouteRecordRaw[] = [], userRoles: string[]): RouteRecordRaw[] => {
+  console.log("routes", routes, userRoles )
   if (userRoles.includes(SUPER_ROLE)) {
     return routes.map(route => cloneRoute(route))
   }
   return routes.reduce<RouteRecordRaw[]>((acc, route) => {
+    console.log(acc, route)
     const routeRoles = getRouteRoles(route)
     if (!hasPermission(routeRoles, userRoles)) {
       return acc

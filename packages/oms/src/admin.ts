@@ -1,4 +1,4 @@
-import type { App, Component, Directive } from 'vue'
+import { createApp, watch, type App, type Component, type Directive } from 'vue'
 import type { RouteRecordRaw } from 'vue-router'
 import type { OmsOptions, OmsPlugin, UsePlugin } from './types'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
@@ -26,6 +26,12 @@ import * as directives from './directive'
 import { defaultOptions } from './default'
 
 export let http: AxiosInstance
+const pendingRoutes: RouteRecordRaw[] = []
+const registeredRouteKeys = new Set<string>()
+
+const getRouteKey = (route: RouteRecordRaw): string => {
+  return typeof route.name === 'string' ? route.name : route.path
+}
 
 export function useHttp(options?: AxiosRequestConfig): AxiosInstance {
   return options ? instance((merge(defaultOptions.axios, options))) : http
@@ -48,6 +54,7 @@ export function createAdmin(omsOptions?: OmsOptions) {
   setupStore(app)
   const appStore = useAppStore(pinia)
   const settingsStore = useSettingsStore(pinia)
+  const userStore = useUserStore(pinia)
   setHttp(http)
   settingsStore.updateSettings(omsOptions?.settings || {})
   appStore.setBaseAPI(options?.axios.baseURL as any)
@@ -60,6 +67,9 @@ export function createAdmin(omsOptions?: OmsOptions) {
       'X-Token': getToken()
     }
   })
+  watch(() => userStore.token, () => {
+    syncRoutesWithRoles()
+  }, { immediate: true })
   router.isReady().then(() => app.mount('#app'))
 }
 
@@ -69,13 +79,33 @@ function regComponents(app: App, components: Record<string, Component> = {}) {
   })
 }
 
-function regRoutes(routes: RouteRecordRaw[] = []) {
+function syncRoutesWithRoles() {
   const userRoles = getRolesFromJwt(getToken())
-  const permittedRoutes = filterRoutesByRole(routes, userRoles)
-  permittedRoutes.forEach(item => {
+  if (!userRoles.length) {
+    return
+  }
+  const permittedRoutes = filterRoutesByRole(pendingRoutes, userRoles)
+  const userStore = useUserStore(pinia)
+  const existedKeys = new Set(userStore.customRouter.map(item => getRouteKey(item)))
+  const newRoutes = permittedRoutes.filter(route => {
+    const key = getRouteKey(route)
+    if (registeredRouteKeys.has(key) || existedKeys.has(key)) {
+      return false
+    }
+    registeredRouteKeys.add(key)
+    return true
+  })
+  newRoutes.forEach(item => {
     router.addRoute(item)
   })
-  useUserStore(pinia).setCustomRoutes(permittedRoutes)
+  if (newRoutes.length) {
+    userStore.setCustomRoutes(newRoutes)
+  }
+}
+
+function regRoutes(routes: RouteRecordRaw[] = []) {
+  pendingRoutes.push(...routes)
+  syncRoutesWithRoles()
 }
 
 function regUse(app: App, use: UsePlugin[]) {
