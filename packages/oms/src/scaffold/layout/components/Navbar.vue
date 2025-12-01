@@ -10,7 +10,10 @@
         class="hamburger-container"
         @toggleClick="toggleSideBar"
       />
-      <breadcrumb class="breadcrumb-container" />
+      <breadcrumb
+        v-if="device !== 'mobile'"
+        class="breadcrumb-container"
+      />
     </el-col>
     <el-col :span="8">
       <div class="right-content">
@@ -101,6 +104,7 @@ const json = ref('')
 const key = ref(0)
 const defaultAvatar = computed(() => settingsStore.defaultAvatar)
 const sidebar = computed(() => appStore.sidebar)
+const device = computed(() => appStore.device)
 const avatar = computed(() => userStore.avatar)
 const name = computed(() => userStore.name)
 const nickname = computed(() => userStore.nickname)

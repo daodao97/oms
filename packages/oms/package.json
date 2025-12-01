@@ -1,6 +1,6 @@
 {
   "name": "@okiss/oms",
-  "version": "0.0.88",
+  "version": "0.0.89",
   "scripts": {
     "dev": "cross-env pkg=oms vite --config ../../build/dev.config.mts",
     "prebuild": "pnpm run update:peers",
@@ -11,32 +11,32 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
-    "@vueuse/core": "^11.3.0",
-    "axios": "^1.12.1",
+    "@vueuse/core": "^14.1.0",
+    "axios": "^1.13.2",
     "crypto-js": "^4.2.0",
-    "dayjs": "^1.11.18",
-    "element-plus": "^2.11.3",
+    "dayjs": "^1.11.19",
+    "element-plus": "^2.11.9",
     "js-cookie": "^3.0.5",
     "lodash": "^4.17.21",
     "mitt": "^3.0.1",
     "mockjs": "^1.1.0",
-    "monaco-editor": "^0.51.0",
+    "monaco-editor": "^0.55.1",
     "normalize.css": "^8.0.1",
     "nprogress": "^0.2.0",
     "path-to-regexp": "^8.3.0",
-    "pinia": "^2.3.1",
+    "pinia": "^3.0.4",
     "qs": "^6.14.0",
-    "vue": "^3.5.21",
-    "vue-router": "^4.5.1",
+    "vue": "^3.5.25",
+    "vue-router": "^4.6.3",
     "vue3-markdown-it": "^1.0.10",
     "vuedraggable": "^4.1.0"
   },
   "peerDependencies": {
-    "@okiss/utils": ">=0.0.29",
-    "@okiss/vbtf": ">=0.0.127",
-    "element-plus": "^2.11.3",
-    "vue": "^3.5.21",
-    "vue-router": "^4.5.1"
+    "@okiss/utils": ">=0.0.30",
+    "@okiss/vbtf": ">=0.0.128",
+    "element-plus": "^2.11.9",
+    "vue": "^3.5.25",
+    "vue-router": "^4.6.3"
   },
   "files": [
     "dist/*"
@@ -61,7 +61,7 @@
     }
   },
   "devDependencies": {
-    "typescript": "^5.9.2",
-    "vue-tsc": "^2.2.12"
+    "typescript": "^5.9.3",
+    "vue-tsc": "^3.1.5"
   }
 }

@@ -1,6 +1,6 @@
 {
   "name": "@okiss/vbtf",
-  "version": "0.0.127",
+  "version": "0.0.128",
   "scripts": {
     "preinstall": "npx only-allow pnpm",
     "dev": "cross-env pkg=vbtf vite --config ../../build/dev.config.mts",
@@ -10,8 +10,8 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
-    "axios": "^1.12.1",
-    "dayjs": "^1.11.18",
+    "axios": "^1.13.2",
+    "dayjs": "^1.11.19",
     "file-saver": "^2.0.5",
     "inputmask": "^5.0.9",
     "lodash": "^4.17.21",
@@ -21,21 +21,21 @@
   },
   "peerDependencies": {
     "@okiss/utils": ">=0.0.12",
-    "vue": "^3.5.21",
-    "vue-router": "^4.5.1",
-    "element-plus": "^2.11.3"
+    "vue": "^3.5.25",
+    "vue-router": "^4.6.3",
+    "element-plus": "^2.11.9"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.0",
-    "@vitejs/plugin-vue-jsx": "^5.0.0",
-    "@vue/compiler-sfc": "^3.5.21",
-    "eslint": "^9.35.0",
-    "eslint-plugin-vue": "^9.33.0",
-    "monaco-editor": "^0.51.0",
-    "sass": "^1.92.1",
-    "typescript": "^5.9.2",
-    "vite": "^7.0.0",
-    "vue-tsc": "^2.2.12"
+    "@vitejs/plugin-vue": "^6.0.2",
+    "@vitejs/plugin-vue-jsx": "^5.1.2",
+    "@vue/compiler-sfc": "^3.5.25",
+    "eslint": "^9.39.1",
+    "eslint-plugin-vue": "^10.6.2",
+    "monaco-editor": "^0.55.1",
+    "sass": "^1.94.2",
+    "typescript": "^5.9.3",
+    "vite": "^7.2.6",
+    "vue-tsc": "^3.1.5"
   },
   "files": [
     "dist/*"

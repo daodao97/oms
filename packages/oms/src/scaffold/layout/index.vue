@@ -22,11 +22,15 @@
 import { Navbar, Sidebar, AppMain } from './components'
 import { useEventListener } from '@vueuse/core'
 import { useAppStore, useSettingsStore } from '../../store'
+import { useRoute } from 'vue-router'
+import { watch } from 'vue'
+
 const { body } = document
 const WIDTH = 992 // refer to Bootstrap's responsive design
 
 const appStore = useAppStore()
 const settingsStore = useSettingsStore()
+const route = useRoute()
 
 const sidebar = computed(() => appStore.sidebar)
 const device = computed(() => appStore.device)
@@ -46,10 +50,6 @@ const isMobile = () => {
   return rect.width - 1 < WIDTH
 }
 
-useEventListener(window, 'resize', () => resizeHandler())
-
-const handleClickOutside = () => appStore.closeSideBar({ withoutAnimation: false })
-
 const resizeHandler = () => {
   if (!document.hidden) {
     const ismobile = isMobile()
@@ -57,6 +57,18 @@ const resizeHandler = () => {
     if (ismobile) appStore.closeSideBar({ withoutAnimation: true })
   }
 }
+
+resizeHandler()
+
+useEventListener(window, 'resize', () => resizeHandler())
+
+watch(route, () => {
+  if (device.value === 'mobile' && sidebar.value.opened) {
+    appStore.closeSideBar({ withoutAnimation: false })
+  }
+})
+
+const handleClickOutside = () => appStore.closeSideBar({ withoutAnimation: false })
 </script>
 
 <style lang="scss" scoped>
@@ -78,7 +90,7 @@ const resizeHandler = () => {
   width: 100%;
   top: 0;
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 999;
 }
 

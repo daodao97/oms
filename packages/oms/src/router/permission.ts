@@ -60,11 +60,11 @@ export const filterRoutesByRole = (routes: RouteRecordRaw[] = [], userRoles: str
     }
     if (route.children && route.children.length) {
       const children = filterRoutesByRole(route.children, userRoles)
-      if (children.length) {
-        cloned.children = children
-      } else {
-        delete cloned.children
+      if (!children.length) {
+        // 如果子路由全部被过滤，父路由不再保留，避免注册空壳路由阻挡后续权限变更时的注册
+        return acc
       }
+      cloned.children = children
     }
     acc.push(cloned)
     return acc

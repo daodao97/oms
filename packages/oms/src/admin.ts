@@ -81,9 +81,6 @@ function regComponents(app: App, components: Record<string, Component> = {}) {
 
 function syncRoutesWithRoles() {
   const userRoles = getRolesFromJwt(getToken())
-  if (!userRoles.length) {
-    return
-  }
   const permittedRoutes = filterRoutesByRole(pendingRoutes, userRoles)
   const userStore = useUserStore(pinia)
   const existedKeys = new Set(userStore.customRouter.map(item => getRouteKey(item)))
