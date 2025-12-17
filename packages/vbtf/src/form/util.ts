@@ -23,6 +23,7 @@ import VDuration from './VDuration.vue'
 import VTableSelect from './TableSelect/index.vue'
 import dayjs from 'dayjs/esm/index.js'
 import VSwitch from './VSwitch.vue'
+import { ElTransfer } from 'element-plus'
 // @ts-ignore
 
 export const componentMap: Record<string, string> = {
@@ -111,7 +112,8 @@ export const customFormComps: Record<string, Component> = {
   VDuration,
   VDate,
   VTableSelect,
-  VSwitch
+  VSwitch,
+  ElTransfer
 }
 
 export const regCustomFormComps = (comps: Record<string, Component>) => {

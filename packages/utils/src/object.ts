@@ -1,11 +1,18 @@
+import jsonpath from 'jsonpath'
+
 export function getObjectNodeByKeyTree(keyTree: string, object: Record<string, any>, defaultVal?: any) {
-  const keys = keyTree.split('.')
-  let val = Object.assign({}, object)
-  for (let i = 0; i < keys.length; i++) {
-    val = val[keys[i]]
-    if (val === undefined || val === null) {
-      return defaultVal
-    }
+  const normalizedKeyTree = keyTree.replace(/^\.+/, '')
+  const jsonPath = normalizedKeyTree
+    ? normalizedKeyTree.startsWith('$')
+      ? normalizedKeyTree
+      : `$.${normalizedKeyTree}`
+    : '$'
+  let val
+  try {
+    val = jsonpath.value(object, jsonPath)
+  } catch {
+    val = undefined
   }
-  return val
+  console.log("getObjectNodeByKeyTree", keyTree, val, object )
+  return val === undefined || val === null ? defaultVal : val
 }

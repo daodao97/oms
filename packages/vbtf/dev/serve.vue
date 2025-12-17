@@ -58,7 +58,7 @@
 import { ref } from 'vue'
 import { VButton, VButtonGroup, VForm, VTable, MonacoEditor, regCustomFormComps } from '@'
 import VTest from './VTest.vue'
-
+import { ElTransfer } from 'element-plus'
 import { reactive } from 'vue'
 
 const formInline = reactive({
@@ -238,6 +238,37 @@ const form1 = {
     {
       field: 'test2'
     },
+    {
+                "field": "models",
+                "info": "可选模型来源于模型价格配置",
+                "label": "支持模型",
+                "props": {
+                    "data": [
+                        {
+                            "key": "claude-sonnet-4-5-20250929",
+                            "label": "claude-sonnet-4-5-20250929"
+                        },
+                        {
+                            "key": "claude-sonnet-4-5-20250929-thinking",
+                            "label": "claude-sonnet-4-5-20250929-thinking"
+                        },
+                        {
+                            "key": "claude-haiku-4-5-20251001",
+                            "label": "claude-haiku-4-5-20251001"
+                        },
+                        {
+                            "key": "o1-preview",
+                            "label": "o1-preview"
+                        }
+                    ],
+                    "filterable": true,
+                    "titles": [
+                        "可选模型",
+                        "支持模型"
+                    ]
+                },
+                "type": "transfer"
+            },
     {
       field: 'test1',
       computed: [

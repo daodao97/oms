@@ -617,6 +617,8 @@ export default defineComponent({
           const key = each.field.replace(/^\.+/, '')
           const nowValue = getObjectNodeByKeyTree(key, data)
 
+          console.log("can_show", key, nowValue)
+
           let check = (dependVale, nowValue) => dependVale === nowValue
           if (isArray(each.value)) {
             if (isArray(nowValue)) {
