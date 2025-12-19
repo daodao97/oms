@@ -43,8 +43,8 @@ import { useUserStore } from '../../../../store'
 import { useRouter } from 'vue-router'
 const userStore = useUserStore()
 
-function filterHidden(arr) {
-  return arr.filter(each => {
+function filterHidden(arr: any[]) {
+  return arr.filter((each: any) => {
     if (each.meta?.menuType === 0) {
       return false
     }
@@ -88,10 +88,16 @@ function onselected(to: string) { router.push(to); selected.value = '' }
   padding: 15px 20px 0 20px;
 
   ::v-deep(.el-select__wrapper) {
-    background-color: #304156;
-    border: 1px dashed gray;
-    border-radius: var(--el-input-border-radius,var(--el-border-radius-base));
+    background-color: transparent;
+    border: 1.5px solid var(--border-color);
+    border-radius: 12px;
     box-shadow: none;
+    transition: all 0.3s ease;
+
+    &:hover {
+      border-color: var(--sidebar-active-text-color);
+      background-color: var(--sidebar-hover-bg);
+    }
   }
   //::v-deep(.el-input__wrapper:hover) {
   //  box-shadow: none;

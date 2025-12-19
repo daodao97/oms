@@ -117,22 +117,22 @@ const navbarStyle = computed(() => {
   const envColor = setting.value.envColor?.[user.value.env]
   if (isDark.value) {
     return {
-      background: 'linear-gradient(135deg, rgba(59, 130, 246, 0.55) 0%, rgba(37, 99, 235, 0.45) 45%, rgba(15, 23, 42, 0.92) 100%)',
-      borderBottom: '1px solid rgba(148, 163, 184, 0.35)',
-      boxShadow: '0 1px 8px rgba(15, 23, 42, 0.7)'
+      background: 'linear-gradient(135deg, rgba(0, 176, 116, 0.15) 0%, rgba(2, 6, 23, 0.95) 100%)',
+      borderBottom: '1px solid var(--border-color)',
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
     }
   }
   if (envColor) {
     return {
-      background: `linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0%, rgba(255, 255, 255, 0.05) 60%, ${envColor} 100%)`,
-      borderBottom: '1px solid rgba(15, 23, 42, 0.08)',
-      boxShadow: '0 1px 4px rgba(15, 23, 42, 0.08)'
+      background: `linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(243, 244, 248, 0.9) 60%, ${envColor} 100%)`,
+      borderBottom: '1px solid var(--border-color)',
+      boxShadow: '0 1px 4px rgba(0, 0, 0, 0.05)'
     }
   }
   return {
-    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.9) 0%, rgba(248, 250, 252, 0.9) 70%, #ffffff 100%)',
-    borderBottom: '1px solid rgba(15, 23, 42, 0.08)',
-    boxShadow: '0 1px 4px rgba(15, 23, 42, 0.05)'
+    background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(243, 244, 248, 0.95) 70%, #ffffff 100%)',
+    borderBottom: '1px solid var(--border-color)',
+    boxShadow: '0 1px 10px rgba(0, 0, 0, 0.03)'
   }
 })
 

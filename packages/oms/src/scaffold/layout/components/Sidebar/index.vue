@@ -9,10 +9,7 @@
       <el-menu
         :default-active="activeMenu"
         :collapse="isCollapse"
-        :background-color="variables.menuBg"
-        :text-color="variables.menuText"
         :unique-opened="false"
-        :active-text-color="variables.menuActiveText"
         :collapse-transition="false"
         mode="vertical"
       >
@@ -83,11 +80,6 @@ const activeMenu = computed(() => {
 })
 
 const showLogo = computed(() => settingsStore.sidebarLogo)
-const variables = computed(() => ({
-  menuBg: '#304156',
-  menuText: '#bfcbd9',
-  menuActiveText: '#409EFF'
-}))
 const isCollapse = computed(() => !sidebar.value.opened)
 
 onMounted(() => showActive())

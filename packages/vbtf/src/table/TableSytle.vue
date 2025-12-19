@@ -152,9 +152,10 @@ export default defineComponent({
     let unbindTheme: (() => void) | null = null
     let stopThemeWatch: (() => void) | null = null
     const syncHeaderTheme = (mode: ThemeMode) => {
-      headerCellStyle.value = mode === 'dark'
-        ? { background: '#1f2937', color: '#e5e7eb' }
-        : { background: '#eef1f6', color: '#303133' }
+      headerCellStyle.value = { 
+        background: 'var(--el-table-header-bg-color)', 
+        color: 'var(--el-table-header-text-color)' 
+      }
     }
     onMounted(() => {
       props.dragSort && rowDrop()

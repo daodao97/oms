@@ -92,9 +92,9 @@ function handleLogoError() {
   width: 100%;
   height: 50px;
   line-height: 50px;
-  background: var(--sidebar-logo-bg, #2b2f3a);
+  background: var(--sidebar-logo-bg, #ffffff);
   text-align: center;
-  color: var(--sidebar-logo-text-color, #fff);
+  color: var(--sidebar-logo-text-color, #00b074);
   overflow: hidden;
 
   & .sidebar-logo-link {
@@ -111,10 +111,10 @@ function handleLogoError() {
     & .sidebar-title {
       display: inline-block;
       margin: 0;
-      color: var(--sidebar-logo-text-color, #fff);
-      font-weight: 600;
+      color: var(--sidebar-logo-text-color, #00b074);
+      font-weight: 700;
       line-height: 50px;
-      font-size: 14px;
+      font-size: 20px;
       font-family: Avenir, Helvetica Neue, Arial, Helvetica, sans-serif;
       vertical-align: middle;
     }
@@ -124,8 +124,8 @@ function handleLogoError() {
       height: 32px;
       line-height: 32px;
       border-radius: 6px;
-      background: rgba(255, 255, 255, 0.2);
-      color: #fff;
+      background: rgba(0, 176, 116, 0.1);
+      color: #00b074;
       font-weight: 600;
       display: inline-flex;
       align-items: center;

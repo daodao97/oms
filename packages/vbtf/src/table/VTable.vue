@@ -1,177 +1,70 @@
 <template>
   <!--  筛选条件  -->
-  <el-card
-    v-if="showFilter && showFilterCard"
-    shadow="never"
-    class="table-filter"
-  >
+  <el-card v-if="showFilter && showFilterCard" shadow="never" class="table-filter">
     <slot name="filter">
-      <v-form
-        v-if="tableFilter.length > 0"
-        :key="formKey"
-        ref="filter"
-        v-model="filterForm"
-        :dev="dev"
-        class="filter-form"
-        prefix-path="filter"
-        :options="filterFormOptions"
-        :form-items="tableFilter"
-        :init-query-params="syncUrl"
-        @submit="searchAction"
-        @reset="resetFilter"
-      />
+      <v-form v-if="tableFilter.length > 0" :key="formKey" ref="filter" v-model="filterForm" :dev="dev"
+        class="filter-form" prefix-path="filter" :options="filterFormOptions" :form-items="tableFilter"
+        :init-query-params="syncUrl" @submit="searchAction" @reset="resetFilter" />
     </slot>
   </el-card>
   <!--   批量按钮/其他按钮   -->
   <slot name="action">
-    <el-row
-      :gutter="20"
-      style="margin-bottom: 20px"
-    >
-      <el-col
-        v-if="showBatchButton"
-        :span="batchButtonCol"
-      >
-        <v-button
-          :buttons="makeBatchButton(tableBatchButton)"
-          prefix-path="batchButton"
-          @action="batchBtnAction"
-        />
-        <div
-          v-if="tableBatchButton.length > 0 && selectedInfoPosition === 'afterBatchButton'"
-          class="selected-info"
-        >
-          <span v-html="selectedInfo" />
-        </div>
-      </el-col>
-      <el-col
-        v-if="showNormalButton"
-        :span="24 - batchButtonCol"
-        class="normal-button"
-      >
-        <v-button
-          :buttons="makeNormalButton(tableNormalButton)"
-          prefix-path="normalButton"
-          @action="load"
-        />
-        <export-add-button
-          v-if="tableExportAble"
-          :get-info="getExportInfo"
-        />
-        <el-button
-          v-if="tableExportCurrentPageAble"
-          type="primary"
-          :loading="exporting"
-          @click="exportCurrentTable"
-        >导出</el-button>
-      </el-col>
-    </el-row>
+    <div class="table-toolbar">
+      <el-row :gutter="20">
+        <el-col v-if="showBatchButton" :span="batchButtonCol">
+          <v-button :buttons="makeBatchButton(tableBatchButton)" prefix-path="batchButton" @action="batchBtnAction" />
+          <div v-if="tableBatchButton.length > 0 && selectedInfoPosition === 'afterBatchButton'" class="selected-info">
+            <span v-html="selectedInfo" />
+          </div>
+        </el-col>
+        <el-col v-if="showNormalButton" :span="24 - batchButtonCol" class="normal-button">
+          <v-button :buttons="makeNormalButton(tableNormalButton)" prefix-path="normalButton" @action="load" />
+          <export-add-button v-if="tableExportAble" :get-info="getExportInfo" />
+          <el-button v-if="tableExportCurrentPageAble" type="primary" :loading="exporting"
+            @click="exportCurrentTable">导出</el-button>
+        </el-col>
+      </el-row>
+    </div>
   </slot>
   <slot name="before_table" />
   <!--  列表  -->
-  <el-tabs
-    v-if="tableTabs.length > 0"
-    v-model="activeTab"
-    type="card"
-    @tab-click="changeTab"
-  >
-    <el-tab-pane
-      v-for="(item, index) in tableTabs"
-      :key="index + '-pane'"
-      :name="item.value + ''"
-      :lazy="true"
-    >
+  <el-tabs v-if="tableTabs.length > 0" v-model="activeTab" type="card" @tab-click="changeTab">
+    <el-tab-pane v-for="(item, index) in tableTabs" :key="index + '-pane'" :name="item.value + ''" :lazy="true">
       <template #label>
         <span><v-icon :name="item.icon || ''" />{{ item.label }}</span>
       </template>
       <slot name="table">
-        <table-style
-          ref="table"
-          :key="tableKey"
-          v-loading="loading"
-          :headers="tableHeaders"
-          :data-list="tableList"
-          :drag-sort="dragSortEnable"
-          :props="tableTableProps"
-          :selection="enableSelection"
-          :cell-type="cellType"
-          :cell-props="cellProps"
-          :row-button="tableRowButton"
-          :show-row-button="showRowButton"
-          :make-row-button="makeRowButton"
-          :load-children="loadChildren"
-          :local-sort-handler="localSortHandler"
-          @select-change="handleSelectionChange"
-          @sort-change="sortTable"
-          @cell-change="cellChange"
-          @btn-action="btnAction"
-          @mounted="load"
-          @drag-sort="dragSortHandle"
-        />
+        <table-style ref="table" :key="tableKey" v-loading="loading" :headers="tableHeaders" :data-list="tableList"
+          :drag-sort="dragSortEnable" :props="tableTableProps" :selection="enableSelection" :cell-type="cellType"
+          :cell-props="cellProps" :row-button="tableRowButton" :show-row-button="showRowButton"
+          :make-row-button="makeRowButton" :load-children="loadChildren" :local-sort-handler="localSortHandler"
+          @select-change="handleSelectionChange" @sort-change="sortTable" @cell-change="cellChange"
+          @btn-action="btnAction" @mounted="load" @drag-sort="dragSortHandle" />
       </slot>
     </el-tab-pane>
   </el-tabs>
-  <slot
-    v-else
-    name="table"
-  >
-    <table-style
-      ref="table"
-      :key="tableKey"
-      v-loading="loading"
-      :headers="tableHeaders"
-      :data-list="tableList"
-      :drag-sort="dragSortEnable"
-      :props="tableTableProps"
-      :selection="enableSelection"
-      :cell-type="cellType"
-      :cell-props="cellProps"
-      :row-button="tableRowButton"
-      :show-row-button="showRowButton"
-      :make-row-button="makeRowButton"
-      :load-children="loadChildren"
-      :local-sort-handler="localSortHandler"
-      @select-change="handleSelectionChange"
-      @sort-change="sortTable"
-      @cell-change="cellChange"
-      @btn-action="btnAction"
-      @drag-sort="dragSortHandle"
-    />
+  <slot v-else name="table">
+    <table-style ref="table" :key="tableKey" v-loading="loading" :headers="tableHeaders" :data-list="tableList"
+      :drag-sort="dragSortEnable" :props="tableTableProps" :selection="enableSelection" :cell-type="cellType"
+      :cell-props="cellProps" :row-button="tableRowButton" :show-row-button="showRowButton"
+      :make-row-button="makeRowButton" :load-children="loadChildren" :local-sort-handler="localSortHandler"
+      @select-change="handleSelectionChange" @sort-change="sortTable" @cell-change="cellChange" @btn-action="btnAction"
+      @drag-sort="dragSortHandle" />
   </slot>
-  <el-button
-    v-if="listIncreaseConf.state && listIncreaseConf.location === 'afterList'"
-    class="list-incr-button"
-    @click="listIncreaseRecord"
-  >添加</el-button>
+  <el-button v-if="listIncreaseConf.state && listIncreaseConf.location === 'afterList'" class="list-incr-button"
+    @click="listIncreaseRecord">添加</el-button>
   <el-row style="display: flex">
-    <el-col
-      :span="12"
-      style="min-height: 15px"
-    >
-      <div
-        v-if="tableBatchButton.length > 0 && selectedInfoPosition === 'beforePagination'"
-        class="selected-info"
-      >
+    <el-col :span="12" style="min-height: 15px">
+      <div v-if="tableBatchButton.length > 0 && selectedInfoPosition === 'beforePagination'" class="selected-info">
         <span v-html="selectedInfo" />
       </div>
     </el-col>
     <el-col :span="12">
       <slot name="page">
-        <div
-          v-if="tableShowPagination"
-          class="table-pagination"
-        >
-          <el-pagination
-            :key="paginationKey"
-            background
-            layout="total, sizes, prev, pager, next"
-            :page-size="tablePage.ps"
-            :page-sizes="tablePage.sizes"
-            :current-page="tablePage.pn"
-            :total="tablePage.total"
-            @size-change="pssChange"
-            @current-change="(page) => pnChange(page)"
-          />
+        <div v-if="tableShowPagination" class="table-pagination">
+          <el-pagination :key="paginationKey" background layout="total, sizes, prev, pager, next"
+            :page-size="tablePage.ps" :page-sizes="tablePage.sizes" :current-page="tablePage.pn"
+            :total="tablePage.total" @size-change="pssChange" @current-change="(page) => pnChange(page)" />
         </div>
       </slot>
     </el-col>
@@ -608,7 +501,7 @@ export default defineComponent({
         return
       }
       console.log('searchAction')
-      this.load({resetPage: true})
+      this.load({ resetPage: true })
     },
     load(args = {}, extraPrams = {}) {
       if (!this.tableListApi) {
@@ -1130,108 +1023,22 @@ export default defineComponent({
 })
 </script>
 <style lang="scss" scoped>
-  ::v-deep(.el-form--inline .el-select) {
-    width: 150px;
-  }
+::v-deep(.el-form--inline .el-select) {
+  width: 150px;
+}
 </style>
 <style lang="scss" scoped>
-.filter-form {
-  ::v-deep(.el-form-item__label) {
-    /*text-align-last: justify;*/
-  }
-}
-
-.selected-info {
-  padding: 10px 0;
-  height: 28px;
-  line-height: 28px;
-  color: #909399;
-  font-size: 13px;
-}
-
-.table-pagination {
-  float: right;
-  padding: 10px 0;
-
-  ::v-deep(.el-pagination) {
-    padding-left: 0;
-    padding-right: 0;
-  }
-}
-
-.normal-button {
-  text-align: right;
-  float: right;
-}
-
-.table-filter {
-  margin-bottom: 15px;
-}
-
-::v-deep(.el-divider--horizontal) {
-  margin: 10px 0;
-}
-
-::v-deep(.table-header-cell) {
-  background-color: #f5f5f5;
-}
-
-::v-deep(.el-button + .el-button) {
-  margin-left: 0;
-}
-
-::v-deep(.el-button) {
-  margin-right: 10px;
-
-  &:last-child {
-    margin-right: 0;
-  }
-
-  .el-dropdown {
-    margin-right: 10px;
-
-    &:last-child {
-      margin-right: 0;
-    }
-  }
-}
-
 .list-incr-button {
   width: 100%;
   margin-bottom: 10px;
   margin-top: 10px;
 }
 
+::v-deep(.el-divider--horizontal) {
+  margin: 10px 0;
+}
+
 ::v-deep(.el-card__body) {
   padding-bottom: 0;
-}
-</style>
-<style>
-.el-tabs--border-card>.el-tabs__content {
-  padding: 0;
-}
-
-.table-highlight {
-  background: #67C23A;
-  animation: tableHighlight 2s;
-  animation-iteration-count: infinite;
-}
-
-@keyframes tableHighlight {
-  0% {
-    background: #67C23A;
-  }
-
-  25% {
-    background: #E6A23C;
-  }
-
-  50% {
-    background: #F56C6C;
-  }
-
-  100% {
-    background: #67C23A;
-  }
 }
 </style>

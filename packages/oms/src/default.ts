@@ -13,7 +13,7 @@ export const defaultSettings: Settings = {
   title: 'oms',
   fixedHeader: false,
   sidebarLogo: true,
-  logo: 'http://assest.daodao.run/logo.png',
+  logo: '',
   closeNavNotice: false,
   navBarNotice: '',
   hasNewMessage: true,
@@ -28,7 +28,7 @@ export const defaultSettings: Settings = {
   nav: [],
   whiteRoutes: ['/login'],
   tokenExpire: 7 * 24 * 60 * 60 * 1000,
-  defaultAvatar: 'http://assest.daodao.run/avatar.jpg',
+  defaultAvatar: '',
   envColor: {
     'uat': 'gray',
     'pre': 'green'
