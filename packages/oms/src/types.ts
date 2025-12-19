@@ -1,4 +1,4 @@
-import { AxiosRequestConfig } from './utils/request'
+import type { AxiosRequestConfig } from 'axios'
 import type { RouteRecordRaw } from 'vue-router'
 import { Component, Directive, Plugin } from 'vue'
 import { MockApi } from './mock/types'
@@ -27,10 +27,11 @@ export interface Settings {
     tokenExpire?: number,
     defaultAvatar?: string,
     envColor?: Record<string, string>,
-    serviceOffLineNotice? : string,
+    serviceOffLineNotice?: string,
     formMutex?: boolean
     captcha?: boolean
     themeMode?: 'light' | 'dark'
+    aestheticMode?: 'default' | 'theme1' | 'theme2' | 'theme3'
 }
 
 export type UsePlugin = Plugin | [Plugin, any]
@@ -88,7 +89,7 @@ export type Resource = Record<string, boolean | Record<string, boolean>>
 // eslint-disable-next-line no-unused-vars
 export enum PageType { custom, list, form, customSchema, localComp, tree, report, entity }
 // eslint-disable-next-line no-unused-vars
-export enum MenuType { hidden = 0, dir = 1, menu = 2, page = 3}
+export enum MenuType { hidden = 0, dir = 1, menu = 2, page = 3 }
 
 export interface PageInfo {
     module_id: number,

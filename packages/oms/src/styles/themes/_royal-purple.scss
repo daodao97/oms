@@ -1,0 +1,22 @@
+/* Theme 2: Royal Purple */
+html.aesthetic-theme2 {
+    --el-color-primary: #7c4dff;
+    --el-color-primary-light-3: #a382ff;
+    --el-color-primary-light-5: #be7ffc;
+    --el-color-primary-light-7: #d9bffd;
+    --el-color-primary-light-8: #e7d6fe;
+    --el-color-primary-light-9: #f3ebff;
+    --el-color-primary-dark-2: #6200ea;
+    --el-color-primary-rgb: 124, 77, 255;
+    --sidebar-active-text-color: #7c4dff;
+    --sidebar-logo-text-color: #7c4dff;
+    --sidebar-hover-bg: #f8f6ff;
+    --sidebar-submenu-hover-bg: #fafaff;
+
+    &.dark {
+        --sidebar-hover-bg: rgba(124, 77, 255, 0.12);
+        --sidebar-submenu-hover-bg: rgba(124, 77, 255, 0.06);
+        --sidebar-active-text-color: #b388ff;
+        --sidebar-logo-text-color: #b388ff;
+    }
+}

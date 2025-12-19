@@ -28,7 +28,8 @@ const options: OmsOptions = {
   // mock: true,
   // activeSsoKey: 'dingtalk'
   settings: {
-    captcha: false
+    captcha: false,
+    aestheticMode: 'theme1'
   },
   plugins: [app]
 }

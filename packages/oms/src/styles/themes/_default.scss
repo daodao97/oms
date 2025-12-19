@@ -1,0 +1,31 @@
+/* Aesthetic: Default (Native Element Plus) */
+html.aesthetic-default {
+    --el-color-primary: #409eff;
+    --el-color-primary-light-3: #79bbff;
+    --el-color-primary-light-5: #a0cfff;
+    --el-color-primary-light-7: #c6e2ff;
+    --el-color-primary-light-8: #d9ecff;
+    --el-color-primary-light-9: #ecf5ff;
+    --el-color-primary-dark-2: #337ecc;
+
+    --el-color-success: #67c23a;
+    --el-color-warning: #e6a23c;
+    --el-color-danger: #f56c6c;
+    --el-color-error: #f56c6c;
+
+    --el-border-radius-base: 4px;
+    --el-border-radius-small: 2px;
+    --el-border-radius-round: 20px;
+
+    --sidebar-active-text-color: #409eff;
+    --sidebar-logo-text-color: #409eff;
+    --sidebar-hover-bg: #f5f7fa;
+
+    --card-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.1);
+    --border-color: #dcdfe6;
+
+    &.dark {
+        --sidebar-hover-bg: #262727;
+        --border-color: #4c4d4f;
+    }
+}

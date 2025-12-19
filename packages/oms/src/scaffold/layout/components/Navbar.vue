@@ -1,85 +1,57 @@
 <template>
-  <el-row
-    ref="header"
-    class="navbar"
-    :style="navbarStyle"
-  >
+  <el-row ref="header" class="navbar" :style="navbarStyle">
     <el-col :span="16">
-      <hamburger
-        :is-active="sidebar.opened"
-        class="hamburger-container"
-        @toggleClick="toggleSideBar"
-      />
-      <breadcrumb
-        v-if="device !== 'mobile'"
-        class="breadcrumb-container"
-      />
+      <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
+      <breadcrumb v-if="device !== 'mobile'" class="breadcrumb-container" />
     </el-col>
     <el-col :span="8">
       <div class="right-content">
-        <div
-          v-if="showPageJsonSchemaIcon"
-          class="right-item"
-        >
+        <div v-if="showPageJsonSchemaIcon" class="right-item">
           <PageEditor />
         </div>
-        <div
-          class="right-item-button"
-          style="padding: 0"
-        >
+        <div class="right-item-button" style="padding: 0">
           <v-button :buttons="nav" />
         </div>
-        <el-tooltip
-          placement="bottom"
-          :content="isDark ? '切换为明亮模式' : '切换为暗黑模式'"
-        >
-          <div
-            class="right-item theme-toggle"
-            role="button"
-            tabindex="0"
-            @click="toggleTheme"
-            @keydown.enter.prevent="toggleTheme"
-            @keydown.space.prevent="toggleTheme"
-          >
+        <el-tooltip placement="bottom" :content="isDark ? '切换为明亮模式' : '切换为暗黑模式'">
+          <div class="right-item theme-toggle" role="button" tabindex="0" @click="toggleTheme"
+            @keydown.enter.prevent="toggleTheme" @keydown.space.prevent="toggleTheme">
             <el-icon>
               <component :is="isDark ? Moon : Sunny" />
             </el-icon>
           </div>
         </el-tooltip>
-        <el-dropdown
-          class="right-item"
-          trigger="click"
-        >
+        <el-dropdown class="right-item" trigger="click" @command="setAestheticMode">
+          <div class="aesthetic-picker" role="button" tabindex="0">
+            <el-icon>
+              <Brush />
+            </el-icon>
+          </div>
+          <template #dropdown>
+            <el-dropdown-menu>
+              <el-dropdown-item command="theme1" :disabled="aestheticMode === 'theme1'">薄荷绿 (Mint)</el-dropdown-item>
+              <el-dropdown-item command="theme2" :disabled="aestheticMode === 'theme2'">皇家紫 (Purple)</el-dropdown-item>
+              <el-dropdown-item command="theme3" :disabled="aestheticMode === 'theme3'">海洋蓝 (Blue)</el-dropdown-item>
+              <el-dropdown-item command="default" :disabled="aestheticMode === 'default'" divided>原生样式
+                (Native)</el-dropdown-item>
+            </el-dropdown-menu>
+          </template>
+        </el-dropdown>
+        <el-dropdown class="right-item" trigger="click">
           <div class="user-info">
-            <el-avatar
-              class="user-avatar"
-              :size="32"
-              :src="currentAvatar || undefined"
-              @error="handleAvatarError"
-            >{{ avatarFallback }}</el-avatar>
+            <el-avatar class="user-avatar" :size="32" :src="currentAvatar || undefined" @error="handleAvatarError">{{
+              avatarFallback }}</el-avatar>
             <span class="user-name">{{ nickname || name }}</span>
           </div>
           <template #dropdown>
             <el-dropdown-menu class="user-dropdown">
-              <el-dropdown-item
-                icon="oms-icon-index"
-                @click="$router.push('/')"
-              >首页</el-dropdown-item>
-              <el-dropdown-item
-                divided
-                icon="el-icon-switch-button"
-                @click="logout"
-              >退出登录</el-dropdown-item>
+              <el-dropdown-item icon="oms-icon-index" @click="$router.push('/')">首页</el-dropdown-item>
+              <el-dropdown-item divided icon="el-icon-switch-button" @click="logout">退出登录</el-dropdown-item>
             </el-dropdown-menu>
           </template>
         </el-dropdown>
       </div>
     </el-col>
-    <el-drawer
-      v-if="showJsonSchema"
-      :with-header="false"
-      size="50%"
-    />
+    <el-drawer v-if="showJsonSchema" :with-header="false" size="50%" />
   </el-row>
 </template>
 
@@ -91,8 +63,9 @@ import { showEleByClassName, Cache, waterMarker } from '@okiss/utils'
 import { VBtn as VButton } from '@okiss/vbtf'
 import { useAppStore, useSettingsStore, useUserStore } from '../../../store'
 import { useThemeMode } from '../../../composables/useThemeMode'
+import { useAestheticMode } from '../../../composables/useAestheticMode'
 import { computed, ref, onMounted, watch } from 'vue'
-import { Sunny, Moon } from '@element-plus/icons-vue'
+import { Sunny, Moon, Brush } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
 const settingsStore = useSettingsStore()
@@ -113,6 +86,8 @@ const setting = computed(() => settingsStore)
 const user = computed(() => userStore)
 const showPageJsonSchemaIcon = computed(() => settingsStore.showPageJsonSchema || false)
 const { isDark, toggleTheme } = useThemeMode()
+const { aestheticMode, setAestheticMode } = useAestheticMode()
+
 const navbarStyle = computed(() => {
   const envColor = setting.value.envColor?.[user.value.env]
   if (isDark.value) {
@@ -297,6 +272,17 @@ function handleAvatarError() {
 
   .theme-toggle {
     justify-content: center;
+
+    .el-icon {
+      font-size: 18px;
+    }
+  }
+
+  .aesthetic-picker {
+    justify-content: center;
+    display: flex;
+    align-items: center;
+    height: 100%;
 
     .el-icon {
       font-size: 18px;
