@@ -12,7 +12,6 @@ export * from './utils/container'
 export * from './utils/sso'
 export * from './router/remote'
 export * from './store'
-export { useAestheticMode } from './composables/useAestheticMode'
 
 export { BaseSso } from './utils/sso'
 export type { SsoType } from './utils/sso'

@@ -1,38 +1,17 @@
 <template>
-  <el-select
-    v-model="selected"
-    filterable
-    placeholder="搜索菜单..."
-    class="search-menu"
-    @change="onselected"
-  >
-    <template
-      v-for="group in filterRoutes"
-      :key="group.path"
-    >
+  <el-select v-model="selected" filterable placeholder="搜索菜单..." class="search-menu" @change="onselected">
+    <template v-for="group in filterRoutes" :key="group.path">
       <template v-if="group.children !== undefined">
-        <el-option-group
-          v-if="group.meta.menuType !== 0"
-          :key="group.path + '-'"
-          :label="group.meta.title"
-        >
-          <template
-            v-for="(item, index) in group.children"
-            :key="item.path"
-          >
-            <el-option
-              v-if="group.meta.menuType !== 0"
-              :label="(index === (group.children.length - 1) ? '└─' : '├─' )+ item.meta.title"
-              :value="getJumpPath(item)"
-            />
+        <el-option-group v-if="group.meta.menuType !== 0" :key="group.path + '-'" :label="group.meta.title">
+          <template v-for="(item, index) in group.children" :key="item.path">
+            <el-option v-if="group.meta.menuType !== 0"
+              :label="(index === (group.children.length - 1) ? '└─' : '├─') + item.meta.title"
+              :value="getJumpPath(item)" />
           </template>
         </el-option-group>
       </template>
       <template v-else>
-        <el-option
-          :label="'' + group.meta.title"
-          :value="getJumpPath(group)"
-        />
+        <el-option :label="'' + group.meta.title" :value="getJumpPath(group)" />
       </template>
     </template>
   </el-select>
@@ -85,7 +64,7 @@ function onselected(to: string) { router.push(to); selected.value = '' }
 <style lang="scss" scoped>
 .search-menu {
   width: 100%;
-  padding: 15px 20px 0 20px;
+  padding: 10px 20px;
 
   ::v-deep(.el-select__wrapper) {
     background-color: transparent;
@@ -99,6 +78,7 @@ function onselected(to: string) { router.push(to); selected.value = '' }
       background-color: var(--sidebar-hover-bg);
     }
   }
+
   //::v-deep(.el-input__wrapper:hover) {
   //  box-shadow: none;
   //}

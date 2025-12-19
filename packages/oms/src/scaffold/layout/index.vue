@@ -17,7 +17,6 @@ import { useEventListener } from '@vueuse/core'
 import { useAppStore, useSettingsStore } from '../../store'
 import { useRoute } from 'vue-router'
 import { watch } from 'vue'
-import { useAestheticMode } from '../../composables/useAestheticMode'
 
 const { body } = document
 const WIDTH = 992 // refer to Bootstrap's responsive design

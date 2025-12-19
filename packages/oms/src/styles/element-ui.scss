@@ -1,5 +1,13 @@
 // cover some element-ui styles
 
+:root {
+  --el-transfer-panel-width: auto;
+}
+
+.el-transfer-panel {
+  --el-transfer-panel-width: auto;
+}
+
 .el-breadcrumb__inner,
 .el-breadcrumb__inner a {
   font-weight: 400 !important;
@@ -23,4 +31,3 @@ $--button-small-padding-vertical: 8px !default;
 $--button-small-padding-horizontal: 12px !default;
 
 $--font-path: '~element-plus/lib/theme-chalk/fonts';
-

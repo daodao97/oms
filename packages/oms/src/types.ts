@@ -31,7 +31,6 @@ export interface Settings {
     formMutex?: boolean
     captcha?: boolean
     themeMode?: 'light' | 'dark'
-    aestheticMode?: 'default' | 'theme1' | 'theme2' | 'theme3'
 }
 
 export type UsePlugin = Plugin | [Plugin, any]

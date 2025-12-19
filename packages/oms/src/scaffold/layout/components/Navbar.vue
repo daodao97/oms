@@ -20,22 +20,6 @@
             </el-icon>
           </div>
         </el-tooltip>
-        <el-dropdown class="right-item" trigger="click" @command="setAestheticMode">
-          <div class="aesthetic-picker" role="button" tabindex="0">
-            <el-icon>
-              <Brush />
-            </el-icon>
-          </div>
-          <template #dropdown>
-            <el-dropdown-menu>
-              <el-dropdown-item command="theme1" :disabled="aestheticMode === 'theme1'">薄荷绿 (Mint)</el-dropdown-item>
-              <el-dropdown-item command="theme2" :disabled="aestheticMode === 'theme2'">皇家紫 (Purple)</el-dropdown-item>
-              <el-dropdown-item command="theme3" :disabled="aestheticMode === 'theme3'">海洋蓝 (Blue)</el-dropdown-item>
-              <el-dropdown-item command="default" :disabled="aestheticMode === 'default'" divided>原生样式
-                (Native)</el-dropdown-item>
-            </el-dropdown-menu>
-          </template>
-        </el-dropdown>
         <el-dropdown class="right-item" trigger="click">
           <div class="user-info">
             <el-avatar class="user-avatar" :size="32" :src="currentAvatar || undefined" @error="handleAvatarError">{{
@@ -63,9 +47,8 @@ import { showEleByClassName, Cache, waterMarker } from '@okiss/utils'
 import { VBtn as VButton } from '@okiss/vbtf'
 import { useAppStore, useSettingsStore, useUserStore } from '../../../store'
 import { useThemeMode } from '../../../composables/useThemeMode'
-import { useAestheticMode } from '../../../composables/useAestheticMode'
 import { computed, ref, onMounted, watch } from 'vue'
-import { Sunny, Moon, Brush } from '@element-plus/icons-vue'
+import { Sunny, Moon } from '@element-plus/icons-vue'
 
 const appStore = useAppStore()
 const settingsStore = useSettingsStore()
@@ -86,28 +69,30 @@ const setting = computed(() => settingsStore)
 const user = computed(() => userStore)
 const showPageJsonSchemaIcon = computed(() => settingsStore.showPageJsonSchema || false)
 const { isDark, toggleTheme } = useThemeMode()
-const { aestheticMode, setAestheticMode } = useAestheticMode()
 
 const navbarStyle = computed(() => {
   const envColor = setting.value.envColor?.[user.value.env]
   if (isDark.value) {
     return {
-      background: 'linear-gradient(135deg, rgba(0, 176, 116, 0.15) 0%, rgba(2, 6, 23, 0.95) 100%)',
+      background: 'linear-gradient(135deg, rgba(var(--el-color-primary-rgb, 0, 176, 116), 0.15) 0%, rgba(2, 6, 23, 0.95) 100%)',
       borderBottom: '1px solid var(--border-color)',
-      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)'
+      boxShadow: '0 4px 12px rgba(0, 0, 0, 0.3)',
+      color: 'var(--sidebar-text-color)'
     }
   }
   if (envColor) {
     return {
       background: `linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(243, 244, 248, 0.9) 60%, ${envColor} 100%)`,
       borderBottom: '1px solid var(--border-color)',
-      boxShadow: '0 1px 4px rgba(0, 0, 0, 0.05)'
+      boxShadow: '0 1px 4px rgba(0, 0, 0, 0.05)',
+      color: 'var(--sidebar-text-color)'
     }
   }
   return {
     background: 'linear-gradient(135deg, rgba(255, 255, 255, 0.98) 0%, rgba(243, 244, 248, 0.95) 70%, #ffffff 100%)',
     borderBottom: '1px solid var(--border-color)',
-    boxShadow: '0 1px 10px rgba(0, 0, 0, 0.03)'
+    boxShadow: '0 1px 10px rgba(0, 0, 0, 0.03)',
+    color: 'var(--sidebar-text-color)'
   }
 })
 
@@ -201,8 +186,9 @@ function handleAvatarError() {
   height: 50px;
   /*overflow: hidden;*/
   position: relative;
-  background: #fff;
+  background: var(--sidebar-bg, #fff);
   box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  color: var(--sidebar-text-color);
 
   .hamburger-container {
     line-height: 50px;
@@ -213,7 +199,7 @@ function handleAvatarError() {
     -webkit-tap-highlight-color: transparent;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.025);
+      background: var(--sidebar-hover-bg, rgba(0, 0, 0, 0.025));
     }
   }
 
@@ -233,7 +219,7 @@ function handleAvatarError() {
   float: right;
   height: 100%;
   padding-right: 20px;
-  color: rgba(0, 0, 0, 0.65);
+  color: inherit;
   display: flex;
 
   .icon {
@@ -253,36 +239,12 @@ function handleAvatarError() {
     align-items: center;
 
     &:hover {
-      background: rgba(0, 0, 0, 0.025);
-    }
-  }
-
-  .right-item {
-    padding: 0 12px;
-    height: 100%;
-    transition: all 0.3s;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-
-    &:hover {
-      background: rgba(0, 0, 0, 0.025);
+      background: var(--sidebar-hover-bg, rgba(0, 0, 0, 0.025));
     }
   }
 
   .theme-toggle {
     justify-content: center;
-
-    .el-icon {
-      font-size: 18px;
-    }
-  }
-
-  .aesthetic-picker {
-    justify-content: center;
-    display: flex;
-    align-items: center;
-    height: 100%;
 
     .el-icon {
       font-size: 18px;
@@ -307,7 +269,7 @@ function handleAvatarError() {
   .user-avatar {
     margin: 0 10px 0 0;
     color: #fff;
-    background: #1890ff;
+    background: var(--el-color-primary, #1890ff);
     display: inline-flex;
     align-items: center;
     justify-content: center;

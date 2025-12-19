@@ -10,7 +10,7 @@
   <!--   批量按钮/其他按钮   -->
   <slot name="action">
     <div class="table-toolbar">
-      <el-row :gutter="20">
+      <el-row :gutter="0">
         <el-col v-if="showBatchButton" :span="batchButtonCol">
           <v-button :buttons="makeBatchButton(tableBatchButton)" prefix-path="batchButton" @action="batchBtnAction" />
           <div v-if="tableBatchButton.length > 0 && selectedInfoPosition === 'afterBatchButton'" class="selected-info">

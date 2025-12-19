@@ -36,8 +36,7 @@ export const defaultSettings: Settings = {
   serviceOffLineNotice: '当前页面功能正在维护, 请稍后再试~~~',
   formMutex: true,
   captcha: true,
-  themeMode: 'light',
-  aestheticMode: 'default'
+  themeMode: 'light'
 }
 
 export const defaultOptions: OmsOptions = {
