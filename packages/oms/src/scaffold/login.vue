@@ -282,7 +282,7 @@ const login = () => {
 
 .custom-input {
   .el-input__wrapper {
-    background-color: var(--sidebar-hover-bg) !important;
+    background-color: var(--input-bg) !important;
     box-shadow: none !important;
     border: 1.5px solid var(--border-color) !important;
     border-radius: 16px !important;
@@ -291,12 +291,12 @@ const login = () => {
 
     &:hover {
       border-color: var(--sidebar-active-text-color) !important;
-      background-color: var(--card-bg) !important;
+      background-color: var(--input-bg) !important;
     }
 
     &.is-focus {
       border-color: var(--sidebar-active-text-color) !important;
-      background-color: var(--card-bg) !important;
+      background-color: var(--input-bg) !important;
       box-shadow: 0 0 0 4px rgba(0, 176, 116, 0.1) !important;
     }
   }
@@ -304,6 +304,7 @@ const login = () => {
   .el-input__inner {
     color: var(--sidebar-text-color) !important;
     height: 56px !important;
+    background-color: transparent !important;
 
     &::placeholder {
       color: #b0b0b0 !important;
@@ -313,6 +314,16 @@ const login = () => {
   .el-input__prefix-icon {
     color: #00b074 !important;
     font-size: 20px;
+  }
+
+  // Ensure password input eye icon has proper color in dark mode
+  .el-input__suffix-inner {
+    color: var(--sidebar-text-color) !important;
+    opacity: 0.6;
+
+    &:hover {
+      opacity: 1;
+    }
   }
 }
 
@@ -328,7 +339,7 @@ const login = () => {
   .captcha-img-box {
     width: 140px;
     height: 56px;
-    background: var(--sidebar-hover-bg);
+    background: var(--input-bg);
     border-radius: 16px;
     overflow: hidden;
     cursor: pointer;

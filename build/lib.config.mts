@@ -53,7 +53,13 @@ export default defineConfig({
           vue: 'Vue'
         },
         inlineDynamicImports: true,
-        exports: 'named'
+        exports: 'named',
+        assetFileNames: (assetInfo) => {
+          if (assetInfo.name?.endsWith('.css')) {
+            return 'style.css'
+          }
+          return assetInfo.name || 'assets/[name][extname]'
+        }
       }
     }
   }

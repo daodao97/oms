@@ -7,11 +7,15 @@
 
 html {
   --sidebar-text-color: #374151;
-  --sidebar-bg: #ffffff;
+  --sidebar-bg: #f8fafc;
   --sidebar-hover-bg: #f0f2f5;
   --sidebar-active-text-color: #409eff;
   --sidebar-submenu-hover-bg: #f5f7fa;
-  --app-bg: #f8fafc;
+  --app-bg: #f3f4f6;
+  --card-bg: #ffffff;
+  --card-shadow: 0 8px 40px rgba(0, 0, 0, 0.08);
+  --border-color: #e5e7eb;
+  --input-bg: #f3f4f6;
 
   &.dark {
     background-color: #020617;
@@ -21,6 +25,10 @@ html {
     --sidebar-active-text-color: #409eff;
     --sidebar-submenu-hover-bg: rgba(255, 255, 255, 0.04);
     --app-bg: #020617;
+    --card-bg: rgba(17, 24, 39, 0.95);
+    --card-shadow: 0 8px 40px rgba(0, 0, 0, 0.4);
+    --border-color: rgba(255, 255, 255, 0.1);
+    --input-bg: rgba(255, 255, 255, 0.06);
   }
 }
 
@@ -67,6 +75,16 @@ a:hover {
 
 div:focus {
   outline: none;
+}
+
+// 覆盖浏览器自动填充样式
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px var(--input-bg) inset !important;
+  -webkit-text-fill-color: var(--sidebar-text-color) !important;
+  transition: background-color 5000s ease-in-out 0s;
 }
 
 .clearfix {

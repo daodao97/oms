@@ -11,6 +11,7 @@ import CellView from './view.vue'
 import CellChart from './chart.vue'
 import CellPlayer from './player.vue'
 import CellSortIndex from './sortIndex.vue'
+import CellTime from './time.vue'
 
 export {
   CellEnum,
@@ -25,5 +26,6 @@ export {
   CellView,
   CellChart,
   CellPlayer,
-  CellSortIndex
+  CellSortIndex,
+  CellTime
 }
