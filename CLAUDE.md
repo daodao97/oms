@@ -8,11 +8,24 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 本仓库是一个基于 pnpm workspace 的多包前端 monorepo，所有命令默认在仓库根目录执行。
 
+### 0. 快速创建新应用
+
+```bash
+# 使用脚手架创建新的应用项目
+yarn create @okiss/app admin
+cd admin
+yarn
+yarn serve
+```
+
 ### 1. 依赖安装
 
 ```bash
 # 推荐使用 pnpm（部分包通过 only-allow 强制）
 pnpm install
+
+# 升级特定包到最新版本
+pnpm up @okiss/vbtf --latest
 ```
 
 ### 2. 文档站（VitePress）
@@ -127,9 +140,12 @@ pnpm release.all
 
 - `create-app` (`packages/create-app`)
   - 角色：**脚手架工具**。
-  - 职责：提供 `template-js`、`template-ts` 等模板，配合 README 中的 `yarn create @okiss/app` 命令快速生成新项目。
+  - 职责：提供 `template-js`、`template-ts` 等模板，配合 `yarn create @okiss/app` 命令快速生成新项目。
+  - 包名：`@okiss/create-app`
 
 > 以上包均通过 pnpm workspace 进行依赖管理和联调开发，新增包时应保持相同的结构与构建模式（`src/index.ts` 入口、`dist` 输出、`publishConfig` 指向 dist）。
+>
+> **注意**：`@okiss/vform` 和 `@okiss/plugin-devtool` 在文档中被提及但当前不在此仓库的 packages 目录中，可能作为独立仓库维护或计划未来添加。
 
 ### 2. 运行与依赖关系（高层视角）
 
