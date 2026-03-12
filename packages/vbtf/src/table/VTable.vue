@@ -83,6 +83,7 @@ import TableStyle from './TableSytle.vue'
 import { cloneDeep, findIndex, merge, get } from 'lodash'
 import { SortableEvent } from 'sortablejs'
 import { getComponentValue } from '../form/util'
+import { getTableCellComp, getTableCellType } from './util'
 import { exportJson2Excel } from './excel'
 import VIcon from '../VIcon'
 import { ElMessageBox } from 'element-plus'
@@ -428,9 +429,7 @@ export default defineComponent({
       this.load()
     },
     cellType(column) {
-      let type = column.type || 'span'
-      type = type === 'input' ? 'span' : type
-      return `cell-${type}`
+      return getTableCellComp(column.type)
     },
     cellProps(column, scope) {
       let base = {
@@ -438,7 +437,7 @@ export default defineComponent({
         column: column,
         scope: scope
       }
-      if (this.cellType(column) === 'cell-sort-index') {
+      if (getTableCellType(column.type) === 'cell-sort-index') {
         base['onSortIndexChange'] = ({ from, to }) => {
           if (from !== to && this.tableList?.length > 0) {
             if (to > (this.tableList.length - 1)) {
