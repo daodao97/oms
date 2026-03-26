@@ -1,5 +1,5 @@
 import type { AxiosRequestConfig } from 'axios'
-import type { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw, Router } from 'vue-router'
 import { Component, Directive, Plugin } from 'vue'
 import { MockApi } from './mock/types'
 import { Sso } from './utils/sso'
@@ -52,7 +52,8 @@ export interface OmsOptions {
     settings?: Settings,
     plugins?: OmsPlugin[],
     mock?: boolean,
-    form?: FormOptions
+    form?: FormOptions,
+    router?: Router
 }
 
 export interface FormOptions {

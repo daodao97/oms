@@ -1,10 +1,10 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, type RouteRecordRaw, type RouterHistory } from 'vue-router'
 import Dashboard from '../scaffold/dashboard.vue'
 import Layout from '../scaffold/layout/index.vue'
 import Login from '../scaffold/login.vue'
 import NotFoundPage from '../scaffold/404.vue'
 
-const routes: RouteRecordRaw[] = [
+export const defaultRoutes: RouteRecordRaw[] = [
   {
     path: '/',
     component: Layout,
@@ -36,9 +36,11 @@ const routes: RouteRecordRaw[] = [
   }
 ]
 
-const router = createRouter({
-  history: createWebHashHistory(),
-  routes
-})
+export function createOmsRouter(history: RouterHistory = createWebHashHistory()) {
+  return createRouter({
+    history,
+    routes: defaultRoutes
+  })
+}
 
-export default router
+export default createOmsRouter

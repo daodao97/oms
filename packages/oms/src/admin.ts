@@ -1,5 +1,5 @@
 import { createApp, watch, type App, type Component, type Directive } from 'vue'
-import type { RouteRecordRaw } from 'vue-router'
+import type { RouteRecordRaw, Router } from 'vue-router'
 import type { OmsOptions, OmsPlugin, UsePlugin } from './types'
 import type { AxiosInstance, AxiosRequestConfig } from 'axios'
 // Vuex Module removed in Pinia migration
@@ -20,17 +20,34 @@ import ElementPlus from './plugins/element-plus'
 import zhCn from 'element-plus/es/locale/lang/zh-cn'
 
 import { setupStore, pinia, useAppStore, useSettingsStore, useUserStore, setHttp } from './store'
-import router from './router'
+import { resolveOmsRouter, setActiveOmsRouter } from './router'
 import { filterRoutesByRole } from './router/permission'
 import * as directives from './directive'
 import { defaultOptions } from './default'
 
 export let http: AxiosInstance
-const pendingRoutes: RouteRecordRaw[] = []
-const registeredRouteKeys = new Set<string>()
+
+interface RouteState {
+  pendingRoutes: RouteRecordRaw[]
+  registeredRouteKeys: Set<string>
+}
+
+const routeStateMap = new WeakMap<Router, RouteState>()
 
 const getRouteKey = (route: RouteRecordRaw): string => {
   return typeof route.name === 'string' ? route.name : route.path
+}
+
+function getRouteState(router: Router): RouteState {
+  let state = routeStateMap.get(router)
+  if (!state) {
+    state = {
+      pendingRoutes: [],
+      registeredRouteKeys: new Set<string>()
+    }
+    routeStateMap.set(router, state)
+  }
+  return state
 }
 
 export function useHttp(options?: AxiosRequestConfig): AxiosInstance {
@@ -39,12 +56,13 @@ export function useHttp(options?: AxiosRequestConfig): AxiosInstance {
 
 export function createAdmin(omsOptions?: OmsOptions) {
   const options = merge(defaultOptions, omsOptions)
+  const router = resolveOmsRouter(options.router)
   const app: App = createApp(AppComp)
-  const omsPlugin = createOmsPlugin(options)
+  const omsPlugin = createOmsPlugin(options, router)
   const plugins = options.plugins || []
   plugins.unshift(omsPlugin)
   plugins.forEach(item => {
-    regPlugin(app, item)
+    regPlugin(app, item, router)
   })
   if (options?.mock) {
     startMock()
@@ -60,6 +78,7 @@ export function createAdmin(omsOptions?: OmsOptions) {
   appStore.setBaseAPI(options?.axios.baseURL as any)
   app.config.globalProperties.$http = http
   app.config.globalProperties.$router = router
+  setActiveOmsRouter(router)
   window.App = app
   window.OmsOptions = options
   setUploadHeaderHandle(() => {
@@ -68,7 +87,7 @@ export function createAdmin(omsOptions?: OmsOptions) {
     }
   })
   watch(() => userStore.token, () => {
-    syncRoutesWithRoles()
+    syncRoutesWithRoles(router)
   }, { immediate: true })
   router.isReady().then(() => app.mount('#app'))
 }
@@ -79,17 +98,18 @@ function regComponents(app: App, components: Record<string, Component> = {}) {
   })
 }
 
-function syncRoutesWithRoles() {
+function syncRoutesWithRoles(router: Router) {
+  const routeState = getRouteState(router)
   const userRoles = getRolesFromJwt(getToken())
-  const permittedRoutes = filterRoutesByRole(pendingRoutes, userRoles)
+  const permittedRoutes = filterRoutesByRole(routeState.pendingRoutes, userRoles)
   const userStore = useUserStore(pinia)
   const existedKeys = new Set(userStore.customRouter.map(item => getRouteKey(item)))
   const newRoutes = permittedRoutes.filter(route => {
     const key = getRouteKey(route)
-    if (registeredRouteKeys.has(key) || existedKeys.has(key)) {
+    if (routeState.registeredRouteKeys.has(key) || existedKeys.has(key)) {
       return false
     }
-    registeredRouteKeys.add(key)
+    routeState.registeredRouteKeys.add(key)
     return true
   })
   newRoutes.forEach(item => {
@@ -100,9 +120,9 @@ function syncRoutesWithRoles() {
   }
 }
 
-function regRoutes(routes: RouteRecordRaw[] = []) {
-  pendingRoutes.push(...routes)
-  syncRoutesWithRoles()
+function regRoutes(router: Router, routes: RouteRecordRaw[] = []) {
+  getRouteState(router).pendingRoutes.push(...routes)
+  syncRoutesWithRoles(router)
 }
 
 function regUse(app: App, use: UsePlugin[]) {
@@ -134,16 +154,16 @@ function regStoreModule(modules: Record<string, any> = {}) {
   })
 }
 
-export function regPlugin(app: App, plugin: OmsPlugin) {
+export function regPlugin(app: App, plugin: OmsPlugin, router: Router = resolveOmsRouter()) {
   regComponents(app, plugin.components || {})
-  regRoutes(plugin.routes || [])
+  regRoutes(router, plugin.routes || [])
   regUse(app, plugin.use || [])
   regDirective(app, plugin.directives || {})
   regStoreModule(plugin.storeModules || {})
   regMockApis(plugin.mockApis || [])
 }
 
-export function createOmsPlugin(options: OmsOptions): OmsPlugin {
+export function createOmsPlugin(options: OmsOptions, router: Router = resolveOmsRouter(options.router)): OmsPlugin {
   return {
     components: { VIcon },
     directives: directives,

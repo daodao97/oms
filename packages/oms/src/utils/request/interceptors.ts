@@ -5,7 +5,7 @@ import { Message, MessageBox } from '../../plugins/element-plus'
 import { removeToken } from '../token'
 import { cancelRequestInterceptor, cancelResponseInterceptor } from './cache'
 import { isString } from '@okiss/utils'
-import router from '../../router'
+import { getActiveOmsRouter } from '../../router'
 
 function getToken() {
   return useUserStore(pinia).token
@@ -31,6 +31,7 @@ const baseRequestInterceptor: InterceptorUse<AxiosRequestConfig, AxiosError> = {
     if (token) {
       config.headers['X-Token'] = token
     }
+    const router = getActiveOmsRouter()
     if (router.currentRoute.value.meta?.path) {
       config.headers['X-Path'] = router.currentRoute.value.meta.path
     }

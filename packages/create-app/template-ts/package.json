@@ -9,6 +9,7 @@
   "dependencies": {
     "@okiss/oms": "latest",
     "vue": "^3.3.4",
+    "vue-router": "^4.6.4",
     "vuex": "^4.1.0"
   },
   "devDependencies": {

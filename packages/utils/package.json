@@ -1,6 +1,6 @@
 {
   "name": "@okiss/utils",
-  "version": "0.0.39",
+  "version": "0.0.40",
   "scripts": {
     "build": "cross-env pkg=utils vite build --config ../../build/lib.config.mts",
     "build:report": "cross-env pkg=utils EXPORT=true vite build --config ../../build/lib.config.mts",
@@ -9,11 +9,11 @@
     "release": "cross-env pkg=utils node ../../build/release.js"
   },
   "dependencies": {
-    "dayjs": "^1.11.19",
-    "element-plus": "^2.13.0",
+    "dayjs": "^1.11.20",
+    "element-plus": "^2.13.6",
     "handlebars": "^4.7.8",
     "jsonpath": "^1.1.1",
-    "lodash": "^4.17.21"
+    "lodash": "^4.17.23"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.21",

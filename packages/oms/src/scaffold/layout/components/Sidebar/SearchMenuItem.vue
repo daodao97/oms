@@ -24,8 +24,9 @@
   </template>
 </template>
 <script setup>
-import router from '../../../../router'
+import { useRouter } from 'vue-router'
 const SearchMenuItemVue = defineAsyncComponent(() => import('./SearchMenuItem.vue'))
+const router = useRouter()
 const props = defineProps({
   deep: {
     type: Number,
