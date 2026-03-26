@@ -46,11 +46,24 @@ const noticeApi = ref('')
 const schema = ref<any>({})
 const owners = ref<string[]>([])
 const serviceOffLine = ref<boolean | string>(false)
+const requestId = ref(0)
 
 const env = computed(() => userStore.env)
 const setting = computed(() => settingsStore)
 
-onBeforeMount(() => {
+function resetState() {
+  loading.value = true
+  haveNotice.value = false
+  notice.value = {}
+  noticeApi.value = ''
+  schema.value = {}
+  owners.value = []
+  serviceOffLine.value = false
+}
+
+function loadSchema() {
+  const currentRequestId = ++requestId.value
+  resetState()
   const token = route.path.split('/').filter(item => item)
   const project = token.length > 1 ? token.slice(0, token.length - 1).join('/') : token[0]
   const api = '/schema' + (route.meta as any).path
@@ -58,6 +71,9 @@ onBeforeMount(() => {
   // @ts-ignore
   const http = window?.App?.config?.globalProperties?.$http
   http.get(props.schemaApi || api, conf).then(({ data }) => {
+    if (currentRequestId !== requestId.value) {
+      return
+    }
     loading.value = false
     if (isObject(data)) {
       if (data.notice !== undefined) {
@@ -77,7 +93,15 @@ onBeforeMount(() => {
     schema.value = props.schemaHandler(data, project)
     appStore.SET_PAGE_JSON_SCHEMA({ page: route.path, json: schema.value })
   })
-})
+}
+
+watch(
+  () => [route.fullPath, (route.meta as any)?.path, props.schemaApi],
+  () => {
+    loadSchema()
+  },
+  { immediate: true }
+)
 </script>
 
 <style lang="scss" scoped>

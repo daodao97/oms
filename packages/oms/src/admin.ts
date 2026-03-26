@@ -35,7 +35,23 @@ interface RouteState {
 const routeStateMap = new WeakMap<Router, RouteState>()
 
 const getRouteKey = (route: RouteRecordRaw): string => {
+  if (route.path === '/' && !route.name && route.children && route.children.length === 1) {
+    const child = route.children[0]
+    return typeof child.name === 'string' ? `layout:${child.name}` : `layout:${child.path}`
+  }
   return typeof route.name === 'string' ? route.name : route.path
+}
+
+function normalizePluginRoute(route: RouteRecordRaw): RouteRecordRaw {
+  const normalized = { ...route }
+  const isLayoutRoot = normalized.path === '/' && Array.isArray(normalized.children)
+  if (isLayoutRoot) {
+    return normalized
+  }
+  return {
+    path: '/',
+    children: [normalized]
+  }
 }
 
 function getRouteState(router: Router): RouteState {
@@ -121,7 +137,7 @@ function syncRoutesWithRoles(router: Router) {
 }
 
 function regRoutes(router: Router, routes: RouteRecordRaw[] = []) {
-  getRouteState(router).pendingRoutes.push(...routes)
+  getRouteState(router).pendingRoutes.push(...routes.map(normalizePluginRoute))
   syncRoutesWithRoles(router)
 }
 
