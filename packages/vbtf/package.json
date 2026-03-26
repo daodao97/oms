@@ -10,12 +10,12 @@
   },
   "dependencies": {
     "@element-plus/icons-vue": "^2.3.2",
-    "axios": "^1.13.2",
-    "dayjs": "^1.11.19",
+    "axios": "^1.13.6",
+    "dayjs": "^1.11.20",
     "file-saver": "^2.0.5",
     "inputmask": "^5.0.9",
-    "lodash": "^4.17.21",
-    "sortablejs": "^1.15.6",
+    "lodash": "^4.17.23",
+    "sortablejs": "^1.15.7",
     "vuedraggable": "^4.1.0",
     "xlsx": "^0.18.5"
   },
@@ -26,16 +26,16 @@
     "element-plus": "^2.13.1"
   },
   "devDependencies": {
-    "@vitejs/plugin-vue": "^6.0.3",
-    "@vitejs/plugin-vue-jsx": "^5.1.2",
-    "@vue/compiler-sfc": "^3.5.26",
-    "eslint": "^9.39.2",
-    "eslint-plugin-vue": "^10.6.2",
+    "@vitejs/plugin-vue": "^6.0.5",
+    "@vitejs/plugin-vue-jsx": "^5.1.5",
+    "@vue/compiler-sfc": "^3.5.31",
+    "eslint": "^10.1.0",
+    "eslint-plugin-vue": "^10.8.0",
     "monaco-editor": "^0.55.1",
-    "sass": "^1.97.1",
-    "typescript": "^5.9.3",
-    "vite": "^7.3.0",
-    "vue-tsc": "^3.1.8"
+    "sass": "^1.98.0",
+    "typescript": "^6.0.2",
+    "vite": "^8.0.2",
+    "vue-tsc": "^3.2.6"
   },
   "files": [
     "dist/*"
